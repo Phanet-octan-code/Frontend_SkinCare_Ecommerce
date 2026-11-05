@@ -1,0 +1,303 @@
+@import "tailwindcss";
+@import './styles/variables.css';
+@import './styles/reset.css';
+@import './styles/components.css';
+
+@theme {
+  --breakpoint-xs: 375px;
+  --font-serif: 'Playfair Display', Georgia, Cambria, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --color-primary: #71856B;
+  --color-primary-hover: #596D54;
+  --color-primary-light: #EEF2EB;
+  --color-primary-dark: #1F2520;
+  
+  --color-gold: #C29B38;
+  --color-surface: #FFFFFF;
+  --color-surface-soft: #F7F5F0;
+  --color-surface-card: #FFFFFF;
+  
+  --color-text-main: #1F2520;
+  --color-text-secondary: #5A6358;
+  --color-text-muted: #8C9388;
+  
+  --color-border: #ECE8DE;
+  --color-border-subtle: #F3EFE6;
+  --color-bg: #FAF9F5;
+}
+
+/* ─── BASE BODY SETTINGS ─── */
+body {
+  background-color: #FAF9F5;
+  color: #1F2520;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── MULTILINGUAL TYPOGRAPHY & FONT FALLBACKS ─── */
+html[lang="km"] {
+  font-family: 'Battambang', var(--font-khmer), sans-serif;
+  line-height: 1.68;
+}
+html[lang="km"] body,
+html[lang="km"] input,
+html[lang="km"] button,
+html[lang="km"] select,
+html[lang="km"] textarea {
+  font-family: 'Battambang', var(--font-khmer), sans-serif !important;
+  line-height: 1.68;
+}
+html[lang="km"] .font-serif:not(.brand-logo-title):not(.brand-italic),
+html[lang="km"] .font-sans:not(.brand-logo-tagline),
+html[lang="km"] h1:not(.brand-logo-title),
+html[lang="km"] h2,
+html[lang="km"] h3,
+html[lang="km"] h4,
+html[lang="km"] h5,
+html[lang="km"] h6 {
+  font-family: 'Battambang', var(--font-khmer), sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+html[lang="zh"] {
+  font-family: var(--font-chinese);
+  line-height: 1.58;
+}
+html[lang="zh"] body,
+html[lang="zh"] input,
+html[lang="zh"] button,
+html[lang="zh"] select,
+html[lang="zh"] textarea {
+  font-family: var(--font-chinese) !important;
+  line-height: 1.58;
+}
+html[lang="zh"] .font-serif:not(.brand-logo-title):not(.brand-italic),
+html[lang="zh"] .font-sans:not(.brand-logo-tagline),
+html[lang="zh"] h1:not(.brand-logo-title),
+html[lang="zh"] h2,
+html[lang="zh"] h3,
+html[lang="zh"] h4,
+html[lang="zh"] h5,
+html[lang="zh"] h6 {
+  font-family: var(--font-chinese) !important;
+  letter-spacing: 0.02em !important;
+}
+
+html[lang="en"] {
+  font-family: var(--font-sans);
+}
+html[lang="en"] body {
+  font-family: var(--font-sans);
+}
+html[lang="en"] .font-serif {
+  font-family: var(--font-serif) !important;
+}
+html[lang="en"] .font-sans {
+  font-family: var(--font-sans) !important;
+}
+
+/* ─── PROTECTED BRAND LOGO & TRADEMARK IDENTITY (ALWAYS ORIGINAL ENGLISH LUXURY STYLING) ─── */
+.brand-logo-title,
+.brand-logo-title *,
+html[lang="km"] .brand-logo-title,
+html[lang="km"] .brand-logo-title *,
+html[lang="zh"] .brand-logo-title,
+html[lang="zh"] .brand-logo-title * {
+  font-family: 'Playfair Display', Georgia, Cambria, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.brand-logo-title .brand-italic,
+html[lang="km"] .brand-logo-title .brand-italic,
+html[lang="zh"] .brand-logo-title .brand-italic {
+  font-family: 'Playfair Display', Georgia, Cambria, serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  color: #71856B !important;
+}
+
+.brand-logo-tagline,
+html[lang="km"] .brand-logo-tagline,
+html[lang="zh"] .brand-logo-tagline {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+}
+
+/* ─── GLOBAL UTILITIES & TYPOGRAPHY ─── */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-gold {
+  color: var(--color-accent-gold);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.bg-soft {
+  background-color: var(--color-surface-soft);
+}
+
+.bg-white {
+  background-color: var(--color-surface);
+}
+
+/* ─── SECTION STYLING ─── */
+.section {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 40px;
+}
+
+.section-subtitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+.section-desc {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ─── BREADCRUMBS ─── */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.breadcrumbs a:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumbs .current {
+  color: var(--color-text-main);
+  font-weight: 600;
+}
+
+/* ─── FULL-SCREEN TRUE EDGE-TO-EDGE FLUID ENGINE ───
+   Removes artificial max-width constraints on ultra-wide / 1080p+ monitors
+   so that the header, announcement bar, hero section, shop grid, and footer
+   fill 100% of the viewport width with balanced luxury padding (clamp(16px, 2.5vw, 40px)).
+   Explicit modal/form pages with max-w-* remain intact.
+─── */
+.container:not([class*="max-w-"]),
+.site-container:not([class*="max-w-"]) {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: clamp(16px, 2.5vw, 40px) !important;
+  padding-right: clamp(16px, 2.5vw, 40px) !important;
+}
+
+@media (min-width: 375px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container:not([class*="max-w-"]),
+  .site-container:not([class*="max-w-"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+

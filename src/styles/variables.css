@@ -1,0 +1,71 @@
+:root {
+  /* ─── EXACT SPECIFICATION COLOR SYSTEM ─── */
+  --color-primary: #71856B;             /* Primary botanical green */
+  --color-primary-hover: #596D54;       /* Hover green */
+  --color-primary-dark: #1F2520;        /* Forest charcoal */
+  --color-primary-light: #EEF2EB;       /* Light sage accent */
+  --color-primary-subtle: #F6F8F5;      /* Subtle sage glow */
+
+  --color-bg: #FAF9F5;                  /* Main warm ivory background */
+  --color-surface: #FFFFFF;             /* Pure white for elevated cards */
+  --color-surface-soft: #F7F5F0;        /* Secondary supporting cream background */
+  --color-surface-hover: #ECEAE3;       /* Hover state for soft background */
+
+  --color-text-main: #1F2520;           /* Primary text charcoal */
+  --color-text-secondary: #5A6358;      /* Secondary text muted olive-slate */
+  --color-text-muted: #8C9388;          /* Muted text */
+  --color-text-inverse: #FFFFFF;
+
+  --color-border: #ECE8DE;              /* Refined hairline border */
+  --color-border-subtle: #F3EFE6;       /* Very light card divider */
+  --color-border-hover: #D5D1C7;        /* Border on focus / hover */
+
+  /* Semantic Feedback (Restrained & Harmonious) */
+  --color-success: #4E7C59;
+  --color-success-bg: #EFF5F0;
+  --color-warning: #996E2E;
+  --color-warning-bg: #FAF5EB;
+  --color-danger: #A64444;
+  --color-danger-bg: #F9EFEF;
+  --color-info: #486E85;
+  --color-info-bg: #EDF3F7;
+
+  /* Accent Gold for limited luxury badges */
+  --color-accent: #C29B38;
+  --color-accent-gold: #C29B38;
+  --color-accent-gold-light: #F9F5EE;
+
+  /* ─── TYPOGRAPHY ─── */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, Cambria, serif;
+  --font-khmer: 'Battambang', 'Noto Sans Khmer', system-ui, sans-serif;
+  --font-chinese: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* ─── RESTRAINED ELEVATIONS & SHADOWS ─── */
+  --shadow-none: none;
+  --shadow-xs: 0 1px 3px rgba(31, 37, 32, 0.03);
+  --shadow-sm: 0 2px 8px rgba(31, 37, 32, 0.04), 0 1px 2px rgba(31, 37, 32, 0.02);
+  --shadow-md: 0 6px 16px rgba(31, 37, 32, 0.06), 0 1px 3px rgba(31, 37, 32, 0.02);
+  --shadow-lg: 0 12px 28px rgba(31, 37, 32, 0.08), 0 3px 6px rgba(31, 37, 32, 0.03);
+  --shadow-xl: 0 20px 42px rgba(31, 37, 32, 0.1);
+  --shadow-drawer: -6px 0 28px rgba(31, 37, 32, 0.09);
+
+  /* ─── REFINED RADII (MODERN LUXURY) ─── */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ─── TRANSITIONS ─── */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ─── LAYOUT ─── */
+  --header-height: 72px;
+  --announcement-height: 38px;
+  --container-max: 100%;
+}
