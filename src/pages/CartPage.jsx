@@ -18,6 +18,7 @@ import {
   X,
   CheckCircle2,
 } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
 
 export default function CartPage() {
   const {
@@ -193,16 +194,12 @@ export default function CartPage() {
                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#FAF9F5] overflow-hidden shrink-0 border border-[#ECE8DE] flex items-center justify-center p-1">
                         {product.image_url ? (
                           <img
-                            src={product.image_url}
+                            src={resolveImageUrl(product.image_url)}
                             alt={product.name}
                             loading="lazy"
                             decoding="async"
                             className="w-full h-full object-contain p-1"
-                            onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.src =
-                                'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
-                            }}
+                            onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
                           />
                         ) : null}
                       </div>

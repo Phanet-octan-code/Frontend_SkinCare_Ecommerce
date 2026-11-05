@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Droplets, Sparkles, Beaker, Sun, ShieldCheck, Leaf, Heart, Eye } from 'lucide-react';
+import { resolveImageUrl } from '../../utils/imageUrl';
 
 // Verified 200 OK high-resolution studio botanical images for circular dispensary categories
 const defaultCategoryVisuals = {
@@ -53,7 +54,7 @@ export default function CategoryCard({ category, index = 0 }) {
 
   const getImage = () => {
     const customUrl = category.image_url || category.image;
-    if (customUrl && !customFailed) return customUrl;
+    if (customUrl && !customFailed) return resolveImageUrl(customUrl);
     return getFallbackImage();
   };
 

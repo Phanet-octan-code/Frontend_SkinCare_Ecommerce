@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 import {
   Sparkles,
   ShieldCheck,
@@ -40,13 +41,10 @@ export default function AboutPage() {
         {/* Highlight Image Banner */}
         <div className="relative rounded-3xl overflow-hidden mb-12 sm:mb-16 shadow-xs border border-[#ECE8DE] aspect-[16/9] sm:aspect-[21/9]">
           <img
-            src="/brand-story.jpg"
+            src={resolveImageUrl('/brand-story.jpg')}
             alt="Élixir Botanique Dispensary Laboratory"
             className="w-full h-full object-cover"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement.style.background = 'linear-gradient(135deg, #71856B 0%, #3D483A 100%)';
-            }}
+            onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1F2520]/80 via-[#1F2520]/20 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
             <span className="text-xs uppercase tracking-[0.14em] text-[#D4DDD2] block mb-1">

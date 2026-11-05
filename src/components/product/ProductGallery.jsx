@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductBadge from './ProductBadge';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
 export default function ProductGallery({
   mainImage,
@@ -19,13 +20,15 @@ export default function ProductGallery({
   // Images list: strictly respects provided images, does NOT synthesize or mock extra images
   const galleryImages = React.useMemo(() => {
     if (Array.isArray(images)) {
-      const validImages = images.filter((img) => typeof img === 'string' && img.trim().length > 0);
+      const validImages = images
+        .filter((img) => typeof img === 'string' && img.trim().length > 0)
+        .map((img) => resolveImageUrl(img));
       if (validImages.length > 0) {
         return validImages;
       }
     }
     if (mainImage && typeof mainImage === 'string' && mainImage.trim().length > 0) {
-      return [mainImage];
+      return [resolveImageUrl(mainImage)];
     }
     return ['https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80'];
   }, [mainImage, images]);
@@ -148,10 +151,7 @@ export default function ProductGallery({
             transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
             transform: isHoverZooming ? 'scale(1.25)' : 'scale(1)',
           }}
-          onError={(e) => {
-            e.currentTarget.src =
-              'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
-          }}
+          onError={(e) => handleImageError(e)}
         />
 
         {/* Enlarge Hint Pill on Bottom */}
@@ -225,11 +225,7 @@ export default function ProductGallery({
                     borderRadius: '2px',
                     backgroundColor: 'var(--color-surface-soft)',
                   }}
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src =
-                      'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
-                  }}
+                  onError={(e) => handleImageError(e)}
                 />
               </button>
             );
@@ -334,11 +330,7 @@ export default function ProductGallery({
                   borderRadius: 'var(--radius-sm)',
                   boxShadow: 'var(--shadow-sm)',
                 }}
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src =
-                    'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
-                }}
+                onError={(e) => handleImageError(e)}
               />
 
               {/* Prev / Next controls - Only rendered if multiple images */}
@@ -435,11 +427,7 @@ export default function ProductGallery({
                         borderRadius: '2px',
                         backgroundColor: 'var(--color-surface-soft)',
                       }}
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src =
-                          'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
-                      }}
+                      onError={(e) => handleImageError(e)}
                     />
                   </button>
                 ))}

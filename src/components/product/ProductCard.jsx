@@ -8,6 +8,7 @@ import wishlistService from '../../services/wishlistService';
 import PriceDisplay from './PriceDisplay';
 import QuickViewModal from './QuickViewModal';
 import { ShoppingBag, Heart, Eye, Check, Star } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
 export default function ProductCard({ product, initialWishlisted = false, onWishlistChange }) {
   const { addToCart } = useCart();
@@ -169,15 +170,11 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
           >
             {product.image_url ? (
               <img
-                src={product.image_url}
+                src={resolveImageUrl(product.image_url)}
                 alt={product.name}
                 loading="lazy"
                 className="w-full h-full object-contain p-1 transition-transform duration-500 ease-out group-hover:scale-105"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src =
-                    'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80';
-                }}
+                onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80')}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-center p-3 text-xs font-serif text-[#8C9388]">

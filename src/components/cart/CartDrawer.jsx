@@ -6,6 +6,7 @@ import { useTranslation } from '../../i18n/LanguageContext';
 import QuantitySelector from './QuantitySelector';
 import PriceDisplay from '../product/PriceDisplay';
 import { X, Trash2, ShoppingBag, ArrowRight, Sparkles } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
 export default function CartDrawer() {
   const {
@@ -219,16 +220,12 @@ export default function CartDrawer() {
                   >
                     {product.image_url ? (
                       <img
-                        src={product.image_url}
+                        src={resolveImageUrl(product.image_url)}
                         alt={product.name}
                         loading="lazy"
                         decoding="async"
                         style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '3px', backgroundColor: '#F8F9F7' }}
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src =
-                            'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
-                        }}
+                        onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
                       />
                     ) : (
                       <div

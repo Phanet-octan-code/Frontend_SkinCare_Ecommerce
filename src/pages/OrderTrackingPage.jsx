@@ -5,6 +5,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from '../i18n/LanguageContext';
 import { formatDate } from '../utils/formatters';
+import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
 import Breadcrumbs from '../components/navigation/Breadcrumbs';
 import {
   Search,
@@ -672,7 +673,7 @@ export default function OrderTrackingPage() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         {item.product_image ? (
                           <img
-                            src={item.product_image}
+                            src={resolveImageUrl(item.product_image)}
                             alt={item.product_name}
                             loading="lazy"
                             decoding="async"
@@ -684,11 +685,7 @@ export default function OrderTrackingPage() {
                               borderRadius: 'var(--radius-xs)',
                               backgroundColor: 'var(--color-surface-soft)',
                             }}
-                            onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.src =
-                                'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
-                            }}
+                            onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
                           />
                         ) : (
                           <div

@@ -4,6 +4,7 @@ import { Search, X, ArrowRight, Sparkles } from 'lucide-react';
 import { useTranslation } from '../../i18n/LanguageContext';
 import catalogService from '../../services/catalogService';
 import PriceDisplay from '../product/PriceDisplay';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
 export default function SearchOverlay({ isOpen, onClose }) {
   const { t } = useTranslation();
@@ -156,16 +157,12 @@ export default function SearchOverlay({ isOpen, onClose }) {
                     <div className="w-11 h-11 rounded-lg bg-[#F7F5F0] overflow-hidden shrink-0 flex items-center justify-center">
                       {product.image_url ? (
                         <img
-                          src={product.image_url}
+                          src={resolveImageUrl(product.image_url)}
                           alt={product.name}
                           loading="lazy"
                           decoding="async"
                           className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src =
-                              'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
-                          }}
+                          onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
                         />
                       ) : null}
                     </div>

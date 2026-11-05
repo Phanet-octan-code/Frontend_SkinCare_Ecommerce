@@ -10,6 +10,7 @@ import RatingDisplay from './RatingDisplay';
 import ProductBadge from './ProductBadge';
 import QuantitySelector from '../cart/QuantitySelector';
 import { X, ShoppingBag, Heart, ArrowRight, ShieldCheck, Check } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
 export default function QuickViewModal({ product, isOpen, onClose }) {
   const { addToCart } = useCart();
@@ -107,16 +108,12 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
           >
             {product.image_url ? (
               <img
-                src={product.image_url}
+                src={resolveImageUrl(product.image_url)}
                 alt={product.name}
                 loading="lazy"
                 decoding="async"
                 style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '12px' }}
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src =
-                    'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80';
-                }}
+                onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80')}
               />
             ) : (
               <div style={{ textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '0.84rem' }}>

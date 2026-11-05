@@ -11,6 +11,7 @@ import CategoryCard from '../components/product/CategoryCard';
 import ProductCard from '../components/product/ProductCard';
 import { ProductGridSkeleton } from '../components/feedback/LoadingSkeleton';
 import ErrorState from '../components/feedback/ErrorState';
+import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
 import {
   ArrowRight,
   ChevronLeft,
@@ -300,7 +301,7 @@ export default function HomePage() {
       titlePart1: t('hero.title_part1') || 'Triple Active Hydration',
       titlePart2: t('hero.title_part2') || 'Pure Botanicals & Dermal Renewal',
       subtitle: t('hero.subtitle') || 'A clinical master ritual featuring gentle pH 5.5 Cleanser, concentrated Hydrating Serum dropper, and deep moisture barrier cream formulated for 24-hour cellular replenishment.',
-      image: '/hero-skincare-set.jpg',
+      image: resolveImageUrl('/hero-skincare-set.jpg'),
       ctaPrimary: t('hero.cta_primary') || 'Shop The Ritual',
       ctaSecondary: t('hero.cta_secondary') || 'Clinical Consultation',
       pillTitle: t('hero.pill_slide1') || '01 Hydration Trio',
@@ -325,7 +326,7 @@ export default function HomePage() {
       titlePart1: t('hero.slide2_title1') || 'Science-Led Skincare for',
       titlePart2: t('hero.slide2_title2') || 'Luminous, Resilient Skin',
       subtitle: t('hero.slide2_subtitle') || 'Curated pharmaceutical-grade formulations, active botanicals, and personalized dermatological regimens tested for clinical biocompatibility.',
-      image: '/hero-campaign-old.jpg',
+      image: bestsellers[0]?.image_url ? resolveImageUrl(bestsellers[0].image_url) : resolveImageUrl('/hero-campaign-old.jpg'),
       ctaPrimary: t('hero.slide2_cta') || 'Explore Formulations',
       ctaSecondary: t('hero.cta_secondary') || 'Explore Collection',
       pillTitle: t('hero.pill_slide2') || '02 Cellular Renewal',
@@ -336,8 +337,8 @@ export default function HomePage() {
         t('hero.slide2_f3') || 'Biocompatible',
       ],
       specimen: {
-        title: t('hero.slide2_specimen_title') || 'Aethel Active Crème',
-        subtitle: t('hero.slide2_specimen_subtitle') || 'Bio-Lipid Botanical Infusion',
+        title: bestsellers[0]?.name || t('hero.slide2_specimen_title') || 'Aethel Active Crème',
+        subtitle: bestsellers[0]?.category?.name || t('hero.slide2_specimen_subtitle') || 'Bio-Lipid Botanical Infusion',
         rating: '5.0/5',
         reviews: t('hero.slide2_reviews') || '890+ verified reviews',
         badge: t('hero.slide2_specimen_badge') || 'CLINICAL AWARD',
@@ -350,7 +351,7 @@ export default function HomePage() {
       titlePart1: t('hero.slide3_title1') || 'Clinical Active Potency',
       titlePart2: t('hero.slide3_title2') || 'Hand-Dispensed Purity',
       subtitle: t('hero.slide3_subtitle') || 'Cold-chain dispensed serums, restorative emulsions, and gentle botanical extracts engineered to illuminate the dermal mantle without irritation.',
-      image: '/hero-products-showcase.jpg',
+      image: bestsellers[1]?.image_url ? resolveImageUrl(bestsellers[1].image_url) : resolveImageUrl('/hero-products-showcase.jpg'),
       ctaPrimary: t('hero.slide3_cta') || 'View Dispensary Catalog',
       ctaSecondary: t('hero.cta_secondary') || 'Our Philosophy',
       pillTitle: t('hero.pill_slide3') || '03 Pure Actives',
@@ -361,14 +362,14 @@ export default function HomePage() {
         t('hero.slide3_f3') || 'Zero Additives',
       ],
       specimen: {
-        title: t('hero.slide3_specimen_title') || 'Botanical Elixirs',
-        subtitle: t('hero.slide3_specimen_subtitle') || 'Vitamin C + Niacinamide 10%',
+        title: bestsellers[1]?.name || t('hero.slide3_specimen_title') || 'Botanical Elixirs',
+        subtitle: bestsellers[1]?.category?.name || t('hero.slide3_specimen_subtitle') || 'Vitamin C + Niacinamide 10%',
         rating: '4.95/5',
         reviews: t('hero.slide3_reviews') || '2,100+ verified reviews',
         badge: t('hero.slide3_specimen_badge') || 'BEST SELLER',
       },
     },
-  ], [t]);
+  ], [t, bestsellers]);
 
   useEffect(() => {
     if (isHeroHovered) return;
@@ -519,6 +520,7 @@ export default function HomePage() {
                           alt={slide.titlePart1}
                           loading="eager"
                           className="w-full h-full object-cover object-center rounded-none scale-[1.01] group-hover/hero:scale-[1.05] transition-transform duration-700 ease-out"
+                          onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
                         />
                         {/* Subtle Glass Shimmer Sweep Animation */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/12 to-transparent pointer-events-none animate-hero-shimmer rounded-none" />
@@ -823,13 +825,10 @@ export default function HomePage() {
               {/* Right Image Composition */}
               <div className="w-40 sm:w-48 lg:w-52 h-40 sm:h-48 rounded-2xl overflow-hidden bg-white/70 border border-[#ECE8DE] shadow-xs shrink-0 flex items-center justify-center p-2 transition-transform duration-500 hover:scale-105">
                 <img
-                  src="/hero-products-showcase.jpg"
+                  src={resolveImageUrl('/hero-products-showcase.jpg')}
                   alt="Botanique Promotion"
                   className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
-                  }}
+                  onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
                 />
               </div>
             </div>
@@ -1164,10 +1163,11 @@ export default function HomePage() {
             <div className="lg:col-span-6 relative">
               <div className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] border border-[#ECE8DE] shadow-sm">
                 <img
-                  src="/brand-story.jpg"
+                  src={resolveImageUrl('/brand-story.jpg')}
                   alt="Élixir Botanique Formulation Laboratory"
                   loading="lazy"
                   className="w-full h-full object-cover"
+                  onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
                 />
               </div>
 

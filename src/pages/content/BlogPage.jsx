@@ -16,9 +16,9 @@ import {
   X,
   Share2,
 } from 'lucide-react';
+import { resolveImageUrl, handleImageError, DEFAULT_FALLBACK_IMAGE } from '../../utils/imageUrl';
 
-const FALLBACK_IMAGE =
-  'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
+const FALLBACK_IMAGE = DEFAULT_FALLBACK_IMAGE;
 
 const ARTICLES = [
   {
@@ -53,7 +53,7 @@ The clinical result is transepidermal water loss (TEWL), heightened allergen pen
     readTime: '5 min read',
     date: 'Oct 28, 2026',
     author: 'Elena Rostova, Dermal Specialist',
-    image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
     featured: false,
     content: `Applying multiple low-pH actives in single sessions is one of the most common causes of induced barrier compromise. 
 
@@ -270,14 +270,11 @@ export default function BlogPage() {
 
               <div className="lg:col-span-5 bg-[#F4F1EA] relative min-h-[260px] lg:min-h-full overflow-hidden">
                 <img
-                  src={featuredArticle.image}
+                  src={resolveImageUrl(featuredArticle.image)}
                   alt={featuredArticle.title}
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = FALLBACK_IMAGE;
-                  }}
+                  onError={(e) => handleImageError(e, FALLBACK_IMAGE)}
                 />
               </div>
             </div>
@@ -295,14 +292,11 @@ export default function BlogPage() {
               {/* Thumbnail */}
               <div className="relative aspect-[16/10] overflow-hidden bg-[#F4F1EA]">
                 <img
-                  src={article.image}
+                  src={resolveImageUrl(article.image)}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = FALLBACK_IMAGE;
-                  }}
+                  onError={(e) => handleImageError(e, FALLBACK_IMAGE)}
                 />
                 <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold tracking-wider uppercase text-[#1F2520] shadow-2xs border border-white/40">
                   {article.category}
@@ -443,13 +437,10 @@ export default function BlogPage() {
 
             <div className="rounded-2xl overflow-hidden aspect-[16/9] mb-6 bg-[#F4F1EA]">
               <img
-                src={activeArticle.image}
+                src={resolveImageUrl(activeArticle.image)}
                 alt={activeArticle.title}
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = FALLBACK_IMAGE;
-                }}
+                onError={(e) => handleImageError(e, FALLBACK_IMAGE)}
               />
             </div>
 

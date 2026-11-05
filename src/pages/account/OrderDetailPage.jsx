@@ -5,6 +5,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
 import { useTranslation } from '../../i18n/LanguageContext';
 import { formatDate, formatOrderStatus } from '../../utils/formatters';
+import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
 import AccountNav from '../../components/navigation/AccountNav';
 import { DetailSkeleton } from '../../components/feedback/LoadingSkeleton';
@@ -295,14 +296,10 @@ export default function OrderDetailPage() {
                     <div className="w-16 h-16 rounded-xl bg-[#FAF9F5] border border-[#ECE8DE] overflow-hidden flex items-center justify-center shrink-0 p-1">
                       {productImage ? (
                         <img
-                          src={productImage}
+                          src={resolveImageUrl(productImage)}
                           alt={productName}
                           className="w-full h-full object-contain"
-                          onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src =
-                              'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
-                          }}
+                          onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
                         />
                       ) : (
                         <Package size={20} className="text-[#7A8578]" />
