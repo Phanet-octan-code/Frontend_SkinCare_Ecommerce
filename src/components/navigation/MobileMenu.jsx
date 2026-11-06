@@ -159,54 +159,6 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
             </button>
           </div>
 
-          {/* Language & Currency Top Bar for instant mobile switching */}
-          <div className="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#FAF9F5] border border-[#ECE8DE] mb-3">
-            {/* Language Switcher */}
-            <div className="flex items-center gap-1">
-              <span className="text-[10px] uppercase font-bold text-[#8C9388] mr-1">{t('common.language') || 'Lang'}:</span>
-              {availableLanguages.map((l) => (
-                <button
-                  key={l.code}
-                  type="button"
-                  onClick={() => setLanguage(l.code)}
-                  className={`px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
-                    language === l.code
-                      ? 'bg-[#1F2520] text-white shadow-xs'
-                      : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520]'
-                  }`}
-                >
-                  {l.short}
-                </button>
-              ))}
-            </div>
-
-            {/* Currency Switcher */}
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={() => setCurrency('USD')}
-                className={`px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
-                  currency === 'USD'
-                    ? 'bg-[#71856B] text-white shadow-xs'
-                    : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520]'
-                }`}
-              >
-                USD
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrency('KHR')}
-                className={`px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
-                  currency === 'KHR'
-                    ? 'bg-[#71856B] text-white shadow-xs'
-                    : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520]'
-                }`}
-              >
-                KHR
-              </button>
-            </div>
-          </div>
-
           {/* Quick Search Trigger button */}
           <button
             type="button"
