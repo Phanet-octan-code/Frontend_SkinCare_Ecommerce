@@ -503,11 +503,11 @@ export default function HomePage() {
                 onMouseEnter={() => setIsHeroHovered(true)}
                 onMouseLeave={() => setIsHeroHovered(false)}
               >
-                {/* Animated Emerald & Aquamarine Glow Backdrop - Square / Sharp */}
-                <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#71856B]/35 via-[#34D399]/25 to-[#38BDF8]/20 rounded-none blur-3xl opacity-75 group-hover/hero:opacity-95 transition-opacity duration-700 animate-hero-glow pointer-events-none" />
+                {/* Animated Emerald & Aquamarine Glow Backdrop */}
+                <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#71856B]/20 via-[#34D399]/15 to-[#38BDF8]/10 rounded-none blur-3xl opacity-70 group-hover/hero:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
-                {/* Main Luxury Frame - 100% No Border and No Border-Radius (Completely Square / Straight Architectural Lines) */}
-                <div className="relative w-full aspect-[3/2] sm:aspect-[1.38/1] rounded-none overflow-hidden bg-[#070A08] shadow-[0_30px_70px_-15px_rgba(0,0,0,0.55),0_15px_35px_-10px_rgba(0,0,0,0.3)] transition-all duration-500 group-hover/hero:shadow-[0_40px_85px_-15px_rgba(0,0,0,0.65),0_20px_45px_-10px_rgba(0,0,0,0.35)] group-hover/hero:-translate-y-1 flex items-center justify-center">
+                {/* Main Luxury Frame - Light Botanical Studio Aesthetic (No Black Background) */}
+                <div className="relative w-full aspect-[3/2] sm:aspect-[1.38/1] rounded-none overflow-hidden bg-gradient-to-br from-[#EDF3EC] via-[#F6F8F5] to-[#E3EDE1] shadow-[0_25px_60px_-15px_rgba(71,85,69,0.15),0_10px_25px_-5px_rgba(31,37,32,0.05)] transition-all duration-500 group-hover/hero:shadow-[0_35px_75px_-15px_rgba(71,85,69,0.22),0_15px_30px_-5px_rgba(31,37,32,0.08)] group-hover/hero:-translate-y-1 flex items-center justify-center">
                   
                   {/* Background Slides with smooth crossfade */}
                   {heroSlides.map((slide, idx) => {
@@ -515,7 +515,7 @@ export default function HomePage() {
                     return (
                       <div
                         key={slide.id}
-                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out rounded-none ${
+                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out rounded-none flex items-center justify-center ${
                           isActive ? 'opacity-100 z-1 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
                         }`}
                       >
@@ -523,51 +523,51 @@ export default function HomePage() {
                           src={slide.image}
                           alt={slide.titlePart1}
                           loading="eager"
-                          className="w-full h-full object-cover object-center rounded-none scale-[1.01] group-hover/hero:scale-[1.05] transition-transform duration-700 ease-out"
+                          className="w-full h-full object-contain sm:object-cover object-center rounded-none scale-[1.01] group-hover/hero:scale-[1.04] transition-transform duration-700 ease-out"
                           onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
                         />
                         {/* Subtle Glass Shimmer Sweep Animation */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/12 to-transparent pointer-events-none animate-hero-shimmer rounded-none" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none animate-hero-shimmer rounded-none" />
                       </div>
                     );
                   })}
 
-                  {/* Floating Pill Top-Right: 100% Lab Verified (No Border, Clean Square Cut) */}
+                  {/* Floating Pill Top-Right: 100% Lab Verified (Luxury White Frosted Glass) */}
                   <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 animate-hero-badge-1 pointer-events-none">
-                    <div className="px-3.5 sm:px-4 py-2 rounded-none bg-[#0F1612]/90 backdrop-blur-md text-white shadow-[0_12px_28px_rgba(0,0,0,0.35)] flex items-center gap-2.5">
+                    <div className="px-3.5 sm:px-4 py-2 rounded-none bg-white/95 backdrop-blur-md text-[#1F2520] border border-[#ECE8DE] shadow-[0_10px_25px_rgba(31,37,32,0.08)] flex items-center gap-2.5">
                       <span className="relative flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full bg-[#34D399] opacity-75" />
-                        <span className="relative inline-flex h-2.5 w-2.5 bg-[#10B981]" />
+                        <span className="animate-ping absolute inline-flex h-full w-full bg-[#10B981] opacity-75" />
+                        <span className="relative inline-flex h-2.5 w-2.5 bg-[#059669]" />
                       </span>
                       <div className="flex flex-col text-left">
-                        <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#A7F3D0]">
+                        <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#059669]">
                           {currentHero.specimen.badge}
                         </span>
-                        <span className="text-[11px] sm:text-xs font-medium text-white/90">
+                        <span className="text-[11px] sm:text-xs font-medium text-[#1F2520]">
                           {t('hero.dermatologist_tested') || 'Dermatologist Tested'}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Floating Glass Specimen Card Bottom-Left (No Border, Square Cut) */}
+                  {/* Floating Glass Specimen Card Bottom-Left (Luxury White Frosted Glass) */}
                   <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-10 max-w-[290px] animate-hero-badge-2 pointer-events-none">
-                    <div className="p-3 sm:p-3.5 rounded-none bg-[#0F1612]/92 backdrop-blur-md text-white shadow-[0_20px_45px_rgba(0,0,0,0.45)] flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-none bg-[#1A261E] text-[#34D399] flex items-center justify-center shrink-0 shadow-inner">
+                    <div className="p-3 sm:p-3.5 rounded-none bg-white/95 backdrop-blur-md text-[#1F2520] border border-[#ECE8DE] shadow-[0_16px_36px_rgba(31,37,32,0.1)] flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-none bg-[#EEF2EB] text-[#059669] flex items-center justify-center shrink-0 shadow-inner">
                         <Droplets size={20} className="animate-bounce" style={{ animationDuration: '3s' }} />
                       </div>
                       <div className="min-w-0 pr-1 text-left">
                         <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="text-[10.5px] uppercase tracking-[0.14em] font-bold text-[#34D399] block truncate">
+                          <span className="text-[10.5px] uppercase tracking-[0.14em] font-bold text-[#059669] block truncate">
                             {currentHero.specimen.title}
                           </span>
                         </div>
-                        <p className="text-[11px] text-white/80 font-normal truncate mb-1">
+                        <p className="text-[11px] text-[#5A6358] font-normal truncate mb-1">
                           {currentHero.specimen.subtitle}
                         </p>
-                        <div className="flex items-center gap-1 text-[10px] text-[#FBBF24]">
+                        <div className="flex items-center gap-1 text-[10px] text-[#F59E0B]">
                           <span>★★★★★</span>
-                          <span className="text-white/70 font-medium ml-1">
+                          <span className="text-[#7A8578] font-medium ml-1">
                             {currentHero.specimen.reviews}
                           </span>
                         </div>
@@ -575,10 +575,10 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Floating Tag Bottom-Right (No Border, Square Cut) */}
-                  <div className="hidden sm:flex absolute bottom-6 right-6 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-none bg-[#0F1612]/85 backdrop-blur-md text-[#A7F3D0] text-[10px] font-semibold tracking-wider uppercase shadow-[0_8px_20px_rgba(0,0,0,0.3)] pointer-events-none">
-                    <ShieldCheck size={13} className="text-[#34D399]" />
-                    <span>{t('hero.barrier_lock') || '24H Barrier Lock'}</span>
+                  {/* Floating Tag Bottom-Right (Luxury White Frosted Glass) */}
+                  <div className="hidden sm:flex absolute bottom-6 right-6 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-none bg-white/92 backdrop-blur-md text-[#059669] border border-[#ECE8DE] text-[10px] font-semibold tracking-wider uppercase shadow-[0_6px_16px_rgba(31,37,32,0.06)] pointer-events-none">
+                    <ShieldCheck size={13} className="text-[#059669]" />
+                    <span className="text-[#1F2520] font-semibold">{t('hero.barrier_lock') || '24H Barrier Lock'}</span>
                   </div>
                 </div>
               </div>
