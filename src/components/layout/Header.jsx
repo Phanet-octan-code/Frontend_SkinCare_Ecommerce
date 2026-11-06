@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
+import { getCustomerAvatar } from '../../utils/customerAvatar';
 import catalogService from '../../services/catalogService';
 import {
   Search,
@@ -412,71 +413,109 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               {/* User Account Menu / Sign In */}
               {isAuthenticated ? (
                 <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-8 sm:h-9 lg:h-10 w-8 sm:w-auto p-0 sm:pl-2 sm:pr-3.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#71856B]/60 text-xs font-medium text-[#1F2520] cursor-pointer shadow-2xs hover:shadow-xs transition-colors"
-                    aria-label="User Account"
-                  >
-                    <div className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-[#EEF2EB] text-[#4A5D45] flex items-center justify-center font-bold text-[11px] shrink-0">
-                      {customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'}
-                    </div>
-                    <span className="hidden sm:inline max-w-[85px] truncate font-medium">
-                      {customer?.name?.split(' ')[0] || 'Account'}
-                    </span>
-                    <ChevronDown size={12} className="hidden sm:inline text-[#8C9388]" />
-                  </button>
-
-                  {isUserMenuOpen && (
-                    <>
-                      <div
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="fixed inset-0 z-[1030]"
-                      />
-                      <div className="absolute right-0 top-[120%] w-56 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-2 z-[1040] flex flex-col animate-[fadeIn_0.15s_ease-out]">
-                        <div className="px-3 py-2 border-b border-[#ECE8DE] mb-1">
-                          <p className="text-xs font-semibold text-[#1F2520] truncate">
-                            {customer?.name}
-                          </p>
-                          <p className="text-[11px] text-[#8C9388] truncate">
-                            {customer?.email}
-                          </p>
-                        </div>
-
-                        <Link
-                          to="/account/orders"
-                          onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
-                        >
-                          <Package size={14} />
-                          <span>{t('nav.orders')}</span>
-                        </Link>
-
-                        <Link
-                          to="/account/addresses"
-                          onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
-                        >
-                          <MapPin size={14} />
-                          <span>{t('nav.addresses')}</span>
-                        </Link>
-
-                        <div className="h-px bg-[#ECE8DE] my-1" />
-
+                  {(() => {
+                    const avatarSrc = getCustomerAvatar(customer);
+                    return (
+                      <>
                         <button
                           type="button"
-                          onClick={() => {
-                            setIsUserMenuOpen(false);
-                            logout();
-                          }}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#A64444] hover:bg-[#F9EFEF] transition-colors w-full text-left cursor-pointer"
+                          onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                          className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-8 sm:h-9 lg:h-10 w-8 sm:w-auto p-0 sm:pl-1.5 sm:pr-3.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#71856B]/60 text-xs font-medium text-[#1F2520] cursor-pointer shadow-2xs hover:shadow-xs transition-colors"
+                          aria-label="User Account"
                         >
-                          <LogOut size={14} />
-                          <span>{t('nav.sign_out')}</span>
+                          <div className="w-7 h-7 sm:w-7 sm:h-7 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] flex items-center justify-center font-bold text-[11px] shrink-0 border border-[#71856B]/20">
+                            {avatarSrc ? (
+                              <img
+                                src={avatarSrc}
+                                alt={customer?.name || 'User'}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
+                            )}
+                          </div>
+                          <span className="hidden sm:inline max-w-[85px] truncate font-medium">
+                            {customer?.name?.split(' ')[0] || 'Account'}
+                          </span>
+                          <ChevronDown size={12} className="hidden sm:inline text-[#8C9388]" />
                         </button>
-                      </div>
-                    </>
-                  )}
+
+                        {isUserMenuOpen && (
+                          <>
+                            <div
+                              onClick={() => setIsUserMenuOpen(false)}
+                              className="fixed inset-0 z-[1030]"
+                            />
+                            <div className="absolute right-0 top-[120%] w-60 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-2 z-[1040] flex flex-col animate-[fadeIn_0.15s_ease-out]">
+                              {/* Member Identity Header with Avatar */}
+                              <div className="flex items-center gap-2.5 px-3 py-2.5 border-b border-[#ECE8DE] mb-1.5 bg-[#FAF9F5]/70 rounded-xl">
+                                <div className="w-9 h-9 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] border border-[#71856B]/25 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                                  {avatarSrc ? (
+                                    <img
+                                      src={avatarSrc}
+                                      alt={customer?.name || 'User'}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
+                                  )}
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-xs font-semibold text-[#1F2520] truncate">
+                                    {customer?.name}
+                                  </p>
+                                  <p className="text-[11px] text-[#8C9388] truncate">
+                                    {customer?.email}
+                                  </p>
+                                </div>
+                              </div>
+
+                              <Link
+                                to="/account/profile"
+                                onClick={() => setIsUserMenuOpen(false)}
+                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
+                              >
+                                <User size={14} className="text-[#71856B]" />
+                                <span>{t('account.profile_security') || 'Profile & Photo'}</span>
+                              </Link>
+
+                              <Link
+                                to="/account/orders"
+                                onClick={() => setIsUserMenuOpen(false)}
+                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
+                              >
+                                <Package size={14} />
+                                <span>{t('nav.orders')}</span>
+                              </Link>
+
+                              <Link
+                                to="/account/addresses"
+                                onClick={() => setIsUserMenuOpen(false)}
+                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
+                              >
+                                <MapPin size={14} />
+                                <span>{t('nav.addresses')}</span>
+                              </Link>
+
+                              <div className="h-px bg-[#ECE8DE] my-1" />
+
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsUserMenuOpen(false);
+                                  logout();
+                                }}
+                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#A64444] hover:bg-[#F9EFEF] transition-colors w-full text-left cursor-pointer"
+                              >
+                                <LogOut size={14} />
+                                <span>{t('nav.sign_out')}</span>
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    );
+                  })()}
                 </div>
               ) : (
                 <Link

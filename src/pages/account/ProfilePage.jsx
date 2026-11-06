@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { useCurrency } from '../../context/CurrencyContext';
@@ -7,7 +7,8 @@ import authService from '../../services/authService';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
 import AccountNav from '../../components/navigation/AccountNav';
 import Input from '../../components/forms/Input';
-import { User, Lock, Save, ShieldCheck, Award, Package, CreditCard, Sparkles, CheckCircle2 } from 'lucide-react';
+import { getCustomerAvatar, saveCustomerAvatar, compressImageFile } from '../../utils/customerAvatar';
+import { User, Lock, Save, ShieldCheck, Award, Package, CreditCard, Sparkles, CheckCircle2, Camera, Upload, Trash2 } from 'lucide-react';
 
 export default function ProfilePage() {
   const { customer, updateCustomerState, refreshProfile } = useAuth();
@@ -22,6 +23,11 @@ export default function ProfilePage() {
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileError, setProfileError] = useState(null);
 
+  // Avatar fields & file input
+  const [avatar, setAvatar] = useState(() => getCustomerAvatar(customer));
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const fileInputRef = useRef(null);
+
   // Password fields
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -35,8 +41,92 @@ export default function ProfilePage() {
       setName(customer.name || '');
       setPhone(customer.phone || '');
       setAddress(customer.address || '');
+      setAvatar(getCustomerAvatar(customer));
     }
   }, [customer]);
+
+  const getInitials = (userName) => {
+    if (!userName) return 'EB';
+    const parts = userName.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
+  const handleFileSelect = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('Please upload a valid image file (JPG, PNG, or WebP).', 'warning');
+      return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+      showToast('Image file size must be under 8MB.', 'warning');
+      return;
+    }
+
+    setAvatarLoading(true);
+    try {
+      const compressedDataUrl = await compressImageFile(file, 400, 0.88);
+      setAvatar(compressedDataUrl);
+
+      // Save locally immediately
+      saveCustomerAvatar(customer, compressedDataUrl);
+      const updatedCustomer = { ...customer, avatar: compressedDataUrl };
+      updateCustomerState(updatedCustomer);
+
+      // Also attempt backend update
+      try {
+        await authService.updateProfile({
+          name: name.trim() || customer.name,
+          email: customer.email,
+          avatar: compressedDataUrl,
+        });
+      } catch (apiErr) {
+        // Even if remote backend doesn't support avatar column, local persistence ensures zero loss
+        console.warn('Backend avatar sync warning:', apiErr);
+      }
+
+      showToast('Profile photo updated successfully.', 'success');
+    } catch (err) {
+      showToast(err.message || 'Failed to process image.', 'error');
+    } finally {
+      setAvatarLoading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  const handleRemoveAvatar = async () => {
+    setAvatarLoading(true);
+    try {
+      setAvatar(null);
+      saveCustomerAvatar(customer, null);
+      const updatedCustomer = { ...customer, avatar: null };
+      updateCustomerState(updatedCustomer);
+
+      try {
+        await authService.updateProfile({
+          name: name.trim() || customer.name,
+          email: customer.email,
+          avatar: null,
+        });
+      } catch (apiErr) {
+        console.warn('Backend avatar sync warning:', apiErr);
+      }
+
+      showToast('Profile photo removed.', 'info');
+    } catch (err) {
+      showToast('Failed to remove profile photo.', 'error');
+    } finally {
+      setAvatarLoading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
 
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
@@ -54,10 +144,15 @@ export default function ProfilePage() {
         email: customer.email,
         phone: phone.trim() || undefined,
         address: address.trim() || undefined,
+        avatar: avatar || undefined,
       });
 
       const updated = res.customer || res.data?.customer || res.data;
       if (updated) {
+        // Keep avatar in updated state
+        if (avatar && !updated.avatar) {
+          updated.avatar = avatar;
+        }
         updateCustomerState(updated);
       }
       showToast('Profile information successfully updated.', 'success');
@@ -183,6 +278,83 @@ export default function ProfilePage() {
             </div>
           </div>
         )}
+
+        {/* Profile Photo & Avatar Card */}
+        <div className="rounded-3xl bg-white border border-[#ECE8DE] p-6 sm:p-7 shadow-xs mb-8">
+          <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left">
+            {/* Avatar Circle with Camera Quick-Action */}
+            <div className="relative group shrink-0">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-[#EEF2EB] text-[#71856B] border-2 border-[#71856B]/25 flex items-center justify-center font-serif text-xl sm:text-2xl font-bold tracking-wider shadow-xs ring-4 ring-[#FAF9F5]">
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt={customer?.name || 'User avatar'}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  getInitials(name || customer?.name)
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={avatarLoading}
+                className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#1F2520] hover:bg-[#71856B] text-white flex items-center justify-center shadow-md border-2 border-white transition-transform hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-50"
+                title="Change Photo"
+                aria-label="Upload customer photo"
+              >
+                <Camera size={14} />
+              </button>
+            </div>
+
+            {/* Avatar Details & Actions */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap mb-1">
+                <h3 className="font-serif text-base sm:text-lg font-normal text-[#1F2520]">
+                  {t('account.profile_photo') || 'Customer Profile Photo'}
+                </h3>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#FAF9F5] border border-[#ECE8DE] text-[#7A8578]">
+                  {avatar ? 'Custom Photo' : 'Default Monogram'}
+                </span>
+              </div>
+              <p className="text-xs text-[#7A8578] mb-3 max-w-lg">
+                Personalize your member experience. Your image will be displayed across your order confirmations, header navigation, and client dispensary dashboard.
+              </p>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+
+              <div className="flex items-center justify-center sm:justify-start gap-2.5 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={avatarLoading}
+                  className="px-4 py-2 rounded-full bg-[#1F2520] hover:bg-[#71856B] text-white text-xs font-medium tracking-wide flex items-center gap-1.5 shadow-2xs active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                >
+                  <Upload size={13} />
+                  <span>{avatarLoading ? 'Processing...' : (avatar ? 'Replace Photo' : 'Upload Image')}</span>
+                </button>
+
+                {avatar && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveAvatar}
+                    disabled={avatarLoading}
+                    className="px-3.5 py-2 rounded-full bg-white hover:bg-[#C55A48]/5 border border-[#ECE8DE] hover:border-[#C55A48] text-[#5A6358] hover:text-[#C55A48] text-xs font-medium tracking-wide flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+                  >
+                    <Trash2 size={13} />
+                    <span>Remove Photo</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Dual Column: Personal Details & Password Security */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">

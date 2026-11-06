@@ -403,6 +403,7 @@
     "member_tier": "VIP Client Tier",
     "client_portal": "Client Portal",
     "profile_title": "Client Profile & Credentials",
+    "profile_photo": "Customer Profile Photo",
     "profile_desc": "Manage your personal contact details, loyalty credentials, and security password.",
     "loyalty_tier": "Loyalty Tier",
     "member": "Member",

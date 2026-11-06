@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
+import { getCustomerAvatar } from '../../utils/customerAvatar';
 import catalogService from '../../services/catalogService';
 import {
   X,
@@ -456,9 +457,40 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
         <div className="pt-4 border-t border-[#ECE8DE] mt-auto">
           {isAuthenticated ? (
             <div className="flex flex-col gap-1.5 mb-4">
-              <div className="text-xs font-semibold text-[#1F2520] px-1 truncate">
-                {customer?.name}
-              </div>
+              {(() => {
+                const avatarSrc = getCustomerAvatar(customer);
+                return (
+                  <Link
+                    to="/account/profile"
+                    onClick={handleLinkClick}
+                    className="flex items-center gap-2.5 p-2 rounded-xl bg-[#FAF9F5] border border-[#ECE8DE] no-underline hover:border-[#71856B]/40 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] border border-[#71856B]/25 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                      {avatarSrc ? (
+                        <img src={avatarSrc} alt={customer?.name || 'User'} className="w-full h-full object-cover" />
+                      ) : (
+                        customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs font-semibold text-[#1F2520] truncate">
+                        {customer?.name}
+                      </div>
+                      <div className="text-[10px] text-[#8C9388] truncate">
+                        {customer?.email}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })()}
+              <Link
+                to="/account/profile"
+                onClick={handleLinkClick}
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-[#5A6358] hover:bg-[#FAF9F5]"
+              >
+                <User size={13} className="text-[#71856B]" />
+                <span>{t('account.profile_security') || 'Profile & Photo'}</span>
+              </Link>
               <Link
                 to="/account/orders"
                 onClick={handleLinkClick}

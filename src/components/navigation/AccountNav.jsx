@@ -1,13 +1,15 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from '../../i18n/LanguageContext';
-import { User, MapPin, Package, Heart, Truck, LogOut, Sparkles } from 'lucide-react';
+import { getCustomerAvatar } from '../../utils/customerAvatar';
+import { User, MapPin, Package, Heart, Truck, LogOut, Sparkles, Camera } from 'lucide-react';
 
 export default function AccountNav() {
   const { customer, logout } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const avatarSrc = getCustomerAvatar(customer);
 
   const handleLogout = async () => {
     await logout();
@@ -36,10 +38,25 @@ export default function AccountNav() {
       <div className="rounded-3xl bg-white border border-[#ECE8DE] p-5 sm:p-7 shadow-xs mb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            {/* Monogram Avatar Badge */}
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#EEF2EB] text-[#71856B] border border-[#71856B]/20 flex items-center justify-center font-serif text-lg sm:text-xl font-bold tracking-wider shrink-0 shadow-2xs">
-              {getInitials(customer?.name)}
-            </div>
+            {/* Monogram or Photo Avatar Badge */}
+            <Link
+              to="/account/profile"
+              title="Edit Profile & Photo"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-[#EEF2EB] text-[#71856B] border border-[#71856B]/25 flex items-center justify-center font-serif text-lg sm:text-xl font-bold tracking-wider shrink-0 shadow-2xs relative group no-underline hover:ring-2 hover:ring-[#71856B]/40 transition-all"
+            >
+              {avatarSrc ? (
+                <img
+                  src={avatarSrc}
+                  alt={customer?.name || 'User'}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                getInitials(customer?.name)
+              )}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white">
+                <Camera size={16} />
+              </div>
+            </Link>
 
             <div className="min-w-0">
               <div className="flex items-center gap-2.5 flex-wrap">
