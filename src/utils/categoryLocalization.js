@@ -88,3 +88,4 @@ export function getLocalizedCategoryName(category, language = 'en') {
 
   return rawName;
 }
+

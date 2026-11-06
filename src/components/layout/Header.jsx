@@ -22,10 +22,12 @@ import {
 export default function Header({ onOpenMobileMenu, onOpenSearch }) {
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownTimeoutRef = useRef(null);
+  const langMenuRef = useRef(null);
 
   const { customer, isAuthenticated, logout } = useAuth();
   const { totalItemCount, openCart } = useCart();
@@ -109,6 +111,25 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
     !isOffersActive;
   const isAboutActive = path === '/about';
   const isBlogActive = path.startsWith('/blog') || path.startsWith('/journal');
+
+  // Close menus on page route change or Escape key
+  useEffect(() => {
+    setIsUserMenuOpen(false);
+    setIsLangMenuOpen(false);
+    setActiveDropdown(null);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsUserMenuOpen(false);
+        setIsLangMenuOpen(false);
+        setActiveDropdown(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Hover dropdown handlers with debounce
   const handleMouseEnter = (menuName) => {
@@ -209,27 +230,27 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               type="button"
               onClick={onOpenSearch}
               id="desktop-search-trigger"
-              className="hidden md:flex items-center justify-between w-56 lg:w-64 xl:w-72 h-10 pl-3.5 pr-1.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#E0567A]/60 shadow-[0_1px_2px_rgba(31,37,32,0.02)] cursor-pointer text-xs text-[#8C9388] transition-all duration-200 hover:shadow-xs group shrink-0"
+              className="hidden md:flex items-center justify-between w-36 lg:w-44 xl:w-56 2xl:w-68 h-9 sm:h-10 pl-3 pr-1.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#E0567A]/60 shadow-[0_1px_2px_rgba(31,37,32,0.02)] cursor-pointer text-xs text-[#8C9388] transition-all duration-200 hover:shadow-xs group shrink-0"
             >
               <span className="truncate pr-1 text-[#8C9388] group-hover:text-[#1F2520] transition-colors">
                 {t('header.search_placeholder') || 'Search formulas, retinol...'}
               </span>
               <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[10px] font-medium tracking-wider bg-[#FAF9F5] border border-[#ECE8DE] px-1.5 py-0.5 rounded text-[#7A8578]">
+                <span className="hidden 2xl:inline-block text-[10px] font-medium tracking-wider bg-[#FAF9F5] border border-[#ECE8DE] px-1.5 py-0.5 rounded text-[#7A8578]">
                   Ctrl+K
                 </span>
-                <div className="w-7 h-7 rounded-full bg-[#E0567A] text-white flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
+                <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full bg-[#E0567A] text-white flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
                   <Search size={13} />
                 </div>
               </div>
             </button>
           </div>
 
-          {/* Right Cluster: Nav Links + Wishlist + Bag + User Account (Unified Single Right Group) */}
-          <div className="flex items-center gap-3.5 sm:gap-4 lg:gap-5 xl:gap-7 shrink-0">
+          {/* Right Cluster: Nav Links + Wishlist + Bag + Language + User Account */}
+          <div className="flex items-center gap-2 sm:gap-3 lg:gap-3.5 xl:gap-5 shrink-0 min-w-0">
             {/* Integrated Navigation Links */}
             <nav
-              className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7"
+              className="hidden lg:flex items-center gap-1.5 xl:gap-3.5 2xl:gap-5"
               aria-label="Main navigation"
             >
               {navLinks.map((item) => {
@@ -246,7 +267,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                     <Link
                       to={item.path}
                       onClick={handleCloseDropdown}
-                      className={`relative py-1.5 flex items-center gap-1 text-xs lg:text-[13px] xl:text-sm font-medium tracking-normal transition-colors duration-150 whitespace-nowrap no-underline outline-none focus:outline-none focus-visible:outline-none ${
+                      className={`relative py-1.5 px-0.5 xl:px-1 flex items-center gap-0.5 lg:gap-1 text-[11.5px] lg:text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-normal transition-colors duration-150 whitespace-nowrap no-underline outline-none focus:outline-none focus-visible:outline-none ${
                         item.isActive
                           ? 'text-[#E0567A] font-semibold'
                           : 'text-[#374151] hover:text-[#E0567A]'
@@ -371,13 +392,13 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
             </nav>
 
             {/* Action Icons Block */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 pl-1 sm:pl-2 border-l border-[#ECE8DE]/80">
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 shrink-0 pl-1 sm:pl-2 border-l border-[#ECE8DE]/80">
               {/* Search Icon for Mobile & Tablet (< md) */}
               <button
                 type="button"
                 onClick={onOpenSearch}
                 id="mobile-search-btn"
-                className="md:hidden inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-colors cursor-pointer"
+                className="md:hidden inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-colors cursor-pointer shrink-0"
                 aria-label="Open search"
               >
                 <Search size={18} />
@@ -386,7 +407,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               {/* Wishlist Link */}
               <Link
                 to="/wishlist"
-                className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full text-[#1F2520] hover:bg-white hover:text-[#E0567A] border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95"
+                className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-9.5 lg:h-9.5 rounded-full text-[#1F2520] hover:bg-white hover:text-[#E0567A] border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95 shrink-0"
                 title="My Saved Wishlist"
                 aria-label="Wishlist"
               >
@@ -397,7 +418,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               <button
                 type="button"
                 onClick={openCart}
-                className="relative inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95 cursor-pointer"
+                className="relative inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-9.5 lg:h-9.5 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95 cursor-pointer shrink-0"
                 title="Shopping Bag"
                 aria-label={`Shopping Bag with ${totalItemCount} items`}
               >
@@ -409,8 +430,61 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                 )}
               </button>
 
-              {/* Quick Language Selector (EN | KM | ZH) */}
-              <div className="hidden sm:inline-flex items-center bg-[#F7F5F0] border border-[#ECE8DE] rounded-full p-0.5 gap-0.5 shrink-0">
+              {/* Responsive Language Selector */}
+              {/* Mode A: Compact dropdown capsule on < xl to guarantee ZERO clipping */}
+              <div className="relative xl:hidden" ref={langMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsLangMenuOpen((prev) => !prev)}
+                  className="inline-flex items-center gap-1 h-8 sm:h-9 px-2 sm:px-2.5 rounded-full bg-white hover:bg-[#FAF9F5] border border-[#ECE8DE] hover:border-[#1F2520] text-[11px] font-semibold text-[#1F2520] transition-colors cursor-pointer shadow-2xs shrink-0"
+                  aria-label="Change Language"
+                  title="Select Language"
+                >
+                  <Globe size={13} className="text-[#71856B]" />
+                  <span className="tracking-wide uppercase font-bold text-[10.5px]">{language}</span>
+                  <ChevronDown
+                    size={10}
+                    className={`text-[#8C9388] transition-transform duration-200 ${
+                      isLangMenuOpen ? 'rotate-180 text-[#1F2520]' : ''
+                    }`}
+                  />
+                </button>
+
+                {isLangMenuOpen && (
+                  <>
+                    <div
+                      onClick={() => setIsLangMenuOpen(false)}
+                      className="fixed inset-0 z-[1030]"
+                    />
+                    <div className="absolute right-0 top-[calc(100%+8px)] w-40 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-1.5 z-[1040] animate-[fadeIn_0.15s_ease-out] flex flex-col gap-0.5">
+                      {availableLanguages.map((l) => {
+                        const isActive = language === l.code;
+                        return (
+                          <button
+                            key={l.code}
+                            type="button"
+                            onClick={() => {
+                              setLanguage(l.code);
+                              setIsLangMenuOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
+                              isActive
+                                ? 'bg-[#FDF2F4] text-[#E0567A] font-bold border border-[#E0567A]/20'
+                                : 'text-[#5A6358] hover:bg-[#FAF9F5] hover:text-[#1F2520]'
+                            }`}
+                          >
+                            <span>{l.nativeName}</span>
+                            <span className="text-[10px] uppercase font-bold text-[#8C9388]">{l.short}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Mode B: Segmented 3-button capsule on >= xl desktop */}
+              <div className="hidden xl:inline-flex items-center bg-[#F4F1EA] border border-[#ECE8DE] rounded-full p-0.5 gap-0.5 shrink-0">
                 {availableLanguages.map((l) => {
                   const isActive = language === l.code;
                   return (
@@ -419,10 +493,10 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                       type="button"
                       onClick={() => setLanguage(l.code)}
                       title={l.nativeName}
-                      className={`px-2 py-0.5 rounded-full text-[10.5px] font-semibold transition-all cursor-pointer ${
+                      className={`w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full text-[10.5px] font-semibold transition-all cursor-pointer flex items-center justify-center ${
                         isActive
-                          ? 'bg-[#1F2520] text-white shadow-2xs'
-                          : 'text-[#7A8578] hover:text-[#1F2520]'
+                          ? 'bg-[#1F2520] text-white shadow-xs'
+                          : 'text-[#5A6358] hover:text-[#1F2520] hover:bg-white/60'
                       }`}
                     >
                       {l.short}
@@ -437,16 +511,16 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                   <button
                     type="button"
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-8 sm:h-9 lg:h-10 w-8 sm:w-auto p-0 sm:pl-2 sm:pr-3.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#71856B]/60 text-xs font-medium text-[#1F2520] cursor-pointer shadow-2xs hover:shadow-xs transition-colors"
+                    className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 lg:h-9.5 w-8 sm:w-9 lg:w-9.5 xl:w-auto p-0 xl:pl-1.5 xl:pr-3.5 rounded-full bg-white hover:bg-[#FAF9F5] border border-[#ECE8DE] hover:border-[#1F2520] text-xs font-medium text-[#1F2520] cursor-pointer shadow-2xs hover:shadow-xs transition-colors shrink-0"
                     aria-label="User Account"
                   >
-                    <div className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-[#EEF2EB] text-[#4A5D45] flex items-center justify-center font-bold text-[11px] shrink-0">
+                    <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full bg-[#EEF2EB] text-[#4A5D45] flex items-center justify-center font-bold text-[11px] shrink-0">
                       {customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'}
                     </div>
-                    <span className="hidden sm:inline max-w-[85px] truncate font-medium">
+                    <span className="hidden xl:inline max-w-[85px] 2xl:max-w-[110px] truncate font-medium text-xs text-[#1F2520]">
                       {customer?.name?.split(' ')[0] || 'Account'}
                     </span>
-                    <ChevronDown size={12} className="hidden sm:inline text-[#8C9388]" />
+                    <ChevronDown size={12} className="hidden xl:inline text-[#8C9388]" />
                   </button>
 
                   {isUserMenuOpen && (
@@ -503,12 +577,12 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               ) : (
                 <Link
                   to="/login"
-                  className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 lg:h-10 px-3.5 sm:px-4 rounded-full bg-[#1F2520] hover:bg-[#2F3A31] text-white text-xs font-semibold tracking-wide transition-all duration-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap cursor-pointer no-underline"
+                  className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 lg:h-9.5 w-8 sm:w-9 lg:w-9.5 xl:w-auto px-0 xl:px-4 rounded-full bg-[#1F2520] hover:bg-[#2F3A31] text-white text-xs font-semibold tracking-wide transition-all duration-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap cursor-pointer no-underline shrink-0"
                   style={{ backgroundColor: '#1F2520', color: '#FFFFFF' }}
                   aria-label="Sign In"
                 >
-                  <User size={14} className="text-[#DCE2DA] shrink-0" />
-                  <span className="text-white font-medium">{t('nav.sign_in') || 'Sign In'}</span>
+                  <User size={15} className="text-[#DCE2DA] shrink-0" />
+                  <span className="hidden xl:inline text-white font-medium">{t('nav.sign_in') || 'Sign In'}</span>
                 </Link>
               )}
             </div>
