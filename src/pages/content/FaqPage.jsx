@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
+import { useTranslation } from '../../i18n/LanguageContext';
 import {
   HelpCircle,
   Search,
@@ -88,6 +89,7 @@ const FAQ_DATA = [
 ];
 
 export default function FaqPage() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [openItems, setOpenItems] = useState({});
@@ -123,19 +125,20 @@ export default function FaqPage() {
     <div className="bg-[#FAF9F5] min-h-screen py-8 sm:py-12 md:py-16">
       <div className="container max-w-4xl mx-auto px-4">
         {/* Breadcrumbs */}
-        <Breadcrumbs items={[{ label: 'FAQ' }]} />
+        <Breadcrumbs items={[{ label: t('faq.breadcrumb') || 'FAQ' }]} />
 
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-xs font-semibold tracking-wider uppercase mb-3">
             <HelpCircle size={13} />
-            <span>Clinical Knowledge Base</span>
+            <span>{t('faq.badge') || 'Clinical Knowledge Base'}</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-3 leading-tight">
-            Frequently Asked Questions
+            {t('faq.title_part1') || 'Frequently Addressed'}{' '}
+            <span className="italic font-serif text-[#71856B]">{t('faq.title_part2') || 'Inquiries'}</span>
           </h1>
           <p className="text-sm sm:text-base text-[#5A6358] max-w-xl mx-auto leading-relaxed font-normal">
-            Essential information regarding our compounding standards, POS inventory synchronization, nationwide deliveries, and 14-day tolerance policy.
+            {t('faq.subtitle') || 'Clear, authoritative guidance regarding our clinical formulations, live dispatch tracking, ingredient safety, and returns.'}
           </p>
         </div>
 
@@ -144,7 +147,7 @@ export default function FaqPage() {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search by topic, e.g. KHQR, returns, ingredients..."
+              placeholder={t('header.search_placeholder') || "Search by topic, e.g. KHQR, returns, ingredients..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-11 pr-4 py-3 rounded-full border border-[#ECE8DE] bg-white text-xs sm:text-sm text-[#1F2520] focus:border-[#71856B] focus:ring-1 focus:ring-[#71856B] shadow-xs outline-none transition-all"
@@ -166,7 +169,7 @@ export default function FaqPage() {
                   : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520] hover:border-[#71856B]/40'
               }`}
             >
-              {cat}
+              {cat === 'All' ? (t('common.all') || 'All') : cat}
             </button>
           ))}
         </div>

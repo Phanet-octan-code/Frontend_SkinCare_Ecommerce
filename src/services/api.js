@@ -21,6 +21,8 @@ apiClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    const currentLang = localStorage.getItem('skincare_boutique_lang') || 'en';
+    config.headers['Accept-Language'] = currentLang;
     return config;
   },
   (error) => Promise.reject(error)

@@ -12,6 +12,10 @@ import ProductCard from '../components/product/ProductCard';
 import { ProductGridSkeleton } from '../components/feedback/LoadingSkeleton';
 import ErrorState from '../components/feedback/ErrorState';
 import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
+import heroSlide1 from '../assets/hero/hero-skincare-set.jpg';
+import heroSlide2 from '../assets/hero/hero-campaign-old.jpg';
+import heroSlide3 from '../assets/hero/hero-products-showcase.jpg';
+import brandStoryImg from '../assets/brand-story.jpg';
 import {
   ArrowRight,
   ChevronLeft,
@@ -301,7 +305,7 @@ export default function HomePage() {
       titlePart1: t('hero.title_part1') || 'Triple Active Hydration',
       titlePart2: t('hero.title_part2') || 'Pure Botanicals & Dermal Renewal',
       subtitle: t('hero.subtitle') || 'A clinical master ritual featuring gentle pH 5.5 Cleanser, concentrated Hydrating Serum dropper, and deep moisture barrier cream formulated for 24-hour cellular replenishment.',
-      image: resolveImageUrl('/hero-skincare-set.jpg'),
+      image: heroSlide1,
       ctaPrimary: t('hero.cta_primary') || 'Shop The Ritual',
       ctaSecondary: t('hero.cta_secondary') || 'Clinical Consultation',
       pillTitle: t('hero.pill_slide1') || '01 Hydration Trio',
@@ -326,7 +330,7 @@ export default function HomePage() {
       titlePart1: t('hero.slide2_title1') || 'Science-Led Skincare for',
       titlePart2: t('hero.slide2_title2') || 'Luminous, Resilient Skin',
       subtitle: t('hero.slide2_subtitle') || 'Curated pharmaceutical-grade formulations, active botanicals, and personalized dermatological regimens tested for clinical biocompatibility.',
-      image: bestsellers[0]?.image_url ? resolveImageUrl(bestsellers[0].image_url) : resolveImageUrl('/hero-campaign-old.jpg'),
+      image: heroSlide2,
       ctaPrimary: t('hero.slide2_cta') || 'Explore Formulations',
       ctaSecondary: t('hero.cta_secondary') || 'Explore Collection',
       pillTitle: t('hero.pill_slide2') || '02 Cellular Renewal',
@@ -351,7 +355,7 @@ export default function HomePage() {
       titlePart1: t('hero.slide3_title1') || 'Clinical Active Potency',
       titlePart2: t('hero.slide3_title2') || 'Hand-Dispensed Purity',
       subtitle: t('hero.slide3_subtitle') || 'Cold-chain dispensed serums, restorative emulsions, and gentle botanical extracts engineered to illuminate the dermal mantle without irritation.',
-      image: bestsellers[1]?.image_url ? resolveImageUrl(bestsellers[1].image_url) : resolveImageUrl('/hero-products-showcase.jpg'),
+      image: heroSlide3,
       ctaPrimary: t('hero.slide3_cta') || 'View Dispensary Catalog',
       ctaSecondary: t('hero.cta_secondary') || 'Our Philosophy',
       pillTitle: t('hero.pill_slide3') || '03 Pure Actives',
@@ -825,7 +829,7 @@ export default function HomePage() {
               {/* Right Image Composition */}
               <div className="w-40 sm:w-48 lg:w-52 h-40 sm:h-48 rounded-2xl overflow-hidden bg-white/70 border border-[#ECE8DE] shadow-xs shrink-0 flex items-center justify-center p-2 transition-transform duration-500 hover:scale-105">
                 <img
-                  src={resolveImageUrl('/hero-products-showcase.jpg')}
+                  src={heroSlide3}
                   alt="Botanique Promotion"
                   className="w-full h-full object-cover rounded-xl"
                   onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80')}
@@ -1163,7 +1167,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 relative">
               <div className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] border border-[#ECE8DE] shadow-sm">
                 <img
-                  src={resolveImageUrl('/brand-story.jpg')}
+                  src={brandStoryImg}
                   alt="Élixir Botanique Formulation Laboratory"
                   loading="lazy"
                   className="w-full h-full object-cover"

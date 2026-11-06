@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useTranslation } from '../../i18n/LanguageContext';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
 import { Search, RotateCcw, X, SlidersHorizontal, Sparkles, Check, ChevronDown } from 'lucide-react';
 
 export default function ProductFilters({
@@ -10,7 +11,7 @@ export default function ProductFilters({
   onResetFilters,
   totalResults = 0,
 }) {
-  const { t } = useTranslation();
+  const { t, language } = useLanguage();
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
 
   // Quick price presets
@@ -113,7 +114,7 @@ export default function ProductFilters({
           {/* Category Selector */}
           <div className="w-full min-w-0">
             <label className="md:hidden block text-[11px] font-semibold text-[#71856B] uppercase mb-1">
-              Category
+              {t('nav.categories') || 'Category'}
             </label>
             <select
               value={filters.category_id || ''}
@@ -123,7 +124,7 @@ export default function ProductFilters({
               <option value="">{t('shop.all_categories')} ({categories.reduce((acc, c) => acc + (c.products_count || 0), 0)})</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                  {cat.name} {cat.products_count ? `(${cat.products_count})` : ''}
+                  {getLocalizedCategoryName(cat, language)} {cat.products_count ? `(${cat.products_count})` : ''}
                 </option>
               ))}
             </select>
@@ -132,7 +133,7 @@ export default function ProductFilters({
           {/* Brand Selector */}
           <div className="w-full min-w-0">
             <label className="md:hidden block text-[11px] font-semibold text-[#71856B] uppercase mb-1">
-              Brand
+              {t('nav.brands') || 'Brand'}
             </label>
             <select
               value={filters.brand || ''}
@@ -292,7 +293,7 @@ export default function ProductFilters({
 
             {selectedCategory && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-[#FAF9F5] border border-[#ECE8DE] text-[#1F2520]">
-                Category: {selectedCategory.name}
+                {t('nav.categories') || 'Category'}: {getLocalizedCategoryName(selectedCategory, language)}
                 <X size={12} className="cursor-pointer text-[#71856B] hover:text-[#1F2520]" onClick={() => onFilterChange('category_id', '')} />
               </span>
             )}

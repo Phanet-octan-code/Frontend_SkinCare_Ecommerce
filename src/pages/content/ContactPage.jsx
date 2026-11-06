@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
 import { useToast } from '../../context/ToastContext';
+import { useTranslation } from '../../i18n/LanguageContext';
 import {
   MapPin,
   Phone,
@@ -16,6 +17,7 @@ import {
 
 export default function ContactPage() {
   const { showToast } = useToast();
+  const { t } = useTranslation();
 
   const [form, setForm] = useState({
     name: '',
@@ -35,7 +37,7 @@ export default function ContactPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      showToast('Please complete all required fields.', 'error');
+      showToast(t('contact.fill_required') || 'Please complete all required fields.', 'error');
       return;
     }
 
@@ -43,7 +45,7 @@ export default function ContactPage() {
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-      showToast('Your inquiry has been logged with our dispensary team.', 'success');
+      showToast(t('contact.success_toast') || 'Your inquiry has been logged with our dispensary team.', 'success');
     }, 600);
   };
 
@@ -51,19 +53,19 @@ export default function ContactPage() {
     <div className="bg-[#FAF9F5] min-h-screen py-8 sm:py-12 md:py-16">
       <div className="container max-w-5xl mx-auto px-4">
         {/* Breadcrumbs */}
-        <Breadcrumbs items={[{ label: 'Contact Us' }]} />
+        <Breadcrumbs items={[{ label: t('contact.breadcrumb') || 'Contact Us' }]} />
 
         {/* Header */}
         <div className="text-center mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-xs font-semibold tracking-wider uppercase mb-3">
             <Sparkles size={13} />
-            <span>Client Concierge &amp; Dispensary Care</span>
+            <span>{t('contact.badge') || 'Client Concierge & Dispensary Care'}</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-3 leading-tight">
-            We are Here to Guide Your Skin Health
+            {t('contact.title') || 'We are Here to Guide Your Skin Health'}
           </h1>
           <p className="text-sm sm:text-base text-[#5A6358] max-w-xl mx-auto leading-relaxed font-normal">
-            Have a question regarding active concentrations, batch dispatch times, or skin tolerance? Our formulation advisory team responds within 24 hours.
+            {t('contact.subtitle') || 'Have a question regarding active concentrations, batch dispatch times, or skin tolerance? Our formulation advisory team responds within 24 hours.'}
           </p>
         </div>
 

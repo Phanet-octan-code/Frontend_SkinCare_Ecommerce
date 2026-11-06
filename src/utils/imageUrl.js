@@ -15,7 +15,11 @@ export const BACKEND_BASE_URL = RAW_API_BASE.replace(/\/api\/v1\/?$/, '').replac
 // Frontend base path, e.g. "/Frontend_SkinCare_Ecommerce/" on GitHub Pages or "/" in dev
 export const FRONTEND_BASE_URL = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
 
-export const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
+export const SVG_FALLBACK_IMAGE =
+  "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23F4F1EA'/%3E%3Ccircle cx='400' cy='360' r='140' fill='%23EEF2EB'/%3E%3Cpath d='M360 260h80v40h-80zM375 220h50v40h-50zM350 300h100c15 0 25 10 25 25v190c0 20-15 35-35 35H360c-20 0-35-15-35-35V325c0-15 10-25 25-25z' fill='%2371856B' fill-opacity='0.45'/%3E%3Ctext x='400' y='600' font-family='serif' font-size='22' text-anchor='middle' fill='%235A6358' letter-spacing='3'%3EÉLIXIR BOTANIQUE%3C/text%3E%3Ctext x='400' y='630' font-family='sans-serif' font-size='12' text-anchor='middle' fill='%238C9388' letter-spacing='2'%3ECLINICAL DISPENSARY%3C/text%3E%3C/svg%3E";
+
+export const DEFAULT_FALLBACK_IMAGE =
+  'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80';
 
 /**
  * Resolves any image path into a guaranteed valid, environment-aware URL.
@@ -57,13 +61,7 @@ export function resolveImageUrl(path, fallback = DEFAULT_FALLBACK_IMAGE) {
     return `${BACKEND_BASE_URL}${cleanPath}`;
   }
 
-  // 4. Direct uploaded backend filename: "prod_xxx.jpg" or "cat_xxx.jpg"
-  if (trimmed.startsWith('prod_') || trimmed.startsWith('cat_')) {
-    const subfolder = trimmed.startsWith('cat_') ? 'categories' : 'products';
-    return `${BACKEND_BASE_URL}/images/${subfolder}/${trimmed}`;
-  }
-
-  // 5. Local frontend public assets:
+  // 4. Local frontend public assets:
   // e.g. "/hero-skincare-set.jpg", "hero-skincare-set.jpg", "brand-story.jpg"
   const cleanAsset = trimmed.replace(/^\//, '');
   return `${FRONTEND_BASE_URL}${cleanAsset}`;
@@ -72,19 +70,26 @@ export function resolveImageUrl(path, fallback = DEFAULT_FALLBACK_IMAGE) {
 /**
  * Image error handler helper that gracefully cascades:
  * 1. If failed URL was from frontend base, try backend URL
- * 2. If failed URL was from backend /storage/, try /images/
+ * 2. If failed URL was from backend, try frontend base
  * 3. Fall back to curated skincare fallback
  */
 export function handleImageError(e, fallback = DEFAULT_FALLBACK_IMAGE) {
   const currentSrc = e.currentTarget.src || '';
 
-  // If already at fallback, stop to prevent infinite loops
-  if (currentSrc === fallback) return;
+  // If already at SVG fallback, stop
+  if (currentSrc.startsWith('data:image/svg+xml')) return;
+
+  // If already at chosen fallback, fall back to pure SVG placeholder
+  if (currentSrc === fallback) {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = SVG_FALLBACK_IMAGE;
+    return;
+  }
 
   // If failed on frontend path (e.g. /Frontend_SkinCare_Ecommerce/hero-skincare-set.jpg), try backend host
   if (currentSrc.includes('github.io') || currentSrc.includes(FRONTEND_BASE_URL)) {
     const filename = currentSrc.split('/').pop()?.split('?')[0];
-    if (filename && (filename.startsWith('hero-') || filename.includes('brand-story'))) {
+    if (filename && filename.startsWith('hero-')) {
       const backendHeroUrl = `${BACKEND_BASE_URL}/images/hero/${filename}`;
       if (currentSrc !== backendHeroUrl) {
         e.currentTarget.src = backendHeroUrl;
@@ -102,15 +107,11 @@ export function handleImageError(e, fallback = DEFAULT_FALLBACK_IMAGE) {
     }
   }
 
-  // If failed on backend /images/products/, try /storage/products/
-  if (currentSrc.includes('/images/products/')) {
-    const altSrc = currentSrc.replace('/images/products/', '/storage/products/');
-    if (currentSrc !== altSrc) {
-      e.currentTarget.src = altSrc;
-      return;
-    }
-  }
-
-  e.currentTarget.onerror = null;
+  // Fall back to designated image fallback, and if that errors too, give SVG
+  e.currentTarget.onerror = () => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = SVG_FALLBACK_IMAGE;
+  };
   e.currentTarget.src = fallback;
 }
+

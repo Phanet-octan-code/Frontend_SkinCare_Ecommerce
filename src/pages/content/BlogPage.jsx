@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
+import { useTranslation } from '../../i18n/LanguageContext';
 import {
   BookOpen,
   Calendar,
@@ -53,7 +54,7 @@ The clinical result is transepidermal water loss (TEWL), heightened allergen pen
     readTime: '5 min read',
     date: 'Oct 28, 2026',
     author: 'Elena Rostova, Dermal Specialist',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1608248597359-5433246872a9?auto=format&fit=crop&w=800&q=80',
     featured: false,
     content: `Applying multiple low-pH actives in single sessions is one of the most common causes of induced barrier compromise. 
 
@@ -143,6 +144,7 @@ Our dispensary extraction protocol relies on gentle supercritical cold processin
 const CATEGORIES = ['All', 'Dermatology', 'Ingredients', 'Formulations', 'Routines'];
 
 export default function BlogPage() {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeArticle, setActiveArticle] = useState(null);
@@ -165,22 +167,21 @@ export default function BlogPage() {
       <div className="container max-w-6xl mx-auto px-4">
         {/* Breadcrumbs */}
         <div className="mb-4">
-          <Breadcrumbs items={[{ label: 'Blog & Journal' }]} />
+          <Breadcrumbs items={[{ label: t('blog.breadcrumb') || 'Blog & Journal' }]} />
         </div>
 
         {/* Header Banner */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FDF2F4] text-[#E0567A] text-[11px] font-semibold tracking-wider uppercase mb-3 border border-[#E0567A]/20">
             <BookOpen size={13} />
-            <span>The Dispensary Journal</span>
+            <span>{t('blog.badge') || 'Clinical Monographs & Botanical Science'}</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-3 sm:mb-4 tracking-tight">
-            Clinical Insights &amp;{' '}
-            <span className="italic font-serif text-[#E0567A]">Skincare Science</span>
+            {t('blog.title_part1') || 'The Dermal'}{' '}
+            <span className="italic font-serif text-[#E0567A]">{t('blog.title_part2') || 'Compendium'}</span>
           </h1>
           <p className="text-sm sm:text-base text-[#5A6358] leading-relaxed max-w-2xl mx-auto">
-            Evidence-based dermal education, ingredient monographs, and barrier-restoration
-            protocols curated by cosmetic chemists and skincare practitioners.
+            {t('blog.subtitle') || 'Authoritative dermatological monographs, cellular research digests, and evidence-backed botanical formulating standards from our dispensary chemists.'}
           </p>
         </div>
 
@@ -199,7 +200,7 @@ export default function BlogPage() {
                     : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520] hover:border-[#1F2520]/40'
                 }`}
               >
-                {cat}
+                {cat === 'All' ? (t('common.all') || 'All') : cat}
               </button>
             ))}
           </div>

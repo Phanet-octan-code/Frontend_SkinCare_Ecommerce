@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
 import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
+import { useTranslation } from '../../i18n/LanguageContext';
+import brandStoryImg from '../../assets/brand-story.jpg';
 import {
   Sparkles,
   ShieldCheck,
@@ -17,41 +19,43 @@ import {
 } from 'lucide-react';
 
 export default function AboutPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-[#FAF9F5] min-h-screen py-8 sm:py-12 md:py-16">
       <div className="container max-w-4xl mx-auto px-4">
         {/* Breadcrumbs */}
-        <Breadcrumbs items={[{ label: 'About Us' }]} />
+        <Breadcrumbs items={[{ label: t('about.breadcrumb') || 'About Us' }]} />
 
         {/* Hero Section */}
         <div className="text-center mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-xs font-semibold tracking-wider uppercase mb-3">
             <Leaf size={13} />
-            <span>The Dispensary Philosophy</span>
+            <span>{t('about.philosophy_badge') || 'The Dispensary Philosophy'}</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-4 leading-tight">
-            Rooted in Botany. <br className="hidden sm:inline" />
-            <span className="italic font-serif text-[#71856B]">Calibrated by Science.</span>
+            {t('about.title_part1') || 'Rooted in Botany.'} <br className="hidden sm:inline" />
+            <span className="italic font-serif text-[#71856B]">{t('about.title_part2') || 'Calibrated by Science.'}</span>
           </h1>
           <p className="text-sm sm:text-base text-[#5A6358] max-w-2xl mx-auto leading-relaxed font-normal">
-            Élixir Botanique was founded on an unyielding principle: skincare should heal, fortify, and protect the dermal barrier without synthetic fillers, endocrine disruptors, or compromised molecular potency.
+            {t('about.subtitle') || 'Élixir Botanique was founded on an unyielding principle: skincare should heal, fortify, and protect the dermal barrier without synthetic fillers, endocrine disruptors, or compromised molecular potency.'}
           </p>
         </div>
 
         {/* Highlight Image Banner */}
         <div className="relative rounded-3xl overflow-hidden mb-12 sm:mb-16 shadow-xs border border-[#ECE8DE] aspect-[16/9] sm:aspect-[21/9]">
           <img
-            src={resolveImageUrl('/brand-story.jpg')}
+            src={brandStoryImg}
             alt="Élixir Botanique Dispensary Laboratory"
             className="w-full h-full object-cover"
             onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1F2520]/80 via-[#1F2520]/20 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
             <span className="text-xs uppercase tracking-[0.14em] text-[#D4DDD2] block mb-1">
-              Flagship Boutique &amp; Compounding Counter
+              {t('about.flagship_title') || 'Flagship Boutique & Compounding Counter'}
             </span>
             <h3 className="font-serif text-lg sm:text-2xl font-normal text-white">
-              #42 Preah Norodom Blvd, Phnom Penh, Kingdom of Cambodia
+              {t('about.flagship_address') || '#42 Preah Norodom Blvd, Phnom Penh, Kingdom of Cambodia'}
             </h3>
           </div>
         </div>
@@ -63,10 +67,10 @@ export default function AboutPage() {
               <Leaf size={20} />
             </div>
             <h3 className="font-serif text-lg font-semibold text-[#1F2520] mb-2">
-              Bioactive Extracts
+              {t('about.pillar1_title') || 'Bioactive Extracts'}
             </h3>
             <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed">
-              We source bioactive botanicals cultivated sustainably. Cold-process micro-extraction preserves fragile polyphenols, flavonoids, and phytosterols.
+              {t('about.pillar1_desc') || 'We source bioactive botanicals cultivated sustainably. Cold-process micro-extraction preserves fragile polyphenols, flavonoids, and phytosterols.'}
             </p>
           </div>
 
@@ -75,10 +79,10 @@ export default function AboutPage() {
               <FlaskConical size={20} />
             </div>
             <h3 className="font-serif text-lg font-semibold text-[#1F2520] mb-2">
-              Clinical Rigor &amp; pH Balance
+              {t('about.pillar2_title') || 'Clinical Rigor & pH Balance'}
             </h3>
             <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed">
-              Every formulation is tested for stability, biocompatibility, and physiological acidity (pH 4.7 – 5.5) to protect the skin’s native microbiome.
+              {t('about.pillar2_desc') || 'Every formulation is tested for stability, biocompatibility, and physiological acidity (pH 4.7 – 5.5) to protect the skin’s native microbiome.'}
             </p>
           </div>
 
@@ -87,10 +91,10 @@ export default function AboutPage() {
               <HeartHandshake size={20} />
             </div>
             <h3 className="font-serif text-lg font-semibold text-[#1F2520] mb-2">
-              POS Synced Dispensary
+              {t('about.pillar3_title') || 'POS Synced Dispensary'}
             </h3>
             <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed">
-              Our digital catalog synchronizes with our central laboratory inventory. Clients enjoy real-time stock availability and direct authenticity validation.
+              {t('about.pillar3_desc') || 'Our digital catalog synchronizes with our central laboratory inventory. Clients enjoy real-time stock availability and direct authenticity validation.'}
             </p>
           </div>
         </div>
@@ -98,30 +102,30 @@ export default function AboutPage() {
         {/* Detailed Brand Story Card */}
         <div className="rounded-3xl bg-white border border-[#ECE8DE] p-7 sm:p-10 shadow-xs mb-12 sm:mb-16 text-sm text-[#5A6358] leading-relaxed space-y-4">
           <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#1F2520] mb-2">
-            The Dispensary Standard
+            {t('about.standard_title') || 'The Dispensary Standard'}
           </h2>
           <p>
-            Originating from a clinical skincare consultation counter in Phnom Penh, Élixir Botanique was developed in response to a market saturated with non-regulated bleaching agents and synthetic fragrances. Our dermatological chemists partnered with sustainable regional botanists to engineer non-comedogenic, barrier-restoring emulsions calibrated for humid tropical and urban environments.
+            {t('about.standard_p1') || 'Originating from a clinical skincare consultation counter in Phnom Penh, Élixir Botanique was developed in response to a market saturated with non-regulated bleaching agents and synthetic fragrances.'}
           </p>
           <p>
-            Each bottle and jar is cast from pharmaceutical-grade amber glass to shield active molecules like L-Ascorbic Acid and Granactive Retinoid from ultraviolet degradation. We formulate without parabens, phthalates, synthetic colorants, sulfates, or artificial perfumes.
+            {t('about.standard_p2') || 'Each bottle and jar is cast from pharmaceutical-grade amber glass to shield active molecules like L-Ascorbic Acid and Granactive Retinoid from ultraviolet degradation.'}
           </p>
 
           <div className="my-6 p-5 rounded-2xl bg-[#EEF2EB] border border-[#71856B]/20 text-xs sm:text-sm text-[#1F2520]">
             <h4 className="font-serif font-semibold text-sm sm:text-base text-[#1F2520] mb-2 flex items-center gap-2">
               <ShieldCheck size={16} className="text-[#71856B]" />
-              <span>Certified Pharmacy &amp; MoC Compliance</span>
+              <span>{t('about.compliance_title') || 'Certified Pharmacy & MoC Compliance'}</span>
             </h4>
             <p className="text-[#5A6358] mb-2">
-              Registered with the Ministry of Commerce (MoC) and Department of Drugs &amp; Cosmetics, Phnom Penh, Kingdom of Cambodia.
+              {t('about.compliance_desc') || 'Registered with the Ministry of Commerce (MoC) and Department of Drugs & Cosmetics, Phnom Penh, Kingdom of Cambodia.'}
             </p>
             <p className="text-[11px] text-[#7A8578]">
-              Batch Clearance: Laboratory sealed • 100% Genuine Direct Supply • 14-Day Tolerance Exchange Guarantee
+              {t('about.compliance_sub') || 'Batch Clearance: Laboratory sealed • 100% Genuine Direct Supply • 14-Day Tolerance Exchange Guarantee'}
             </p>
           </div>
 
           <h3 className="font-serif text-lg font-semibold text-[#1F2520] pt-2">
-            Our 4 Core Dispensary Commitments
+            {t('about.commitments_title') || 'Our 4 Core Dispensary Commitments'}
           </h3>
           <ul className="space-y-2 text-xs sm:text-sm text-[#5A6358] pl-4 list-disc">
             <li>
@@ -152,14 +156,14 @@ export default function AboutPage() {
               to="/shop"
               className="w-full sm:w-auto px-7 py-3 rounded-full bg-[#1F2520] hover:bg-[#71856B] text-white text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-xs transition-all active:scale-[0.98]"
             >
-              <span>View Product Catalog</span>
+              <span>{t('nav.all_formulations') || 'View Product Catalog'}</span>
               <ArrowRight size={15} />
             </Link>
             <Link
               to="/contact"
               className="w-full sm:w-auto px-7 py-3 rounded-full border border-[#ECE8DE] hover:border-[#1F2520] text-[#1F2520] text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center transition-all bg-white"
             >
-              <span>Contact Dispensary Care</span>
+              <span>{t('nav.contact') || 'Contact Dispensary Care'}</span>
             </Link>
           </div>
         </div>

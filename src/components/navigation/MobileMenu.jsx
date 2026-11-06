@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
 import catalogService from '../../services/catalogService';
 import {
   X,
@@ -158,6 +159,54 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
             </button>
           </div>
 
+          {/* Language & Currency Top Bar for instant mobile switching */}
+          <div className="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#FAF9F5] border border-[#ECE8DE] mb-3">
+            {/* Language Switcher */}
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] uppercase font-bold text-[#8C9388] mr-1">{t('common.language') || 'Lang'}:</span>
+              {availableLanguages.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  onClick={() => setLanguage(l.code)}
+                  className={`px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
+                    language === l.code
+                      ? 'bg-[#1F2520] text-white shadow-xs'
+                      : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520]'
+                  }`}
+                >
+                  {l.short}
+                </button>
+              ))}
+            </div>
+
+            {/* Currency Switcher */}
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => setCurrency('USD')}
+                className={`px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
+                  currency === 'USD'
+                    ? 'bg-[#71856B] text-white shadow-xs'
+                    : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520]'
+                }`}
+              >
+                USD
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrency('KHR')}
+                className={`px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
+                  currency === 'KHR'
+                    ? 'bg-[#71856B] text-white shadow-xs'
+                    : 'bg-white border border-[#ECE8DE] text-[#5A6358] hover:text-[#1F2520]'
+                }`}
+              >
+                KHR
+              </button>
+            </div>
+          </div>
+
           {/* Quick Search Trigger button */}
           <button
             type="button"
@@ -183,7 +232,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                   : 'text-[#1F2520] hover:bg-[#FAF9F5] font-medium border border-transparent'
               }`}
             >
-              <span>Home</span>
+              <span>{t('nav.home')}</span>
               {isHomeActive && (
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
               )}
@@ -204,7 +253,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                 aria-expanded={isCategoriesOpen}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-medium">Categories</span>
+                  <span className="font-medium">{t('nav.categories')}</span>
                   {isCategoriesActive && (
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
                   )}
@@ -229,7 +278,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                         : 'font-semibold text-[#E0567A] hover:bg-[#FDF2F4]'
                     }`}
                   >
-                    <span>All Formulations</span>
+                    <span>{t('nav.all_formulations') || 'All Formulations'}</span>
                     <ArrowRight size={12} />
                   </Link>
 
@@ -247,7 +296,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                             : 'text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5]'
                         }`}
                       >
-                        <span>{cat.name}</span>
+                        <span>{getLocalizedCategoryName(cat, language)}</span>
                         {cat.products_count > 0 ? (
                           <span
                             className={`text-[10px] ${
@@ -281,7 +330,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                 aria-expanded={isBrandsOpen}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-medium">Brands</span>
+                  <span className="font-medium">{t('nav.brands') || 'Brands'}</span>
                   {isBrandsActive && (
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
                   )}
@@ -306,7 +355,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                         : 'font-semibold text-[#E0567A] hover:bg-[#FDF2F4]'
                     }`}
                   >
-                    <span>All Brands</span>
+                    <span>{t('nav.all_brands') || 'All Brands'}</span>
                     <ArrowRight size={12} />
                   </Link>
 
@@ -348,13 +397,13 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
             >
               <div className="flex items-center gap-2">
                 <Percent size={14} />
-                <span>Offers</span>
+                <span>{t('nav.offers') || 'Offers'}</span>
                 {isOffersActive && (
                   <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
                 )}
               </div>
               <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase bg-[#E0567A] text-white leading-none shadow-2xs">
-                SALE
+                {t('common.sale') || 'SALE'}
               </span>
             </Link>
 
@@ -368,7 +417,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                   : 'text-[#1F2520] hover:bg-[#FAF9F5] font-medium border border-transparent'
               }`}
             >
-              <span>About Us</span>
+              <span>{t('nav.about_us') || 'About Us'}</span>
               {isAboutActive && (
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
               )}
@@ -384,7 +433,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                   : 'text-[#1F2520] hover:bg-[#FAF9F5] font-medium border border-transparent'
               }`}
             >
-              <span>Blog</span>
+              <span>{t('nav.blog') || 'Blog'}</span>
               {isBlogActive && (
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
               )}

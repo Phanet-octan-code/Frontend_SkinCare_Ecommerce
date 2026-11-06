@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
 import catalogService from '../../services/catalogService';
 import {
   Search,
@@ -15,6 +16,7 @@ import {
   Package,
   MapPin,
   ArrowRight,
+  Globe,
 } from 'lucide-react';
 
 export default function Header({ onOpenMobileMenu, onOpenSearch }) {
@@ -27,7 +29,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
 
   const { customer, isAuthenticated, logout } = useAuth();
   const { totalItemCount, openCart } = useCart();
-  const { t } = useLanguage();
+  const { language, setLanguage, availableLanguages, t } = useLanguage();
 
   // Curated clinical categories
   const defaultCategories = [
@@ -132,40 +134,40 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
   const navLinks = [
     {
       id: 'home',
-      name: 'Home',
+      name: t('nav.home') || 'Home',
       path: '/',
       isActive: isHomeActive,
     },
     {
       id: 'categories',
-      name: 'Categories',
+      name: t('nav.categories') || 'Categories',
       path: '/shop',
       isActive: isCategoriesActive,
       hasDropdown: true,
     },
     {
       id: 'brands',
-      name: 'Brands',
+      name: t('nav.brands') || 'Brands',
       path: '/shop?filter=brands',
       isActive: isBrandsActive,
       hasDropdown: true,
     },
     {
       id: 'offers',
-      name: 'Offers',
+      name: t('nav.offers') || 'Offers',
       path: '/shop?promotion=1',
       isActive: isOffersActive,
-      badge: 'SALE',
+      badge: t('common.sale') || 'SALE',
     },
     {
       id: 'about',
-      name: 'About Us',
+      name: t('nav.about_us') || t('nav.about') || 'About Us',
       path: '/about',
       isActive: isAboutActive,
     },
     {
       id: 'blog',
-      name: 'Blog',
+      name: t('nav.blog') || 'Blog',
       path: '/blog',
       isActive: isBlogActive,
     },
@@ -287,14 +289,14 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                       >
                         <div className="px-3 py-1.5 border-b border-[#ECE8DE] mb-2 flex items-center justify-between">
                           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8C9388]">
-                            Categories
+                            {t('nav.categories')}
                           </span>
                           <Link
                             to="/shop"
                             onClick={handleCloseDropdown}
                             className="text-[11px] text-[#E0567A] hover:underline font-medium flex items-center gap-1"
                           >
-                            <span>All Formulations</span>
+                            <span>{t('nav.all_formulations')}</span>
                             <ArrowRight size={11} />
                           </Link>
                         </div>
@@ -302,6 +304,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                         <div className="flex flex-col gap-0.5 max-h-64 overflow-y-auto no-scrollbar">
                           {displayedCategories.map((cat) => {
                             const targetPath = cat.path || `/shop?category_id=${cat.id}`;
+                            const categoryLabel = getLocalizedCategoryName(cat, language);
                             return (
                               <Link
                                 key={cat.id || cat.name}
@@ -310,7 +313,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                                 className="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-[#2D3748] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors group/item"
                               >
                                 <span className="font-medium group-hover/item:text-[#E0567A] transition-colors">
-                                  {cat.name}
+                                  {categoryLabel}
                                 </span>
                                 <span className="text-[#8C9388] text-[10px] group-hover/item:translate-x-0.5 transition-transform">
                                   →
@@ -331,14 +334,14 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                       >
                         <div className="px-3 py-1.5 border-b border-[#ECE8DE] mb-2 flex items-center justify-between">
                           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8C9388]">
-                            Featured Brands
+                            {t('nav.brands')}
                           </span>
                           <Link
                             to="/shop?filter=brands"
                             onClick={handleCloseDropdown}
                             className="text-[11px] text-[#E0567A] hover:underline font-medium flex items-center gap-1"
                           >
-                            <span>All Brands</span>
+                            <span>{t('nav.all_brands')}</span>
                             <ArrowRight size={11} />
                           </Link>
                         </div>
@@ -405,6 +408,28 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                   </span>
                 )}
               </button>
+
+              {/* Quick Language Selector (EN | KM | ZH) */}
+              <div className="hidden sm:inline-flex items-center bg-[#F7F5F0] border border-[#ECE8DE] rounded-full p-0.5 gap-0.5 shrink-0">
+                {availableLanguages.map((l) => {
+                  const isActive = language === l.code;
+                  return (
+                    <button
+                      key={l.code}
+                      type="button"
+                      onClick={() => setLanguage(l.code)}
+                      title={l.nativeName}
+                      className={`px-2 py-0.5 rounded-full text-[10.5px] font-semibold transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-[#1F2520] text-white shadow-2xs'
+                          : 'text-[#7A8578] hover:text-[#1F2520]'
+                      }`}
+                    >
+                      {l.short}
+                    </button>
+                  );
+                })}
+              </div>
 
               {/* User Account Menu / Sign In */}
               {isAuthenticated ? (
