@@ -12,7 +12,7 @@ import ProductCard from '../components/product/ProductCard';
 import { ProductGridSkeleton } from '../components/feedback/LoadingSkeleton';
 import ErrorState from '../components/feedback/ErrorState';
 import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
-import heroSlide1 from '../assets/hero/hero-skincare-set.jpg';
+import heroSlide1 from '../assets/hero/hero.png';
 import heroSlide2 from '../assets/hero/hero-campaign-old.jpg';
 import heroSlide3 from '../assets/hero/hero-products-showcase.jpg';
 import brandStoryImg from '../assets/brand-story.jpg';
