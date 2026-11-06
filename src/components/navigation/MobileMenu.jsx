@@ -6,6 +6,7 @@ import { useLanguage } from '../../i18n/LanguageContext';
 import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
 import { getCustomerAvatar } from '../../utils/customerAvatar';
 import catalogService from '../../services/catalogService';
+import leafLogo from '../../assets/logo/leaf.png';
 import {
   X,
   Search,
@@ -142,13 +143,20 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
         <div>
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-[#ECE8DE] mb-4">
-            <Link to="/" onClick={handleLinkClick} className="no-underline select-none">
-              <span className="brand-logo-title font-serif text-lg font-normal tracking-wide text-[#1F2520] block">
-                ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
-              </span>
-              <span className="brand-logo-tagline text-[9px] tracking-[0.16em] uppercase text-[#8C9388] block mt-0.5 font-medium">
-                CLINICAL SKINCARE & DISPENSARY
-              </span>
+            <Link to="/" onClick={handleLinkClick} className="flex items-center gap-2.5 no-underline select-none">
+              <img
+                src={leafLogo}
+                alt="Élixir Botanique Leaf Logo"
+                className="w-7 h-7 object-contain shrink-0"
+              />
+              <div className="flex flex-col items-start leading-none">
+                <span className="brand-logo-title font-serif text-lg font-normal tracking-wide text-[#1F2520] block">
+                  ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
+                </span>
+                <span className="brand-logo-tagline text-[8.5px] tracking-[0.16em] uppercase text-[#8C9388] block mt-1 font-medium">
+                  CLINICAL SKINCARE &amp; DISPENSARY
+                </span>
+              </div>
             </Link>
             <button
               type="button"

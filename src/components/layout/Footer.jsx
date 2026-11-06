@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Truck, RefreshCw, Award, MapPin, Phone } from 'lucide-react';
 import { useTranslation } from '../../i18n/LanguageContext';
+import leafLogo from '../../assets/logo/leaf.png';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -78,13 +79,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 sm:pb-14">
           {/* Brand Identity & Location (5 columns on desktop) */}
           <div className="lg:col-span-5 pr-0 lg:pr-6">
-            <Link to="/" className="inline-block mb-3.5 group select-none" aria-label="Élixir Botanique - Clinical Skincare & Dispensary">
-              <span className="brand-logo-title font-serif text-xl sm:text-2xl font-normal tracking-wide text-white block">
-                ÉLIXIR <span className="brand-italic font-serif italic text-[var(--color-primary-light)] font-normal">BOTANIQUE</span>
-              </span>
-              <span className="brand-logo-tagline text-[10px] tracking-[0.2em] uppercase text-[#8E9C8D] block mt-0.5 font-medium">
-                CLINICAL SKINCARE & DISPENSARY
-              </span>
+            <Link to="/" className="inline-flex items-center gap-3 mb-3.5 group select-none" aria-label="Élixir Botanique - Clinical Skincare & Dispensary">
+              <img
+                src={leafLogo}
+                alt="Élixir Botanique Leaf Logo"
+                className="w-8 h-8 sm:w-9 sm:h-9 object-contain shrink-0 group-hover:scale-105 transition-transform duration-200"
+              />
+              <div className="flex flex-col items-start leading-none">
+                <span className="brand-logo-title font-serif text-xl sm:text-2xl font-normal tracking-wide text-white block">
+                  ÉLIXIR <span className="brand-italic font-serif italic text-[var(--color-primary-light)] font-normal">BOTANIQUE</span>
+                </span>
+                <span className="brand-logo-tagline text-[10px] tracking-[0.2em] uppercase text-[#8E9C8D] block mt-1 font-medium">
+                  CLINICAL SKINCARE &amp; DISPENSARY
+                </span>
+              </div>
             </Link>
 
             <p className="text-xs sm:text-sm leading-relaxed text-[#A6B2A4] mb-5 max-w-sm font-normal">

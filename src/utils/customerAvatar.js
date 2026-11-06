@@ -95,3 +95,4 @@ export function compressImageFile(file, maxDimension = 400, quality = 0.88) {
     reader.readAsDataURL(file);
   });
 }
+

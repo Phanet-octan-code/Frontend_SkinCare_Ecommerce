@@ -6,6 +6,7 @@ import { useLanguage } from '../../i18n/LanguageContext';
 import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
 import { getCustomerAvatar } from '../../utils/customerAvatar';
 import catalogService from '../../services/catalogService';
+import leafLogo from '../../assets/logo/leaf.png';
 import {
   Search,
   ShoppingBag,
@@ -194,15 +195,22 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
             {/* Brand Logo & Dispensary Tagline */}
             <Link
               to="/"
-              className="flex flex-col items-start no-underline select-none shrink-0 group"
+              className="flex items-center gap-2 sm:gap-2.5 no-underline select-none shrink-0 group"
               aria-label="Élixir Botanique - Clinical Skincare & Dispensary"
             >
-              <span className="brand-logo-title font-serif text-base sm:text-lg lg:text-xl font-normal tracking-[0.02em] text-[#1F2520] leading-none whitespace-nowrap">
-                ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
-              </span>
-              <span className="brand-logo-tagline text-[7.5px] sm:text-[8.5px] lg:text-[9px] font-medium tracking-[0.16em] uppercase text-[#8C9388] mt-1 whitespace-nowrap block">
-                CLINICAL SKINCARE &amp; DISPENSARY
-              </span>
+              <img
+                src={leafLogo}
+                alt="Élixir Botanique Leaf Logo"
+                className="w-7 h-7 sm:w-8 sm:h-8 object-contain shrink-0 group-hover:scale-105 transition-transform duration-200"
+              />
+              <div className="flex flex-col items-start leading-none">
+                <span className="brand-logo-title font-serif text-base sm:text-lg lg:text-xl font-normal tracking-[0.02em] text-[#1F2520] leading-none whitespace-nowrap">
+                  ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
+                </span>
+                <span className="brand-logo-tagline text-[7.5px] sm:text-[8.5px] lg:text-[9px] font-medium tracking-[0.16em] uppercase text-[#8C9388] mt-1 whitespace-nowrap block">
+                  CLINICAL SKINCARE &amp; DISPENSARY
+                </span>
+              </div>
             </Link>
 
             {/* Dribbble-Style Search Pill (Right next to Logo) */}
