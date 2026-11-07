@@ -88,7 +88,7 @@ export default function ShopPage() {
     const signal = (abortSignal instanceof AbortSignal) ? abortSignal : undefined;
     const apiParams = {
       page: filters.page,
-      per_page: 12,
+      per_page: 15,
       search: filters.search.trim() || undefined,
       category_id: filters.category_id || undefined,
       brand: filters.brand || undefined,
@@ -117,7 +117,7 @@ export default function ShopPage() {
           current_page: 1,
           last_page: 1,
           total: res.data.length,
-          per_page: 12,
+          per_page: 15,
         };
         setPagination(pag);
       }
@@ -191,7 +191,7 @@ export default function ShopPage() {
 
   return (
     <div className="bg-[#FAF9F5] min-h-screen py-4 sm:py-6 md:py-8">
-      <div className="container">
+      <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Reusable Breadcrumbs */}
         <Breadcrumbs
           items={[
@@ -202,7 +202,7 @@ export default function ShopPage() {
         />
 
         {/* Page Header */}
-        <div className="mb-4 sm:mb-6">
+        <div className="mb-5 sm:mb-7">
           <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold text-[var(--color-text-main)] mb-1.5">
             {pageTitle}
           </h1>
@@ -211,56 +211,65 @@ export default function ShopPage() {
           </p>
         </div>
 
-        {/* Unified Filter & Search Bar */}
-        <ProductFilters
-          categories={categories}
-          brands={brands}
-          filters={filters}
-          onFilterChange={handleFilterChange}
-          onResetFilters={handleResetFilters}
-          totalResults={pagination.total || products.length}
-        />
-
-        {/* Catalog Body */}
-        {loading && products.length === 0 ? (
-          <ProductGridSkeleton count={12} />
-        ) : error && products.length === 0 ? (
-          <ErrorState
-            title={t('shop.catalogue_error')}
-            message={error}
-            onRetry={() => fetchProducts()}
-          />
-        ) : products.length === 0 ? (
-          <EmptyState
-            title={t('shop.no_products_found')}
-            description={t('shop.no_products_found')}
-            actionText={t('shop.reset_filters')}
-            onAction={handleResetFilters}
-          />
-        ) : (
-          <>
-            <ProductGrid
-              products={products}
-              wishlistedIds={wishlistedIds}
-              columns={4}
-              onWishlistChange={(productId, isWish) => {
-                setWishlistedIds((prev) => {
-                  const next = new Set(prev);
-                  if (isWish) next.add(productId);
-                  else next.delete(productId);
-                  return next;
-                });
-              }}
+        {/* 2-Column Layout: Left Sidebar Filters + Right 5-Column Product Grid */}
+        <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
+          {/* Left Sidebar: Filter Console */}
+          <aside className="w-full lg:w-64 xl:w-72 shrink-0 lg:sticky lg:top-24 z-10">
+            <ProductFilters
+              categories={categories}
+              brands={brands}
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              onResetFilters={handleResetFilters}
+              totalResults={pagination.total || products.length}
             />
+          </aside>
 
-            {/* Pagination synced with API pagination */}
-            <Pagination
-              currentPage={pagination.current_page || 1}
-              lastPage={pagination.last_page || 1}
-              onPageChange={handlePageChange}
-            />
-          </>
-        )}
+          {/* Right Main Catalog Body */}
+          <main className="flex-1 min-w-0 w-full">
+            {loading && products.length === 0 ? (
+              <ProductGridSkeleton count={15} columns={5} />
+            ) : error && products.length === 0 ? (
+              <ErrorState
+                title={t('shop.catalogue_error')}
+                message={error}
+                onRetry={() => fetchProducts()}
+              />
+            ) : products.length === 0 ? (
+              <EmptyState
+                title={t('shop.no_products_found')}
+                description={t('shop.no_products_found')}
+                actionText={t('shop.reset_filters')}
+                onAction={handleResetFilters}
+              />
+            ) : (
+              <>
+                <ProductGrid
+                  products={products}
+                  wishlistedIds={wishlistedIds}
+                  columns={5}
+                  onWishlistChange={(productId, isWish) => {
+                    setWishlistedIds((prev) => {
+                      const next = new Set(prev);
+                      if (isWish) next.add(productId);
+                      else next.delete(productId);
+                      return next;
+                    });
+                  }}
+                />
+
+                {/* Pagination synced with API pagination */}
+                <div className="mt-8 sm:mt-10">
+                  <Pagination
+                    currentPage={pagination.current_page || 1}
+                    lastPage={pagination.last_page || 1}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              </>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );
