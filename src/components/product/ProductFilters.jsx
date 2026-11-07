@@ -82,12 +82,12 @@ export default function ProductFilters({
 
       {/* Main Left Filter Sidebar (Always open on lg+, toggleable on mobile) */}
       <div
-        className={`p-4 sm:p-5 rounded-2xl bg-white border border-[#ECE8DE] shadow-2xs space-y-4 sm:space-y-5 transition-all ${
-          isMobileExpanded ? 'block mb-6' : 'hidden lg:block'
+        className={`filter-sidebar-scroll rounded-2xl bg-white border border-[#ECE8DE] shadow-2xs transition-all lg:max-h-[calc(100vh-6.5rem)] lg:overflow-y-auto overscroll-contain ${
+          isMobileExpanded ? 'block mb-6 max-h-[80vh] overflow-y-auto' : 'hidden lg:block'
         }`}
       >
-        {/* Sidebar Header with Results and Reset */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#ECE8DE]">
+        {/* Sticky Sidebar Header with Results and Reset */}
+        <div className="sticky top-0 bg-white/95 backdrop-blur-xs px-4 sm:px-5 py-3 border-b border-[#ECE8DE] z-10 flex items-center justify-between rounded-t-2xl shadow-2xs">
           <div className="flex items-center gap-2">
             <SlidersHorizontal size={14} className="text-[#71856B]" />
             <span className="text-xs font-bold tracking-wider uppercase text-[#1F2520]">
@@ -106,6 +106,9 @@ export default function ProductFilters({
             </button>
           )}
         </div>
+
+        {/* Scrollable Filter Body */}
+        <div className="p-4 sm:p-5 space-y-3.5 sm:space-y-4 pb-6">
 
         {/* Results Count Banner */}
         <div className="text-[11px] text-[#8C9388] font-medium">
@@ -335,7 +338,30 @@ export default function ProductFilters({
             </div>
           </div>
         )}
+        </div>
       </div>
+
+      <style>{`
+        .filter-sidebar-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: #71856B #F0ECE1;
+        }
+        .filter-sidebar-scroll::-webkit-scrollbar {
+          width: 6px;
+        }
+        .filter-sidebar-scroll::-webkit-scrollbar-track {
+          background: #F0ECE1;
+          border-radius: 9999px;
+          margin: 6px 0;
+        }
+        .filter-sidebar-scroll::-webkit-scrollbar-thumb {
+          background-color: #71856B;
+          border-radius: 9999px;
+        }
+        .filter-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+          background-color: #4A5D45;
+        }
+      `}</style>
     </div>
   );
 }

@@ -213,8 +213,8 @@ export default function ShopPage() {
 
         {/* 2-Column Layout: Left Sidebar Filters + Right 4-Column Product Grid */}
         <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
-          {/* Left Sidebar: Filter Console (Flows naturally with the page so all filters can be scrolled up/down) */}
-          <aside className="w-full lg:w-64 xl:w-72 shrink-0">
+          {/* Left Sidebar: Sticky Filter Console with independent vertical scroll */}
+          <aside className="w-full lg:w-64 xl:w-72 shrink-0 lg:sticky lg:top-20 z-20 self-start">
             <ProductFilters
               categories={categories}
               brands={brands}
