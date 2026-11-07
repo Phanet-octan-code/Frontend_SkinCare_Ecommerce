@@ -69,7 +69,7 @@ export default function WishlistPage() {
         </div>
 
         {loading ? (
-          <ProductGridSkeleton count={10} columns={5} />
+          <ProductGridSkeleton count={8} columns={4} />
         ) : products.length === 0 ? (
           <div className="rounded-3xl bg-white border border-[#ECE8DE] p-8 sm:p-14 shadow-xs text-center">
             <EmptyState
@@ -85,7 +85,7 @@ export default function WishlistPage() {
             products={products}
             wishlistedIds={new Set(products.map((p) => p.id))}
             onWishlistChange={handleWishlistChange}
-            columns={5}
+            columns={4}
           />
         )}
       </div>
