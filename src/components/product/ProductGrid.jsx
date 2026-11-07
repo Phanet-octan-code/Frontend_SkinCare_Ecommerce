@@ -11,12 +11,12 @@ export default function ProductGrid({
 
   const colClasses =
     columns === 5
-      ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'
+      ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
       : columns === 4
       ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
       : columns === 3
       ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
-      : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5';
+      : 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
 
   return (
     <div

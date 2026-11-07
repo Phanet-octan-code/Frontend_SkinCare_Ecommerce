@@ -33,6 +33,49 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
   const stockQty = Number(product.qty ?? product.stock ?? 0);
   const isOutOfStock = stockQty <= 0;
 
+  // Extract brand from product name or meta
+  const extractMeta = (name = '') => {
+    const knownBrands = [
+      'The Ordinary',
+      'Beauty of Joseon',
+      'COSRX',
+      'CeraVe',
+      'Cetaphil',
+      'La Roche-Posay',
+      "Paula's Choice",
+      "Paula’s Choice",
+      "Kiehl's",
+      'Anua',
+      'Skin1004',
+      'Innisfree',
+      'Torriden',
+      'SkinCeuticals',
+      'Dermalogica',
+      'Round Lab',
+      'Haruharu Wonder',
+      'Isntree',
+      'Klairs',
+      'Bioderma',
+      'Laneige',
+      'Sulwhasoo',
+    ];
+
+    const cleanName = (name || '').replace(/’/g, "'").trim();
+    let brand = product.brand || null;
+    if (!brand) {
+      for (const b of knownBrands) {
+        if (cleanName.toLowerCase().startsWith(b.toLowerCase())) {
+          brand = b;
+          break;
+        }
+      }
+    }
+
+    return brand || product.category?.name || 'Élixir Botanique';
+  };
+
+  const brand = extractMeta(product.name);
+
   // Generate clean benefit subtitle matching the minimalist reference aesthetic
   const getSubtitle = () => {
     if (product.subtitle) return product.subtitle;
@@ -194,20 +237,25 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
           </button>
         </div>
 
-        {/* Product Details (Matches Minimalist Reference) */}
+        {/* Product Details (Preserves Classic Serif Font) */}
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
-            {/* Title: Uppercase, Sans-Serif, Tracking Wider */}
+            {/* Brand / Formulation Category Tag */}
+            <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#71856B] block truncate mb-1">
+              {brand}
+            </span>
+
+            {/* Product Title (Classic Old Font: font-serif) */}
             <Link
               to={`/products/${product.slug || product.id}`}
-              className="font-sans text-xs sm:text-[13px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] text-[#1F2520] hover:text-[#526B54] uppercase line-clamp-1 leading-snug transition-colors block mb-1"
+              className="font-serif text-[13.5px] sm:text-[15px] font-medium text-[#1F2520] hover:text-[#526B54] line-clamp-1 mb-1 leading-snug transition-colors block"
               title={product.name}
             >
               {product.name}
             </Link>
 
             {/* Benefit Subtitle */}
-            <p className="text-[11px] sm:text-xs text-[#71776E] font-normal line-clamp-2 leading-relaxed mb-3 min-h-[32px]">
+            <p className="text-[11px] sm:text-xs text-[#71776E] font-normal line-clamp-2 leading-relaxed mb-3 min-h-[30px]">
               {subtitle}
             </p>
           </div>
@@ -215,7 +263,7 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
           {/* Bottom Row: Price on left, Circular Black Plus Button on right */}
           <div className="flex items-center justify-between mt-auto pt-1">
             <div className="flex items-baseline gap-1.5">
-              <span className="text-sm sm:text-[15px] font-semibold text-[#1F2520]">
+              <span className="text-sm sm:text-[15.5px] font-semibold text-[#1F2520]">
                 {format(finalPrice)}
               </span>
               {hasDiscount && (
@@ -225,13 +273,14 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               )}
             </div>
 
-            {/* Circular Quick Add Button */}
+            {/* Circular Quick Add Button (Generously sized for comfort) */}
             <button
               type="button"
               onClick={handleAddToCart}
               disabled={isOutOfStock || isAdding}
+              title={isOutOfStock ? (t('common.out_of_stock') || 'Out of Stock') : (t('common.add_to_cart') || 'Add to Cart')}
               aria-label={`Add ${product.name} to cart`}
-              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
                 isOutOfStock
                   ? 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
                   : isAdding
@@ -240,9 +289,9 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               }`}
             >
               {isAdding ? (
-                <Check size={14} strokeWidth={2.5} className="text-white" />
+                <Check size={15} strokeWidth={2.5} className="text-white" />
               ) : (
-                <Plus size={15} strokeWidth={2.2} />
+                <Plus size={16} strokeWidth={2.2} />
               )}
             </button>
           </div>

@@ -48,8 +48,8 @@ export default function HomePage() {
   const { t } = useTranslation();
 
   // Initial cached data for instantaneous 0ms first render
-  const cachedBestsellers = catalogService.getInitialBestsellers(8);
-  const cachedNewArrivals = catalogService.getInitialNewArrivals(8);
+  const cachedBestsellers = catalogService.getInitialBestsellers(10);
+  const cachedNewArrivals = catalogService.getInitialNewArrivals(10);
   const cachedCategories = catalogService.getInitialCategories();
   const cachedPromotions = catalogService.getInitialPromotions();
   const cachedProducts = catalogService.getInitialProducts({ per_page: 12 });
@@ -97,8 +97,8 @@ export default function HomePage() {
         catalogResult,
         settingsResult,
       ] = await Promise.allSettled([
-        catalogService.getBestsellers(8),
-        catalogService.getNewArrivals(8),
+        catalogService.getBestsellers(10),
+        catalogService.getNewArrivals(10),
         catalogService.getCategories(),
         catalogService.getPromotions(),
         catalogService.getProducts({ per_page: 12 }),
@@ -752,12 +752,12 @@ export default function HomePage() {
           </div>
 
           {loading && bestsellers.length === 0 && catalogProducts.length === 0 ? (
-            <ProductGridSkeleton count={5} columns={5} />
+            <ProductGridSkeleton count={10} columns={5} />
           ) : error && bestsellers.length === 0 && catalogProducts.length === 0 ? (
             <ErrorState message={error} onRetry={loadData} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6">
-              {(bestsellers.length > 0 ? bestsellers : catalogProducts).slice(0, 5).map((product) => (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 lg:gap-6">
+              {(bestsellers.length > 0 ? bestsellers : catalogProducts).slice(0, 10).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -787,7 +787,7 @@ export default function HomePage() {
           </div>
 
           {loading && newArrivals.length === 0 ? (
-            <ProductGridSkeleton count={5} columns={5} />
+            <ProductGridSkeleton count={10} columns={5} />
           ) : (
             <ProductGrid
               products={newArrivals.length > 0 ? newArrivals.slice(0, 10) : catalogProducts.slice(0, 10)}
