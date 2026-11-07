@@ -28,11 +28,11 @@ export function ProductSkeleton() {
 export function ProductGridSkeleton({ count = 10, columns = 5 }) {
   const colClasses =
     columns === 5
-      ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+      ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'
       : 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
 
   return (
-    <div className={`w-full ${colClasses} gap-4 sm:gap-5 lg:gap-6`}>
+    <div className={`w-full ${colClasses} gap-3.5 sm:gap-4 lg:gap-5`}>
       {Array.from({ length: count }).map((_, index) => (
         <ProductSkeleton key={index} />
       ))}

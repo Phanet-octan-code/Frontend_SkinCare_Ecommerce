@@ -756,7 +756,7 @@ export default function HomePage() {
           ) : error && bestsellers.length === 0 && catalogProducts.length === 0 ? (
             <ErrorState message={error} onRetry={loadData} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 lg:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
               {(bestsellers.length > 0 ? bestsellers : catalogProducts).slice(0, 10).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

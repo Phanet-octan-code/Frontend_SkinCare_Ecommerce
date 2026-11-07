@@ -11,16 +11,16 @@ export default function ProductGrid({
 
   const colClasses =
     columns === 5
-      ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+      ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'
       : columns === 4
       ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
       : columns === 3
       ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
-      : 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
+      : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5';
 
   return (
     <div
-      className={`product-grid w-full ${colClasses} gap-4 sm:gap-5 lg:gap-6 items-stretch`}
+      className={`product-grid w-full ${colClasses} gap-3.5 sm:gap-4 lg:gap-5 items-stretch`}
     >
       {products.map((product) => (
         <ProductCard
