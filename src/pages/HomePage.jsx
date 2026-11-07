@@ -752,12 +752,12 @@ export default function HomePage() {
           </div>
 
           {loading && bestsellers.length === 0 && catalogProducts.length === 0 ? (
-            <ProductGridSkeleton count={6} />
+            <ProductGridSkeleton count={5} columns={5} />
           ) : error && bestsellers.length === 0 && catalogProducts.length === 0 ? (
             <ErrorState message={error} onRetry={loadData} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 md:gap-5">
-              {(bestsellers.length > 0 ? bestsellers : catalogProducts).slice(0, 6).map((product) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6">
+              {(bestsellers.length > 0 ? bestsellers : catalogProducts).slice(0, 5).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -787,11 +787,11 @@ export default function HomePage() {
           </div>
 
           {loading && newArrivals.length === 0 ? (
-            <ProductGridSkeleton count={4} />
+            <ProductGridSkeleton count={5} columns={5} />
           ) : (
             <ProductGrid
-              products={newArrivals.length > 0 ? newArrivals.slice(0, 8) : catalogProducts.slice(0, 8)}
-              columns={4}
+              products={newArrivals.length > 0 ? newArrivals.slice(0, 10) : catalogProducts.slice(0, 10)}
+              columns={5}
             />
           )}
         </div>

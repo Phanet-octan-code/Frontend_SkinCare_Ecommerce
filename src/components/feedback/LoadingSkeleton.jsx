@@ -2,23 +2,21 @@ import React from 'react';
 
 export function ProductSkeleton() {
   return (
-    <div className="rounded-2xl p-3 sm:p-4 bg-white border border-[#ECE8DE] shadow-xs flex flex-col gap-2.5 sm:gap-3 relative">
+    <div className="flex flex-col h-full bg-transparent">
       {/* Image slot */}
-      <div className="skeleton w-full aspect-square rounded-xl bg-[#F7F5F0]" />
-
-      {/* Brand & Volume meta */}
-      <div className="skeleton w-1/3 h-2.5 rounded-full" />
+      <div className="skeleton w-full aspect-[4/5] sm:aspect-square bg-[#F4F1EA] mb-3" />
 
       {/* Product Name */}
-      <div className="skeleton w-4/5 h-4 rounded-md" />
+      <div className="skeleton w-3/4 h-3.5 rounded-none bg-[#ECE8DE] mb-1.5" />
 
-      {/* Rating stars */}
-      <div className="skeleton w-1/4 h-2.5 rounded-full" />
+      {/* Subtitle */}
+      <div className="skeleton w-full h-2.5 rounded-none bg-[#F0EDE6] mb-1" />
+      <div className="skeleton w-2/3 h-2.5 rounded-none bg-[#F0EDE6] mb-3" />
 
       {/* Pricing & Add to Bag footer */}
-      <div className="mt-auto pt-2.5 border-t border-[#ECE8DE]/60 flex items-center justify-between gap-2">
-        <div className="skeleton w-1/3 h-5 rounded-md" />
-        <div className="skeleton w-1/3 h-8 rounded-full" />
+      <div className="mt-auto pt-1 flex items-center justify-between">
+        <div className="skeleton w-14 h-4 rounded-none bg-[#ECE8DE]" />
+        <div className="skeleton w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1F2520]/10" />
       </div>
     </div>
   );
@@ -27,11 +25,11 @@ export function ProductSkeleton() {
 export function ProductGridSkeleton({ count = 8, columns = 4 }) {
   const colClasses =
     columns === 5
-      ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+      ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'
       : 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
 
   return (
-    <div className={`w-full ${colClasses} gap-3 sm:gap-4 md:gap-5 lg:gap-6`}>
+    <div className={`w-full ${colClasses} gap-4 sm:gap-5 lg:gap-6`}>
       {Array.from({ length: count }).map((_, index) => (
         <ProductSkeleton key={index} />
       ))}
