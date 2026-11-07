@@ -88,7 +88,7 @@ export default function ShopPage() {
     const signal = (abortSignal instanceof AbortSignal) ? abortSignal : undefined;
     const apiParams = {
       page: filters.page,
-      per_page: 15,
+      per_page: 12,
       search: filters.search.trim() || undefined,
       category_id: filters.category_id || undefined,
       brand: filters.brand || undefined,
@@ -117,7 +117,7 @@ export default function ShopPage() {
           current_page: 1,
           last_page: 1,
           total: res.data.length,
-          per_page: 15,
+          per_page: 12,
         };
         setPagination(pag);
       }
@@ -211,7 +211,7 @@ export default function ShopPage() {
           </p>
         </div>
 
-        {/* 2-Column Layout: Left Sidebar Filters + Right 5-Column Product Grid */}
+        {/* 2-Column Layout: Left Sidebar Filters + Right 4-Column Product Grid */}
         <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
           {/* Left Sidebar: Filter Console */}
           <aside className="w-full lg:w-64 xl:w-72 shrink-0 lg:sticky lg:top-24 z-10">
@@ -225,10 +225,10 @@ export default function ShopPage() {
             />
           </aside>
 
-          {/* Right Main Catalog Body */}
+          {/* Right Main Catalog Body (4 Columns) */}
           <main className="flex-1 min-w-0 w-full">
             {loading && products.length === 0 ? (
-              <ProductGridSkeleton count={15} columns={5} />
+              <ProductGridSkeleton count={12} columns={4} />
             ) : error && products.length === 0 ? (
               <ErrorState
                 title={t('shop.catalogue_error')}
@@ -247,7 +247,7 @@ export default function ShopPage() {
                 <ProductGrid
                   products={products}
                   wishlistedIds={wishlistedIds}
-                  columns={5}
+                  columns={4}
                   onWishlistChange={(productId, isWish) => {
                     setWishlistedIds((prev) => {
                       const next = new Set(prev);
