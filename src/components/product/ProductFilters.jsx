@@ -82,12 +82,16 @@ export default function ProductFilters({
 
       {/* Main Left Filter Sidebar (Always open on lg+, toggleable on mobile) */}
       <div
-        className={`p-4 sm:p-5 rounded-2xl bg-white border border-[#ECE8DE] shadow-2xs space-y-4 sm:space-y-5 ${
+        className={`filter-catalog-scroll p-4 sm:p-5 rounded-2xl bg-white border border-[#ECE8DE] shadow-2xs space-y-4 sm:space-y-5 lg:max-h-[calc(100vh-6.5rem)] lg:overflow-y-auto overscroll-contain transition-all ${
           isMobileExpanded ? 'block mb-6' : 'hidden lg:block'
         }`}
+        style={{
+          scrollbarWidth: 'thin',
+          scrollbarColor: '#D8D4CA transparent',
+        }}
       >
-        {/* Sidebar Header with Results and Reset */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#ECE8DE]">
+        {/* Sticky Sidebar Header with Results and Reset */}
+        <div className="sticky -top-4 sm:-top-5 -mt-4 sm:-mt-5 -mx-4 sm:-mx-5 p-4 sm:p-5 pb-3 border-b border-[#ECE8DE] bg-white rounded-t-2xl z-10 flex items-center justify-between shadow-2xs">
           <div className="flex items-center gap-2">
             <SlidersHorizontal size={14} className="text-[#71856B]" />
             <span className="text-xs font-bold tracking-wider uppercase text-[#1F2520]">
@@ -336,6 +340,22 @@ export default function ProductFilters({
           </div>
         )}
       </div>
+
+      <style>{`
+        .filter-catalog-scroll::-webkit-scrollbar {
+          width: 5px;
+        }
+        .filter-catalog-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .filter-catalog-scroll::-webkit-scrollbar-thumb {
+          background-color: #D8D4CA;
+          border-radius: 9999px;
+        }
+        .filter-catalog-scroll::-webkit-scrollbar-thumb:hover {
+          background-color: #71856B;
+        }
+      `}</style>
     </div>
   );
 }
