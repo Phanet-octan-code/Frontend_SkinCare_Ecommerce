@@ -82,16 +82,12 @@ export default function ProductFilters({
 
       {/* Main Left Filter Sidebar (Always open on lg+, toggleable on mobile) */}
       <div
-        className={`filter-catalog-scroll p-4 sm:p-5 rounded-2xl bg-white border border-[#ECE8DE] shadow-2xs space-y-4 sm:space-y-5 lg:max-h-[calc(100vh-6.5rem)] lg:overflow-y-auto overscroll-contain transition-all ${
+        className={`p-4 sm:p-5 rounded-2xl bg-white border border-[#ECE8DE] shadow-2xs space-y-4 sm:space-y-5 transition-all ${
           isMobileExpanded ? 'block mb-6' : 'hidden lg:block'
         }`}
-        style={{
-          scrollbarWidth: 'thin',
-          scrollbarColor: '#D8D4CA transparent',
-        }}
       >
-        {/* Sticky Sidebar Header with Results and Reset */}
-        <div className="sticky -top-4 sm:-top-5 -mt-4 sm:-mt-5 -mx-4 sm:-mx-5 p-4 sm:p-5 pb-3 border-b border-[#ECE8DE] bg-white rounded-t-2xl z-10 flex items-center justify-between shadow-2xs">
+        {/* Sidebar Header with Results and Reset */}
+        <div className="flex items-center justify-between pb-3 border-b border-[#ECE8DE]">
           <div className="flex items-center gap-2">
             <SlidersHorizontal size={14} className="text-[#71856B]" />
             <span className="text-xs font-bold tracking-wider uppercase text-[#1F2520]">
@@ -203,12 +199,24 @@ export default function ProductFilters({
           </select>
         </div>
 
-        {/* Availability & Deals */}
-        <div className="pt-3 border-t border-[#ECE8DE] space-y-2">
+        {/* Availability & Offers */}
+        <div className="pt-3 border-t border-[#ECE8DE] space-y-2.5">
           <label className="block text-[10.5px] font-semibold text-[#71856B] uppercase tracking-wider mb-1">
-            Availability
+            Offers & Availability
           </label>
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#1F2520] select-none">
+          <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#1F2520] select-none hover:text-[#71856B] transition-colors">
+            <input
+              type="checkbox"
+              checked={Boolean(filters.promotion)}
+              onChange={(e) => onFilterChange('promotion', e.target.checked ? '1' : '')}
+              className="rounded accent-[#71856B] w-4 h-4 cursor-pointer"
+            />
+            <span className="flex items-center gap-1.5">
+              <Sparkles size={13} className="text-[#C29B38]" />
+              <span className="font-semibold text-[#1F2520]">{t('shop.promotions_only') || 'Special Offers & Deals'}</span>
+            </span>
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#1F2520] select-none hover:text-[#71856B] transition-colors">
             <input
               type="checkbox"
               checked={Boolean(filters.in_stock)}
@@ -216,18 +224,6 @@ export default function ProductFilters({
               className="rounded accent-[#71856B] w-4 h-4 cursor-pointer"
             />
             <span>{t('shop.in_stock_only') || 'In Stock Only'}</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#1F2520] select-none">
-            <input
-              type="checkbox"
-              checked={Boolean(filters.promotion)}
-              onChange={(e) => onFilterChange('promotion', e.target.checked ? '1' : '')}
-              className="rounded accent-[#71856B] w-4 h-4 cursor-pointer"
-            />
-            <span className="flex items-center gap-1">
-              <Sparkles size={12} className="text-[#C29B38]" />
-              {t('shop.promotions_only') || 'Special Offers Only'}
-            </span>
           </label>
         </div>
 
@@ -340,22 +336,6 @@ export default function ProductFilters({
           </div>
         )}
       </div>
-
-      <style>{`
-        .filter-catalog-scroll::-webkit-scrollbar {
-          width: 5px;
-        }
-        .filter-catalog-scroll::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .filter-catalog-scroll::-webkit-scrollbar-thumb {
-          background-color: #D8D4CA;
-          border-radius: 9999px;
-        }
-        .filter-catalog-scroll::-webkit-scrollbar-thumb:hover {
-          background-color: #71856B;
-        }
-      `}</style>
     </div>
   );
 }
