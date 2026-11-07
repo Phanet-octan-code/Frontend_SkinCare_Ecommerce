@@ -11,7 +11,10 @@ export function ProductSkeleton() {
 
       {/* Subtitle */}
       <div className="skeleton w-full h-2.5 rounded-none bg-[#F0EDE6] mb-1" />
-      <div className="skeleton w-2/3 h-2.5 rounded-none bg-[#F0EDE6] mb-3" />
+      <div className="skeleton w-2/3 h-2.5 rounded-none bg-[#F0EDE6] mb-2" />
+
+      {/* Stars */}
+      <div className="skeleton w-1/3 h-2.5 rounded-none bg-[#ECE8DE] mb-3" />
 
       {/* Pricing & Add to Bag footer */}
       <div className="mt-auto pt-1 flex items-center justify-between">
