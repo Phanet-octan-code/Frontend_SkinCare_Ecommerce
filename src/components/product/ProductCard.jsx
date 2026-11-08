@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
@@ -16,6 +16,7 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
   const { showToast } = useToast();
   const { t } = useTranslation();
   const { format } = useCurrency();
+  const navigate = useNavigate();
 
   const [isWishlisted, setIsWishlisted] = useState(initialWishlisted);
   const [isWishlistLoading, setIsWishlistLoading] = useState(false);
@@ -174,6 +175,12 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
     e.stopPropagation();
 
     if (isOutOfStock) return;
+
+    if (!isAuthenticated) {
+      showToast('Please sign in or register an account to add items to your cart.', 'warning');
+      navigate('/login', { state: { from: window.location.pathname } });
+      return;
+    }
 
     setIsAdding(true);
     addToCart(product, 1);

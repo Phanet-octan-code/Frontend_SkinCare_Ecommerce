@@ -237,13 +237,24 @@ export default function ProductDetailPage() {
     ? Math.round(((regularPrice - finalPrice) / regularPrice) * 100)
     : 0;
 
+  // Auto-calculated total price based on selected quantity
+  const totalRegularPrice = regularPrice * qty;
+  const totalFinalPrice = finalPrice * qty;
+
   const stockQty = Number(product.qty ?? product.stock ?? 0);
   const isOutOfStock = stockQty <= 0;
   const isLowStock = stockQty > 0 && stockQty <= 5;
 
-  // Add to Cart handler
+  // Add to Cart handler - requires authenticated user
   const handleAddToCart = () => {
     if (isOutOfStock) return;
+
+    if (!isAuthenticated) {
+      showToast('Please sign in or register an account to add items to your cart.', 'warning');
+      navigate('/login', { state: { from: location.pathname } });
+      return;
+    }
+
     setIsAdding(true);
     addToCart(product, qty);
     setTimeout(() => setIsAdding(false), 600);
@@ -252,6 +263,13 @@ export default function ProductDetailPage() {
   // Buy Now handler: Add to cart and immediately proceed to checkout
   const handleBuyNow = () => {
     if (isOutOfStock) return;
+
+    if (!isAuthenticated) {
+      showToast('Please sign in or register an account to proceed to checkout.', 'warning');
+      navigate('/login', { state: { from: '/checkout' } });
+      return;
+    }
+
     addToCart(product, qty);
     navigate('/checkout');
   };
@@ -392,14 +410,21 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Price Box with Promotion Campaign Banner */}
+            {/* Price Box with Auto-Counting and Promotion Banner */}
             <div className="py-4 border-y border-[#ECE8DE] mb-5">
-              <PriceDisplay
-                regularPrice={regularPrice}
-                finalPrice={finalPrice}
-                size="lg"
-                showDiscountBadge={true}
-              />
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <PriceDisplay
+                  regularPrice={totalRegularPrice}
+                  finalPrice={totalFinalPrice}
+                  size="lg"
+                  showDiscountBadge={true}
+                />
+                {qty > 1 && (
+                  <span className="text-xs sm:text-sm text-[#7A8578] font-normal">
+                    ({format(finalPrice)} each × {qty})
+                  </span>
+                )}
+              </div>
 
               {product.promotion_name && (
                 <div className="mt-2 flex items-center gap-1.5 text-xs text-[#71856B] font-medium">
@@ -458,7 +483,13 @@ export default function ProductDetailPage() {
                   style={{ backgroundColor: isAdding ? 'var(--color-success)' : '#1F2520', color: '#FFFFFF' }}
                 >
                   <ShoppingBag size={17} />
-                  <span>{isOutOfStock ? t('product.sold_out') : isAdding ? t('product.added_to_bag') : t('common.add_to_cart')}</span>
+                  <span>
+                    {isOutOfStock
+                      ? (t('product.sold_out') || 'Sold Out')
+                      : isAdding
+                      ? (t('product.added_to_bag') || 'Added to Bag')
+                      : `${t('common.add_to_cart') || 'Add to Cart'} • ${format(totalFinalPrice)}`}
+                  </span>
                 </button>
 
                 {/* Wishlist Toggle Button */}
@@ -484,10 +515,12 @@ export default function ProductDetailPage() {
                 type="button"
                 onClick={handleBuyNow}
                 disabled={isOutOfStock}
-                className="w-full min-h-[46px] rounded-full border border-[#1F2520] text-[#1F2520] hover:bg-[#1F2520] hover:text-white font-medium text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none"
+                className="w-full min-h-[46px] rounded-full border border-[#1F2520] text-[#1F2520] hover:bg-[#1F2520] hover:text-white font-medium text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
               >
                 <Zap size={15} />
-                <span>{t('product.buy_now')}</span>
+                <span>
+                  {t('product.buy_now') || 'Buy Now with Express Checkout'} • {format(totalFinalPrice)}
+                </span>
               </button>
             </div>
 

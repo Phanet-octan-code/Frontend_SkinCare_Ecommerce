@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { useTranslation } from '../../i18n/LanguageContext';
+import { useCurrency } from '../../context/CurrencyContext';
 import wishlistService from '../../services/wishlistService';
 import PriceDisplay from './PriceDisplay';
 import RatingDisplay from './RatingDisplay';
@@ -17,6 +18,8 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
   const { t } = useTranslation();
+  const { format } = useCurrency();
+  const navigate = useNavigate();
   const [qty, setQty] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -45,6 +48,14 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
 
   const handleAddToCart = () => {
     if (isOutOfStock) return;
+
+    if (!isAuthenticated) {
+      showToast('Please sign in or register an account to add items to your cart.', 'warning');
+      onClose();
+      navigate('/login', { state: { from: window.location.pathname } });
+      return;
+    }
+
     setIsAdding(true);
     addToCart(product, qty);
     setTimeout(() => {
@@ -163,14 +174,21 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
               </div>
             )}
 
-            {/* Price Box */}
+            {/* Price Box with Auto-Counting */}
             <div style={{ margin: '12px 0 14px' }}>
-              <PriceDisplay
-                regularPrice={regularPrice}
-                finalPrice={finalPrice}
-                size="md"
-                showDiscountBadge={hasDiscount}
-              />
+              <div className="flex items-baseline gap-2.5 flex-wrap">
+                <PriceDisplay
+                  regularPrice={regularPrice * qty}
+                  finalPrice={finalPrice * qty}
+                  size="md"
+                  showDiscountBadge={hasDiscount}
+                />
+                {qty > 1 && (
+                  <span className="text-[11px] text-[#7A8578] font-normal">
+                    ({format(finalPrice)} each × {qty})
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Short description */}
@@ -217,11 +235,17 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                disabled={isOutOfStock}
+                disabled={isOutOfStock || isAdding}
                 className="btn btn-primary flex-1 active:scale-[0.98] transition-transform duration-150 cursor-pointer shadow-xs hover:shadow-md"
               >
                 {isAdding ? <Check size={15} /> : <ShoppingBag size={15} />}
-                <span>{isOutOfStock ? t('common.out_of_stock') : isAdding ? t('product.added_to_bag') : t('common.add_to_cart')}</span>
+                <span>
+                  {isOutOfStock
+                    ? (t('common.out_of_stock') || 'Sold Out')
+                    : isAdding
+                    ? (t('product.added_to_bag') || 'Added to Bag')
+                    : `${t('common.add_to_cart') || 'Add to Bag'} • ${format(finalPrice * qty)}`}
+                </span>
               </button>
 
               <button

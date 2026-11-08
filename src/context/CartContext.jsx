@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useToast } from './ToastContext';
 import { useCurrency } from './CurrencyContext';
+import { useAuth } from './AuthContext';
 import cartService from '../services/cartService';
 
 const CartContext = createContext(null);
@@ -32,6 +33,7 @@ export function CartProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const { showToast } = useToast();
+  const { isAuthenticated } = useAuth();
   const { deliveryThreshold, standardShipping } = useCurrency();
   const quoteDebounceRef = useRef(null);
 
@@ -134,6 +136,11 @@ export function CartProvider({ children }) {
 
   const addToCart = useCallback(
     (product, qty = 1, options = {}) => {
+      if (!isAuthenticated) {
+        showToast('Please sign in or register an account to add items to your cart.', 'warning');
+        return false;
+      }
+
       const quantityToAdd = Math.max(1, Number(qty) || 1);
 
       setItems((prevItems) => {
@@ -180,7 +187,7 @@ export function CartProvider({ children }) {
         setIsCartOpen(true);
       }
     },
-    [showToast]
+    [showToast, isAuthenticated]
   );
 
   const updateQty = useCallback((productId, qty) => {

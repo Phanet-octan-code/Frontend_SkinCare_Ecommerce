@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
 import { useCart } from '../../context/CartContext';
 import { Check, AlertCircle, AlertTriangle, Sparkles, X } from 'lucide-react';
@@ -6,6 +7,7 @@ import { Check, AlertCircle, AlertTriangle, Sparkles, X } from 'lucide-react';
 export default function ToastContainer() {
   const { toasts, removeToast } = useToast();
   const { openCart } = useCart();
+  const navigate = useNavigate();
 
   if (!toasts.length) return null;
 
@@ -40,14 +42,20 @@ export default function ToastContainer() {
 
   return (
     <div
-      className="fixed top-4 right-4 sm:top-5 sm:right-6 z-[1300] flex flex-col items-end gap-2 pointer-events-none select-none"
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[1300] flex flex-col-reverse items-end gap-2 sm:gap-2.5 pointer-events-none select-none"
       role="region"
       aria-label="Notifications"
     >
       {toasts.map((toast) => {
+        const lowerMsg = (toast.message || '').toLowerCase();
+        const isAuthNotice =
+          lowerMsg.includes('sign in') ||
+          lowerMsg.includes('register') ||
+          lowerMsg.includes('log in') ||
+          lowerMsg.includes('account');
+
         const isCartNotice =
-          (toast.message || '').toLowerCase().includes('bag') ||
-          (toast.message || '').toLowerCase().includes('cart');
+          !isAuthNotice && (lowerMsg.includes('bag') || lowerMsg.includes('cart'));
 
         // Extract product name if enclosed in quotes: e.g. Added "Dermalogica Daily Microfoliant" to your bag
         const match = toast.message.match(/"([^"]+)"/);
@@ -56,7 +64,7 @@ export default function ToastContainer() {
         return (
           <div
             key={toast.id}
-            className="pointer-events-auto relative flex items-center gap-2 sm:gap-2.5 pl-3 pr-2 py-1.5 sm:py-2 rounded-full bg-[#1F2520]/95 backdrop-blur-md text-white border border-white/15 shadow-[0_8px_24px_rgba(0,0,0,0.18)] animate-[toastSlideDown_0.22s_cubic-bezier(0.16,1,0.3,1)] transition-all max-w-[calc(100vw-32px)] sm:max-w-md group"
+            className="pointer-events-auto relative flex items-center gap-2 sm:gap-2.5 pl-3 pr-2 py-1.5 sm:py-2 rounded-full bg-[#1F2520]/95 backdrop-blur-md text-white border border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.22)] animate-[toastSlideUp_0.22s_cubic-bezier(0.16,1,0.3,1)] transition-all max-w-[calc(100vw-32px)] sm:max-w-md group"
           >
             {/* Minimal Status Icon */}
             {renderMiniIcon(toast.type)}
@@ -77,6 +85,32 @@ export default function ToastContainer() {
                 </span>
               )}
             </div>
+
+            {/* Quick "Sign In" & "Register" Actions for Auth requirement */}
+            {isAuthNotice && (
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/login', { state: { from: window.location.pathname } });
+                    removeToast(toast.id);
+                  }}
+                  className="text-[11px] sm:text-xs font-semibold text-[#A3C293] hover:text-white px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 transition-all shrink-0 cursor-pointer"
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/login?tab=register', { state: { from: window.location.pathname } });
+                    removeToast(toast.id);
+                  }}
+                  className="text-[11px] sm:text-xs font-semibold text-white/90 hover:text-white px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 transition-all shrink-0 cursor-pointer"
+                >
+                  Register
+                </button>
+              </div>
+            )}
 
             {/* Quick "View" Action for Cart items */}
             {isCartNotice && (
