@@ -370,16 +370,20 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Hero Product Visual (Clean Transparent Image from hero-campaign.jpg - No Background, No Border, No Shadow) */}
+            {/* Right Column: Hero Product Visual (Clean Animated Floating Image with Soft Ground Depth Shadow) */}
             <div className="lg:col-span-5 xl:col-span-6 w-full flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
-              <div className="relative w-full max-w-[540px] lg:max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] flex items-center justify-center bg-transparent">
-                <img
-                  src={heroCampaignImg}
-                  alt="Élixir Botanique Skincare Ritual"
-                  loading="eager"
-                  className="w-full h-auto object-contain max-h-[480px] sm:max-h-[540px] lg:max-h-[600px] transition-transform duration-500 ease-out hover:scale-[1.02]"
-                  onError={(e) => handleImageError(e, `${import.meta.env.BASE_URL}hero-campaign.jpg`)}
-                />
+              <div className="relative w-full max-w-[540px] lg:max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] flex items-center justify-center group/hero bg-transparent">
+                <div className="relative w-full flex items-center justify-center animate-hero-float">
+                  <img
+                    src={heroCampaignImg}
+                    alt="Élixir Botanique Skincare Ritual"
+                    loading="eager"
+                    className="w-full h-auto object-contain max-h-[480px] sm:max-h-[540px] lg:max-h-[600px] transition-transform duration-700 ease-out group-hover/hero:scale-[1.03] select-none filter drop-shadow-[0_22px_32px_rgba(31,37,32,0.13)]"
+                    onError={(e) => handleImageError(e, `${import.meta.env.BASE_URL}hero-campaign.jpg`)}
+                  />
+                  {/* Clean Ground Floor Shadow Synchronized With Float Animation */}
+                  <div className="absolute -bottom-4 sm:-bottom-6 left-1/2 w-[72%] sm:w-[76%] h-6 sm:h-8 bg-[#1F2520]/14 rounded-[100%] blur-xl pointer-events-none animate-hero-shadow" />
+                </div>
               </div>
             </div>
           </div>

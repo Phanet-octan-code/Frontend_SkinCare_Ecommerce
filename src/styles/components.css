@@ -697,8 +697,23 @@ textarea:focus-visible {
   }
 }
 
+@keyframes heroShadowPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.88);
+    opacity: 0.4;
+  }
+}
+
 .animate-hero-float {
   animation: heroFloat 6s ease-in-out infinite;
+}
+
+.animate-hero-shadow {
+  animation: heroShadowPulse 6s ease-in-out infinite;
 }
 
 .animate-hero-glow {
