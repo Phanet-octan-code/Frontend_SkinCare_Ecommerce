@@ -7,7 +7,7 @@ import { useTranslation } from '../../i18n/LanguageContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import wishlistService from '../../services/wishlistService';
 import QuickViewModal from './QuickViewModal';
-import { Heart, Eye, Check, Plus, Star } from 'lucide-react';
+import { Heart, Eye, Check, Plus } from 'lucide-react';
 import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
 export default function ProductCard({ product, initialWishlisted = false, onWishlistChange }) {
@@ -202,7 +202,7 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
                 src={resolveImageUrl(product.image_url)}
                 alt={product.name}
                 loading="lazy"
-                className="w-full h-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-105"
+                className="w-full h-full object-contain p-2 mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-105"
                 onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80')}
               />
             ) : (
@@ -213,26 +213,14 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
           </Link>
         </div>
 
-        {/* Product Details (Preserves Classic Serif Font) */}
+        {/* Product Details (Ultra Clean & Minimalist) */}
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
-            {/* Brand + Discount Badge + Heart in Clean Header Row */}
+            {/* Brand + Wishlist Row */}
             <div className="flex items-center justify-between gap-1.5 mb-1">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#71856B] truncate">
-                  {brand}
-                </span>
-                {hasDiscount && (
-                  <span className="px-1.5 py-0.2 text-[8.5px] font-semibold uppercase tracking-wider bg-[#1F2520] text-white shrink-0">
-                    -{discountPercent}%
-                  </span>
-                )}
-                {isOutOfStock && (
-                  <span className="px-1.5 py-0.2 text-[8.5px] font-semibold uppercase tracking-wider bg-[#71776E] text-white shrink-0">
-                    Sold Out
-                  </span>
-                )}
-              </div>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#71856B] truncate">
+                {brand}
+              </span>
 
               {/* Minimal Wishlist Heart Button */}
               <button
@@ -252,54 +240,37 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               </button>
             </div>
 
-            {/* Product Title (Classic Old Font: font-serif) */}
+            {/* Product Title (Clean Single Line) */}
             <Link
               to={`/products/${product.slug || product.id}`}
-              className="font-serif text-[13.5px] sm:text-[15px] font-medium text-[#1F2520] hover:text-[#526B54] line-clamp-1 mb-1.5 leading-snug transition-colors block"
+              className="font-serif text-[13px] sm:text-[14px] font-medium text-[#1F2520] hover:text-[#526B54] truncate mb-2 leading-snug transition-colors block"
               title={product.name}
             >
               {product.name}
             </Link>
-
-            {/* Star Ratings */}
-            <div className="flex items-center gap-1.5 mb-2 select-none">
-              <div className="flex items-center gap-0.5 text-[#C29B38]">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    size={11.5}
-                    className="fill-[#C29B38] text-[#C29B38]"
-                    strokeWidth={0}
-                  />
-                ))}
-              </div>
-              <span className="text-[10.5px] sm:text-[11px] text-[#8C9388] font-medium">
-                ({reviewCount})
-              </span>
-            </div>
           </div>
 
-          {/* Bottom Row: Price on left, Circular Black Plus Button on right */}
+          {/* Bottom Row: Clean Price on left, Circular Black Plus Button on right */}
           <div className="flex items-center justify-between mt-auto pt-1">
             <div className="flex items-baseline gap-1.5">
-              <span className="text-sm sm:text-[15.5px] font-semibold text-[#1F2520]">
+              <span className="text-[13.5px] sm:text-sm font-semibold text-[#1F2520]">
                 {format(finalPrice)}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-[#9CA3AF] line-through font-normal">
+                <span className="text-[11px] text-[#9CA3AF] line-through font-normal">
                   {format(regularPrice)}
                 </span>
               )}
             </div>
 
-            {/* Circular Quick Add Button (Generously sized for comfort) */}
+            {/* Circular Quick Add Button */}
             <button
               type="button"
               onClick={handleAddToCart}
               disabled={isOutOfStock || isAdding}
               title={isOutOfStock ? (t('common.out_of_stock') || 'Out of Stock') : (t('common.add_to_cart') || 'Add to Cart')}
               aria-label={`Add ${product.name} to cart`}
-              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
+              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
                 isOutOfStock
                   ? 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
                   : isAdding
@@ -308,9 +279,9 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               }`}
             >
               {isAdding ? (
-                <Check size={15} strokeWidth={2.5} className="text-white" />
+                <Check size={14} strokeWidth={2.5} className="text-white" />
               ) : (
-                <Plus size={16} strokeWidth={2.2} />
+                <Plus size={15} strokeWidth={2.2} />
               )}
             </button>
           </div>
