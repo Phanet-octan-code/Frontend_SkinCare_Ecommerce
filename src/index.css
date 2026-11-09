@@ -210,23 +210,9 @@ html[lang="zh"] .brand-logo-tagline {
   line-height: 1.6;
 }
 
-/* ─── BREADCRUMBS ─── */
+/* ─── BREADCRUMBS (DISABLED GLOBALLY) ─── */
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.86rem;
-  color: var(--color-text-muted);
-  margin-bottom: 24px;
-}
-
-.breadcrumbs a:hover {
-  color: var(--color-primary);
-}
-
-.breadcrumbs .current {
-  color: var(--color-text-main);
-  font-weight: 600;
+  display: none !important;
 }
 
 /* ─── FULL-SCREEN TRUE EDGE-TO-EDGE FLUID ENGINE ───
