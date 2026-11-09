@@ -182,8 +182,8 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
     <header className="sticky top-0 z-[1020] bg-[#FAF9F5]/98 backdrop-blur-md border-b border-[#ECE8DE] shadow-[0_1px_3px_rgba(31,37,32,0.02)] select-none">
       <div className="container">
         <div className="flex items-center justify-between h-16 sm:h-17 md:h-[72px] gap-3 sm:gap-4 lg:gap-6 w-full">
-          {/* Left Cluster: Mobile Menu Button (< lg) + Page Navigation Links */}
-          <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 xl:gap-8 min-w-0">
+          {/* Left Cluster: Mobile Menu Button (< lg) + Brand Name of Logo + Page Navigation Links */}
+          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5 xl:gap-7 min-w-0">
             {/* Mobile Menu Toggle Button (< lg) */}
             <button
               type="button"
@@ -195,9 +195,26 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               <Menu size={20} />
             </button>
 
+            {/* Brand Name of Logo (Clean Typography) */}
+            <Link
+              to="/"
+              className="flex flex-col items-start leading-none no-underline select-none shrink-0 group py-0.5"
+              aria-label="Élixir Botanique - Clinical Skincare & Dispensary"
+            >
+              <span className="brand-logo-title font-serif text-[17px] sm:text-lg lg:text-[19px] xl:text-xl font-normal tracking-[0.02em] text-[#1F2520] leading-none whitespace-nowrap group-hover:text-[#71856B] transition-colors">
+                ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
+              </span>
+              <span className="brand-logo-tagline text-[7px] sm:text-[7.5px] lg:text-[8px] font-medium tracking-[0.16em] uppercase text-[#8C9388] mt-1 whitespace-nowrap block">
+                CLINICAL SKINCARE &amp; DISPENSARY
+              </span>
+            </Link>
+
+            {/* Subtle Divider between Brand Name and Nav Links on Desktop */}
+            <div className="hidden lg:block w-px h-5 bg-[#ECE8DE] shrink-0 mx-1 xl:mx-1.5" aria-hidden="true" />
+
             {/* Navigation Links Aligned Left */}
             <nav
-              className="hidden lg:flex items-center gap-5 xl:gap-7 2xl:gap-8"
+              className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7"
               aria-label="Main navigation"
             >
               {navLinks.map((item) => {
