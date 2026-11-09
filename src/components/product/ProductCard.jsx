@@ -10,6 +10,18 @@ import QuickViewModal from './QuickViewModal';
 import { Heart, Eye, Check, Plus } from 'lucide-react';
 import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 
+// Decode common HTML entities like &amp; to &
+const decodeHtml = (str) => {
+  if (!str) return '';
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&#39;/g, "'");
+};
+
 export default function ProductCard({ product, initialWishlisted = false, onWishlistChange }) {
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
@@ -190,19 +202,19 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
   return (
     <>
       <div className="product-card group relative flex flex-col h-full bg-transparent transition-all duration-300">
-        {/* Pure Clean Product Image Canvas (Zero Overlaid Content) */}
-        <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-[#F4F1EA] group-hover:bg-[#ECE8DF] transition-colors duration-300 flex items-center justify-center p-3 sm:p-4 mb-2.5">
+        {/* Full-Bleed Product Image Canvas (Edge-to-Edge Image Look) */}
+        <div className="relative w-full aspect-square overflow-hidden bg-[#F4F1EA] group-hover:bg-[#ECE8DF] transition-colors duration-300">
           {/* Product Image Link */}
           <Link
             to={`/products/${product.slug || product.id}`}
-            className="w-full h-full flex items-center justify-center overflow-hidden"
+            className="w-full h-full block overflow-hidden"
           >
             {product.image_url ? (
               <img
                 src={resolveImageUrl(product.image_url)}
-                alt={product.name}
+                alt={decodeHtml(product.name)}
                 loading="lazy"
-                className="w-full h-full object-contain p-2 mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80')}
               />
             ) : (
@@ -213,13 +225,13 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
           </Link>
         </div>
 
-        {/* Product Details (Ultra Clean & Minimalist) */}
-        <div className="flex-1 flex flex-col justify-between min-w-0">
+        {/* Product Details (Ultra Clean & Balanced) */}
+        <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between min-w-0 bg-white">
           <div>
             {/* Brand + Wishlist Row */}
-            <div className="flex items-center justify-between gap-1.5 mb-1">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#71856B] truncate">
-                {brand}
+            <div className="flex items-center justify-between gap-1.5 mb-1.5">
+              <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#71856B] truncate">
+                {decodeHtml(brand)}
               </span>
 
               {/* Minimal Wishlist Heart Button */}
@@ -240,13 +252,13 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               </button>
             </div>
 
-            {/* Product Title (Clean Single Line) */}
+            {/* Product Title (Clean Single Line, Decoded HTML) */}
             <Link
               to={`/products/${product.slug || product.id}`}
-              className="font-serif text-[13px] sm:text-[14px] font-medium text-[#1F2520] hover:text-[#526B54] truncate mb-2 leading-snug transition-colors block"
-              title={product.name}
+              className="font-serif text-[13.5px] sm:text-[14.5px] font-medium text-[#1F2520] hover:text-[#526B54] truncate mb-2 leading-snug transition-colors block"
+              title={decodeHtml(product.name)}
             >
-              {product.name}
+              {decodeHtml(product.name)}
             </Link>
           </div>
 
@@ -269,7 +281,7 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               onClick={handleAddToCart}
               disabled={isOutOfStock || isAdding}
               title={isOutOfStock ? (t('common.out_of_stock') || 'Out of Stock') : (t('common.add_to_cart') || 'Add to Cart')}
-              aria-label={`Add ${product.name} to cart`}
+              aria-label={`Add ${decodeHtml(product.name)} to cart`}
               className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
                 isOutOfStock
                   ? 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'

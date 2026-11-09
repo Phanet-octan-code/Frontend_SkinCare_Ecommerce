@@ -2,24 +2,23 @@ import React from 'react';
 
 export function ProductSkeleton() {
   return (
-    <div className="flex flex-col h-full bg-transparent">
-      {/* Image slot */}
-      <div className="skeleton w-full aspect-[4/5] sm:aspect-square bg-[#F4F1EA] mb-3" />
+    <div className="flex flex-col h-full bg-white rounded-2xl border border-[#ECE8DE] overflow-hidden">
+      {/* Full-bleed Image slot */}
+      <div className="skeleton w-full aspect-square bg-[#F4F1EA]" />
 
-      {/* Product Name */}
-      <div className="skeleton w-3/4 h-3.5 rounded-none bg-[#ECE8DE] mb-1.5" />
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between">
+        <div>
+          {/* Brand */}
+          <div className="skeleton w-1/3 h-2.5 rounded bg-[#ECE8DE] mb-2" />
+          {/* Product Name */}
+          <div className="skeleton w-3/4 h-3.5 rounded bg-[#ECE8DE] mb-2" />
+        </div>
 
-      {/* Subtitle */}
-      <div className="skeleton w-full h-2.5 rounded-none bg-[#F0EDE6] mb-1" />
-      <div className="skeleton w-2/3 h-2.5 rounded-none bg-[#F0EDE6] mb-2" />
-
-      {/* Stars */}
-      <div className="skeleton w-1/3 h-2.5 rounded-none bg-[#ECE8DE] mb-3" />
-
-      {/* Pricing & Add to Bag footer */}
-      <div className="mt-auto pt-1 flex items-center justify-between">
-        <div className="skeleton w-14 h-4 rounded-none bg-[#ECE8DE]" />
-        <div className="skeleton w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1F2520]/10" />
+        {/* Pricing & Add to Bag footer */}
+        <div className="mt-auto pt-2 flex items-center justify-between">
+          <div className="skeleton w-16 h-4 rounded bg-[#ECE8DE]" />
+          <div className="skeleton w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1F2520]/10" />
+        </div>
       </div>
     </div>
   );

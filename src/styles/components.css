@@ -209,25 +209,26 @@ textarea:focus-visible {
   border: 1px solid var(--color-border);
 }
 
-/* ─── LUXURY PRODUCT CARD SPECIFICATION (BORDERLESS, SQUARE, ELEVATED SHADOW) ─── */
+/* ─── LUXURY PRODUCT CARD SPECIFICATION (EDGE-TO-EDGE IMAGE, ELEVATED SHADOW) ─── */
 .product-card {
-  padding: 14px;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
   height: 100%;
   position: relative;
   overflow: hidden;
   background-color: #FFFFFF;
-  border: none !important;
-  border-radius: 0px !important;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  border: 1px solid #ECE8DE !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.28s ease;
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
 }
 
 .product-card:hover {
-  border: none !important;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+  border-color: #D6D0C2 !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
   transform: translateY(-3px);
 }
 

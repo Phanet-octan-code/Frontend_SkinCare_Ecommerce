@@ -254,6 +254,70 @@ export default function HomePage() {
     setTimeout(checkCategoryScroll, 350);
   };
 
+  // Product Row Scroll States and Handlers (Single Row Scroll Forward)
+  const bestsellerScrollRef = useRef(null);
+  const [canScrollBestLeft, setCanScrollBestLeft] = useState(false);
+  const [canScrollBestRight, setCanScrollBestRight] = useState(true);
+
+  const checkBestsellerScroll = useCallback(() => {
+    if (!bestsellerScrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = bestsellerScrollRef.current;
+    setCanScrollBestLeft(scrollLeft > 8);
+    setCanScrollBestRight(scrollLeft < scrollWidth - clientWidth - 8);
+  }, []);
+
+  const scrollBestsellers = (direction) => {
+    if (!bestsellerScrollRef.current) return;
+    const scrollAmount = Math.max(280, bestsellerScrollRef.current.clientWidth * 0.75);
+    bestsellerScrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+    setTimeout(checkBestsellerScroll, 350);
+  };
+
+  const newArrivalsScrollRef = useRef(null);
+  const [canScrollNewLeft, setCanScrollNewLeft] = useState(false);
+  const [canScrollNewRight, setCanScrollNewRight] = useState(true);
+
+  const checkNewArrivalsScroll = useCallback(() => {
+    if (!newArrivalsScrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = newArrivalsScrollRef.current;
+    setCanScrollNewLeft(scrollLeft > 8);
+    setCanScrollNewRight(scrollLeft < scrollWidth - clientWidth - 8);
+  }, []);
+
+  const scrollNewArrivals = (direction) => {
+    if (!newArrivalsScrollRef.current) return;
+    const scrollAmount = Math.max(280, newArrivalsScrollRef.current.clientWidth * 0.75);
+    newArrivalsScrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+    setTimeout(checkNewArrivalsScroll, 350);
+  };
+
+  const promoScrollRef = useRef(null);
+  const [canScrollPromoLeft, setCanScrollPromoLeft] = useState(false);
+  const [canScrollPromoRight, setCanScrollPromoRight] = useState(true);
+
+  const checkPromoScroll = useCallback(() => {
+    if (!promoScrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = promoScrollRef.current;
+    setCanScrollPromoLeft(scrollLeft > 8);
+    setCanScrollPromoRight(scrollLeft < scrollWidth - clientWidth - 8);
+  }, []);
+
+  const scrollPromo = (direction) => {
+    if (!promoScrollRef.current) return;
+    const scrollAmount = Math.max(280, promoScrollRef.current.clientWidth * 0.75);
+    promoScrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+    setTimeout(checkPromoScroll, 350);
+  };
+
   // Derive products that have active discounts or participate in active promotions
   const promotionalProducts = useMemo(() => {
     const combined = [...bestsellers, ...newArrivals, ...catalogProducts];
@@ -613,66 +677,176 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── SECTION 6: BEST SELLERS SECTION (6 CLEAN MINIMALIST CARDS) ─── */}
-      <section className="py-12 sm:py-16 md:py-18 bg-white border-b border-[#ECE8DE]">
-        <div className="container">
-          <div className="flex items-center justify-between mb-8 sm:mb-10">
+      {/* ─── SECTION 6: BEST SELLERS (SINGLE ROW SCROLL FORWARD) ─── */}
+      <section className="py-12 sm:py-16 md:py-18 bg-white border-b border-[#ECE8DE] relative overflow-hidden">
+        <div className="container relative">
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
             <div>
               <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wider uppercase text-[#1F2520] m-0">
                 {t('home.best_selling_formulas') || 'BEST SELLERS'}
               </h2>
             </div>
-            <Link
-              to="/shop?filter=popular"
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1F2520] hover:text-[#71856B] transition-colors"
-            >
-              <span>View All</span>
-              <ArrowRight size={14} />
-            </Link>
+
+            <div className="flex items-center gap-4">
+              <Link
+                to="/shop?filter=popular"
+                className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1F2520] hover:text-[#71856B] transition-colors"
+              >
+                <span>View All</span>
+                <ArrowRight size={14} />
+              </Link>
+
+              {/* Forward / Backward Scroll Controls */}
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => scrollBestsellers('left')}
+                  disabled={!canScrollBestLeft}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                    canScrollBestLeft
+                      ? 'border-[#1F2520]/25 text-[#1F2520] bg-white hover:bg-[#1F2520] hover:text-white shadow-2xs'
+                      : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
+                  }`}
+                  aria-label="Previous best sellers"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollBestsellers('right')}
+                  disabled={!canScrollBestRight}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                    canScrollBestRight
+                      ? 'border-[#1F2520] text-white bg-[#1F2520] hover:bg-[#2F3A31] shadow-2xs'
+                      : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
+                  }`}
+                  aria-label="Next best sellers"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
           </div>
 
           {loading && bestsellers.length === 0 && catalogProducts.length === 0 ? (
-            <ProductGridSkeleton count={10} columns={5} />
+            <ProductGridSkeleton count={5} columns={5} />
           ) : error && bestsellers.length === 0 && catalogProducts.length === 0 ? (
             <ErrorState message={error} onRetry={loadData} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
-              {(bestsellers.length > 0 ? bestsellers : catalogProducts).slice(0, 10).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+            <div className="relative">
+              {canScrollBestLeft && (
+                <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 transition-opacity duration-300" />
+              )}
+              {canScrollBestRight && (
+                <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 transition-opacity duration-300" />
+              )}
+
+              <div
+                ref={bestsellerScrollRef}
+                onScroll={checkBestsellerScroll}
+                className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scroll-smooth py-2 px-1 select-none"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch',
+                }}
+              >
+                {(bestsellers.length > 0 ? bestsellers : catalogProducts).map((product) => (
+                  <div
+                    key={product.id}
+                    className="shrink-0 w-[180px] xs:w-[210px] sm:w-[240px] md:w-[260px] flex flex-col"
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
       </section>
 
-      {/* ─── SECTION 7: NEW ARRIVALS (LATEST DISPENSARY RELEASES) ─── */}
-      <section className="py-14 sm:py-18 md:py-20 border-b border-[#ECE8DE] bg-[#FAF9F5]">
-        <div className="container">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 sm:mb-10 gap-4">
+      {/* ─── SECTION 7: NEW ARRIVALS (SINGLE ROW SCROLL FORWARD) ─── */}
+      <section className="py-12 sm:py-16 md:py-18 border-b border-[#ECE8DE] bg-[#FAF9F5] relative overflow-hidden">
+        <div className="container relative">
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
             <div>
-              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
-                Fresh Laboratory Batches
-              </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] m-0">
-                New Arrivals & Active Releases
+              <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wider uppercase text-[#1F2520] m-0">
+                New Arrivals
               </h2>
             </div>
-            <Link
-              to="/shop?sort=newest"
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#71856B] hover:text-[#596D54] transition-colors"
-            >
-              <span>View All New Formulations</span>
-              <ArrowRight size={14} />
-            </Link>
+
+            <div className="flex items-center gap-4">
+              <Link
+                to="/shop?sort=newest"
+                className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1F2520] hover:text-[#71856B] transition-colors"
+              >
+                <span>View All</span>
+                <ArrowRight size={14} />
+              </Link>
+
+              {/* Forward / Backward Scroll Controls */}
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => scrollNewArrivals('left')}
+                  disabled={!canScrollNewLeft}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                    canScrollNewLeft
+                      ? 'border-[#1F2520]/25 text-[#1F2520] bg-white hover:bg-[#1F2520] hover:text-white shadow-2xs'
+                      : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
+                  }`}
+                  aria-label="Previous new arrivals"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollNewArrivals('right')}
+                  disabled={!canScrollNewRight}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                    canScrollNewRight
+                      ? 'border-[#1F2520] text-white bg-[#1F2520] hover:bg-[#2F3A31] shadow-2xs'
+                      : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
+                  }`}
+                  aria-label="Next new arrivals"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
           </div>
 
           {loading && newArrivals.length === 0 ? (
-            <ProductGridSkeleton count={10} columns={5} />
+            <ProductGridSkeleton count={5} columns={5} />
           ) : (
-            <ProductGrid
-              products={(newArrivals.length > 0 ? newArrivals : catalogProducts).slice(0, 10)}
-              columns={5}
-            />
+            <div className="relative">
+              {canScrollNewLeft && (
+                <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-r from-[#FAF9F5] to-transparent pointer-events-none z-10 transition-opacity duration-300" />
+              )}
+              {canScrollNewRight && (
+                <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-l from-[#FAF9F5] to-transparent pointer-events-none z-10 transition-opacity duration-300" />
+              )}
+
+              <div
+                ref={newArrivalsScrollRef}
+                onScroll={checkNewArrivalsScroll}
+                className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scroll-smooth py-2 px-1 select-none"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch',
+                }}
+              >
+                {(newArrivals.length > 0 ? newArrivals : catalogProducts).map((product) => (
+                  <div
+                    key={product.id}
+                    className="shrink-0 w-[180px] xs:w-[210px] sm:w-[240px] md:w-[260px] flex flex-col"
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </section>
@@ -765,31 +939,84 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Promotional Qualifying Products Row */}
+          {/* Promotional Qualifying Products Row (Single Row Scroll Forward) */}
           {promotionalProducts.length > 0 && (
-            <div className="mt-12 sm:mt-14">
+            <div className="mt-12 sm:mt-14 relative overflow-hidden">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.16em] uppercase text-[#71856B] block mb-1">
-                    Special Dispensary Offers
-                  </span>
-                  <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-[#1F2520] m-0">
+                  <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wider uppercase text-[#1F2520] m-0">
                     Qualifying Clinical Formulations
                   </h3>
                 </div>
-                <Link
-                  to="/shop?promotion=1"
-                  className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1F2520] hover:text-[#71856B] transition-colors"
-                >
-                  <span>View All Offers</span>
-                  <ArrowRight size={13} />
-                </Link>
+
+                <div className="flex items-center gap-4">
+                  <Link
+                    to="/shop?promotion=1"
+                    className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1F2520] hover:text-[#71856B] transition-colors"
+                  >
+                    <span>View All</span>
+                    <ArrowRight size={13} />
+                  </Link>
+
+                  {/* Forward / Backward Scroll Controls */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => scrollPromo('left')}
+                      disabled={!canScrollPromoLeft}
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                        canScrollPromoLeft
+                          ? 'border-[#1F2520]/25 text-[#1F2520] bg-white hover:bg-[#1F2520] hover:text-white shadow-2xs'
+                          : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
+                      }`}
+                      aria-label="Previous promotional items"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollPromo('right')}
+                      disabled={!canScrollPromoRight}
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                        canScrollPromoRight
+                          ? 'border-[#1F2520] text-white bg-[#1F2520] hover:bg-[#2F3A31] shadow-2xs'
+                          : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
+                      }`}
+                      aria-label="Next promotional items"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
-                {promotionalProducts.slice(0, 10).map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="relative">
+                {canScrollPromoLeft && (
+                  <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 transition-opacity duration-300" />
+                )}
+                {canScrollPromoRight && (
+                  <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 transition-opacity duration-300" />
+                )}
+
+                <div
+                  ref={promoScrollRef}
+                  onScroll={checkPromoScroll}
+                  className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scroll-smooth py-2 px-1 select-none"
+                  style={{
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                    WebkitOverflowScrolling: 'touch',
+                  }}
+                >
+                  {promotionalProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="shrink-0 w-[180px] xs:w-[210px] sm:w-[240px] md:w-[260px] flex flex-col"
+                    >
+                      <ProductCard product={product} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
