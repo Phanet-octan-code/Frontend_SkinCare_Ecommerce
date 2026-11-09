@@ -12,23 +12,17 @@ import ProductCard from '../components/product/ProductCard';
 import { ProductGridSkeleton } from '../components/feedback/LoadingSkeleton';
 import ErrorState from '../components/feedback/ErrorState';
 import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
-import heroSlide1 from '../assets/hero/hero.png';
-import heroSlide2 from '../assets/hero/hero-campaign-old.jpg';
 import heroSlide3 from '../assets/hero/hero-products-showcase.jpg';
 import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Droplets,
-  Sun,
-  Sparkle,
   ShieldCheck,
   Heart,
   Truck,
   Lock,
   Headphones,
   CheckCircle2,
-  Sparkles,
   X,
   Mail,
   Star,
@@ -313,121 +307,37 @@ export default function HomePage() {
     setNewsletterEmail('');
   };
 
-  // Hero slide state with auto-rotation & pause-on-hover
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isHeroHovered, setIsHeroHovered] = useState(false);
-
-  const heroSlides = useMemo(() => [
-    {
-      id: 'hydration-ritual',
-      badge: t('hero.badge') || '100% PURE ACTIVES • CLINICAL DISPENSARY',
-      badgeIcon: Droplets,
-      titlePart1: t('hero.title_part1') || 'Triple Active Hydration',
-      titlePart2: t('hero.title_part2') || 'Pure Botanicals & Dermal Renewal',
-      subtitle: t('hero.subtitle') || 'A clinical master ritual featuring gentle pH 5.5 Cleanser, concentrated Hydrating Serum dropper, and deep moisture barrier cream formulated for 24-hour cellular replenishment.',
-      image: heroSlide1,
-      ctaPrimary: t('hero.cta_primary') || 'Shop The Ritual',
-      ctaSecondary: t('hero.cta_secondary') || 'Clinical Consultation',
-      pillTitle: t('hero.pill_slide1') || '01 Hydration Trio',
-      accentColor: '#34D399',
-      features: [
-        t('hero.feature_hydration') || 'Deep Hydration',
-        t('hero.feature_barrier') || 'Barrier Fortification',
-        t('hero.feature_ph') || 'pH 5.5 Balanced',
-      ],
-      specimen: {
-        title: t('hero.slide1_title') || 'Deep Moisture Complex',
-        subtitle: t('hero.slide1_subtitle') || 'Cleanser • Serum • Barrier Cream',
-        rating: '4.9/5',
-        reviews: t('hero.verified_reviews') || '1,240+ verified reviews',
-        badge: t('hero.slide1_badge') || '100% LAB VERIFIED',
-      },
-    },
-    {
-      id: 'cellular-renewal',
-      badge: t('hero.slide2_badge') || 'CLINICAL DERMATOLOGY • BOTANICAL ESSENCE',
-      badgeIcon: Sparkles,
-      titlePart1: t('hero.slide2_title1') || 'Science-Led Skincare for',
-      titlePart2: t('hero.slide2_title2') || 'Luminous, Resilient Skin',
-      subtitle: t('hero.slide2_subtitle') || 'Curated pharmaceutical-grade formulations, active botanicals, and personalized dermatological regimens tested for clinical biocompatibility.',
-      image: heroSlide2,
-      ctaPrimary: t('hero.slide2_cta') || 'Explore Formulations',
-      ctaSecondary: t('hero.cta_secondary') || 'Explore Collection',
-      pillTitle: t('hero.pill_slide2') || '02 Cellular Renewal',
-      accentColor: '#71856B',
-      features: [
-        t('hero.slide2_f1') || 'Cellular Renewal',
-        t('hero.slide2_f2') || 'Anti-Oxidant Shield',
-        t('hero.slide2_f3') || 'Biocompatible',
-      ],
-      specimen: {
-        title: bestsellers[0]?.name || t('hero.slide2_specimen_title') || 'Aethel Active Crème',
-        subtitle: bestsellers[0]?.category?.name || t('hero.slide2_specimen_subtitle') || 'Bio-Lipid Botanical Infusion',
-        rating: '5.0/5',
-        reviews: t('hero.slide2_reviews') || '890+ verified reviews',
-        badge: t('hero.slide2_specimen_badge') || 'CLINICAL AWARD',
-      },
-    },
-    {
-      id: 'botanical-alchemy',
-      badge: t('hero.slide3_badge') || 'STABILIZED BIO-ACTIVES • LIGHT-PROTECTED GLASS',
-      badgeIcon: Leaf,
-      titlePart1: t('hero.slide3_title1') || 'Clinical Active Potency',
-      titlePart2: t('hero.slide3_title2') || 'Hand-Dispensed Purity',
-      subtitle: t('hero.slide3_subtitle') || 'Cold-chain dispensed serums, restorative emulsions, and gentle botanical extracts engineered to illuminate the dermal mantle without irritation.',
-      image: heroSlide3,
-      ctaPrimary: t('hero.slide3_cta') || 'View Dispensary Catalog',
-      ctaSecondary: t('hero.cta_secondary') || 'Our Philosophy',
-      pillTitle: t('hero.pill_slide3') || '03 Pure Actives',
-      accentColor: '#C29B38',
-      features: [
-        t('hero.slide3_f1') || 'Cold-Chain Handled',
-        t('hero.slide3_f2') || 'Stabilized Actives',
-        t('hero.slide3_f3') || 'Zero Additives',
-      ],
-      specimen: {
-        title: bestsellers[1]?.name || t('hero.slide3_specimen_title') || 'Botanical Elixirs',
-        subtitle: bestsellers[1]?.category?.name || t('hero.slide3_specimen_subtitle') || 'Vitamin C + Niacinamide 10%',
-        rating: '4.95/5',
-        reviews: t('hero.slide3_reviews') || '2,100+ verified reviews',
-        badge: t('hero.slide3_specimen_badge') || 'BEST SELLER',
-      },
-    },
-  ], [t, bestsellers]);
-
-  useEffect(() => {
-    if (isHeroHovered) return;
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6500);
-    return () => clearInterval(interval);
-  }, [isHeroHovered, heroSlides.length]);
-
-  const currentHero = heroSlides[activeSlide] || heroSlides[0];
+  const heroData = useMemo(() => ({
+    titlePart1: t('hero.title_part1') || 'Triple Active Hydration',
+    titlePart2: t('hero.title_part2') || 'Pure Botanicals & Dermal Renewal',
+    ctaPrimary: t('hero.cta_primary') || 'Shop The Ritual',
+    ctaSecondary: t('hero.cta_secondary') || 'Clinical Consultation',
+    features: [
+      t('hero.feature_hydration') || 'Deep Hydration',
+      t('hero.feature_barrier') || 'Barrier Fortification',
+      t('hero.feature_ph') || 'pH 5.5 Balanced',
+    ],
+  }), [t]);
 
   return (
     <div className="bg-[#FAF9F5] text-[var(--color-text-main)]">
-      {/* ─── SECTION 3: HERO BANNER (EDITORIAL BOTANICAL & CLINICAL LUXURY) ─── */}
+      {/* ─── SECTION 3: HERO BANNER (CLEAN BOTANICAL & CLINICAL LUXURY) ─── */}
       <section className="relative bg-[#FAF9F5] py-10 sm:py-14 md:py-18 lg:py-20 overflow-hidden">
-        {/* Subtle luminous ambient backdrop */}
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[540px] h-[540px] bg-white/80 rounded-none blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 left-10 w-96 h-96 bg-[#EEF2EB]/60 rounded-none blur-3xl pointer-events-none" />
-
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center justify-between">
-            {/* Left Column: 2-line Heading, Benefits, CTA Buttons, Slide Navigation */}
+            {/* Left Column: 2-line Heading, Benefits, CTA Buttons */}
             <div className="lg:col-span-7 xl:col-span-6 max-w-xl lg:max-w-2xl flex flex-col items-start text-left">
-              {/* Main Heading (Guaranteed 2 Clean Lines: Line 1 Black Serif, Line 2 Italic Sage Green) */}
+              {/* Main Heading (2 Clean Lines: Line 1 Black Serif, Line 2 Italic Sage Green) */}
               <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.85rem] lg:text-[3.25rem] xl:text-[3.6rem] font-normal text-[#1F2520] leading-[1.14] tracking-[-0.02em] mb-5 sm:mb-6 transition-all duration-300">
-                <span className="block">{currentHero.titlePart1}</span>
+                <span className="block">{heroData.titlePart1}</span>
                 <span className="block italic font-serif text-[#546A50] mt-1 sm:mt-1.5">
-                  {currentHero.titlePart2}
+                  {heroData.titlePart2}
                 </span>
               </h1>
 
-              {/* Key Benefits Pill Row (Borderless, Clean Shadow) */}
+              {/* Key Benefits Pill Row */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6 sm:mb-7">
-                {currentHero.features.map((feat, i) => (
+                {heroData.features.map((feat, i) => (
                   <span
                     key={i}
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-none bg-white text-[#3E4A3B] text-[11px] sm:text-xs font-semibold shadow-[0_2px_8px_rgba(31,37,32,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
@@ -445,57 +355,30 @@ export default function HomePage() {
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 rounded-none text-xs font-bold tracking-wider uppercase bg-[#1F2520] hover:bg-[#2C382D] text-white shadow-[0_10px_25px_rgba(31,37,32,0.25)] hover:shadow-[0_14px_30px_rgba(31,37,32,0.35)] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer no-underline group"
                   style={{ backgroundColor: '#1F2520', color: '#FFFFFF' }}
                 >
-                  <span>{currentHero.ctaPrimary}</span>
+                  <span>{heroData.ctaPrimary}</span>
                   <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
 
-                <button
-                  type="button"
-                  onClick={() => setIsPhilosophyOpen(true)}
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-4 rounded-none text-xs font-bold tracking-wider uppercase text-[#1F2520] bg-white hover:bg-[#FAF9F5] shadow-[0_4px_16px_rgba(31,37,32,0.07)] hover:shadow-[0_6px_20px_rgba(31,37,32,0.12)] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer"
+                <Link
+                  to="/about"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-4 rounded-none text-xs font-bold tracking-wider uppercase text-[#1F2520] bg-white hover:bg-[#FAF9F5] shadow-[0_4px_16px_rgba(31,37,32,0.07)] hover:shadow-[0_6px_20px_rgba(31,37,32,0.12)] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer no-underline"
                   style={{ backgroundColor: '#FFFFFF', color: '#1F2520' }}
                 >
-                  <span>{currentHero.ctaSecondary}</span>
-                </button>
+                  <span>{heroData.ctaSecondary}</span>
+                </Link>
               </div>
             </div>
 
-            {/* Right Column: Hero Product Visual (No Border and No Border-Radius - Clean Square Architectural Aesthetic) */}
+            {/* Right Column: Hero Product Visual (Single Clean Transparent Image from public/hero.png - No Background, No Border, No Shadow) */}
             <div className="lg:col-span-5 xl:col-span-6 w-full flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
-              <div
-                className="relative w-full max-w-[540px] lg:max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] group/hero"
-                onMouseEnter={() => setIsHeroHovered(true)}
-                onMouseLeave={() => setIsHeroHovered(false)}
-              >
-                {/* Animated Emerald & Aquamarine Glow Backdrop */}
-                <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#71856B]/20 via-[#34D399]/15 to-[#38BDF8]/10 rounded-none blur-3xl opacity-70 group-hover/hero:opacity-90 transition-opacity duration-700 pointer-events-none" />
-
-                {/* Main Luxury Frame - Light Botanical Studio Aesthetic (No Black Background) */}
-                <div className="relative w-full aspect-[3/2] sm:aspect-[1.38/1] rounded-none overflow-hidden bg-gradient-to-br from-[#EDF3EC] via-[#F6F8F5] to-[#E3EDE1] shadow-[0_25px_60px_-15px_rgba(71,85,69,0.15),0_10px_25px_-5px_rgba(31,37,32,0.05)] transition-all duration-500 group-hover/hero:shadow-[0_35px_75px_-15px_rgba(71,85,69,0.22),0_15px_30px_-5px_rgba(31,37,32,0.08)] group-hover/hero:-translate-y-1 flex items-center justify-center">
-                  
-                  {/* Background Slides with smooth crossfade */}
-                  {heroSlides.map((slide, idx) => {
-                    const isActive = activeSlide === idx;
-                    return (
-                      <div
-                        key={slide.id}
-                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out rounded-none flex items-center justify-center ${
-                          isActive ? 'opacity-100 z-1 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
-                        }`}
-                      >
-                        <img
-                          src={slide.image}
-                          alt={slide.titlePart1}
-                          loading="eager"
-                          className="w-full h-full object-contain sm:object-cover object-center rounded-none scale-[1.01] group-hover/hero:scale-[1.04] transition-transform duration-700 ease-out"
-                          onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
-                        />
-                        {/* Subtle Glass Shimmer Sweep Animation */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none animate-hero-shimmer rounded-none" />
-                      </div>
-                    );
-                  })}
-                </div>
+              <div className="relative w-full max-w-[540px] lg:max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] flex items-center justify-center bg-transparent">
+                <img
+                  src="/hero.png"
+                  alt="Élixir Botanique Formulations"
+                  loading="eager"
+                  className="w-full h-auto object-contain max-h-[460px] sm:max-h-[520px] lg:max-h-[580px] transition-transform duration-500 ease-out hover:scale-[1.02]"
+                  onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
+                />
               </div>
             </div>
           </div>
