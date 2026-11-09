@@ -293,47 +293,7 @@ export default function HomePage() {
     setTimeout(checkNewArrivalsScroll, 350);
   };
 
-  const promoScrollRef = useRef(null);
-  const [canScrollPromoLeft, setCanScrollPromoLeft] = useState(false);
-  const [canScrollPromoRight, setCanScrollPromoRight] = useState(true);
 
-  const checkPromoScroll = useCallback(() => {
-    if (!promoScrollRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = promoScrollRef.current;
-    setCanScrollPromoLeft(scrollLeft > 8);
-    setCanScrollPromoRight(scrollLeft < scrollWidth - clientWidth - 8);
-  }, []);
-
-  const scrollPromo = (direction) => {
-    if (!promoScrollRef.current) return;
-    const scrollAmount = Math.max(280, promoScrollRef.current.clientWidth * 0.75);
-    promoScrollRef.current.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
-    });
-    setTimeout(checkPromoScroll, 350);
-  };
-
-  // Derive products that have active discounts or participate in active promotions
-  const promotionalProducts = useMemo(() => {
-    const combined = [...bestsellers, ...newArrivals, ...catalogProducts];
-    const map = new Map();
-    for (const item of combined) {
-      if (!map.has(item.id)) {
-        map.set(item.id, item);
-      }
-    }
-
-    const unique = Array.from(map.values());
-    const discounted = unique.filter((p) => {
-      const regular = Number(p.sale_price || p.price || 0);
-      const final = Number(p.final_price || p.sale_price || p.price || 0);
-      return Boolean(p.has_discount || regular > final || (p.promotion_name && p.promotion_name.trim().length > 0));
-    });
-
-    // If active promotional products exist, return them; otherwise return top featured items for the promo showcase
-    return discounted.length > 0 ? discounted.slice(0, 8) : unique.slice(0, 4);
-  }, [bestsellers, newArrivals, catalogProducts]);
 
   // Newsletter submission handler
   const handleNewsletterSubmit = (e) => {
@@ -935,87 +895,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Promotional Qualifying Products Row (Single Row Scroll Forward) */}
-          {promotionalProducts.length > 0 && (
-            <div className="mt-12 sm:mt-14 relative overflow-hidden">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wider uppercase text-[#1F2520] m-0">
-                    Qualifying Clinical Formulations
-                  </h3>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <Link
-                    to="/shop?promotion=1"
-                    className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1F2520] hover:text-[#71856B] transition-colors"
-                  >
-                    <span>View All</span>
-                    <ArrowRight size={13} />
-                  </Link>
-
-                  {/* Forward / Backward Scroll Controls */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => scrollPromo('left')}
-                      disabled={!canScrollPromoLeft}
-                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
-                        canScrollPromoLeft
-                          ? 'border-[#1F2520]/25 text-[#1F2520] bg-white hover:bg-[#1F2520] hover:text-white shadow-2xs'
-                          : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
-                      }`}
-                      aria-label="Previous promotional items"
-                    >
-                      <ChevronLeft size={18} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollPromo('right')}
-                      disabled={!canScrollPromoRight}
-                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-200 cursor-pointer ${
-                        canScrollPromoRight
-                          ? 'border-[#1F2520] text-white bg-[#1F2520] hover:bg-[#2F3A31] shadow-2xs'
-                          : 'border-[#ECE8DE] text-gray-300 bg-white/50 cursor-not-allowed opacity-40'
-                      }`}
-                      aria-label="Next promotional items"
-                    >
-                      <ChevronRight size={18} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative">
-                {canScrollPromoLeft && (
-                  <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 transition-opacity duration-300" />
-                )}
-                {canScrollPromoRight && (
-                  <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 transition-opacity duration-300" />
-                )}
-
-                <div
-                  ref={promoScrollRef}
-                  onScroll={checkPromoScroll}
-                  className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scroll-smooth py-2 px-1 select-none"
-                  style={{
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                    WebkitOverflowScrolling: 'touch',
-                  }}
-                >
-                  {promotionalProducts.map((product) => (
-                    <div
-                      key={product.id}
-                      className="shrink-0 w-[180px] xs:w-[210px] sm:w-[240px] md:w-[260px] flex flex-col"
-                    >
-                      <ProductCard product={product} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
