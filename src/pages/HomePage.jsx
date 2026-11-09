@@ -395,14 +395,8 @@ export default function HomePage() {
 
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center justify-between">
-            {/* Left Column: Eyebrow, 2-line Heading, Description, Benefits, CTA Buttons, Slide Switcher */}
+            {/* Left Column: 2-line Heading, Benefits, CTA Buttons, Slide Navigation */}
             <div className="lg:col-span-7 xl:col-span-6 max-w-xl lg:max-w-2xl flex flex-col items-start text-left">
-              {/* Eyebrow Tagline Badge (Borderless, Natural Soft Shadow) */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-[#EEF2EB] text-[#4A5D45] text-[10px] sm:text-[11px] font-bold tracking-[0.16em] uppercase mb-4 sm:mb-5 shadow-xs transition-all duration-300">
-                <currentHero.badgeIcon size={13} className="text-[#596D54] shrink-0 animate-pulse" />
-                <span>{currentHero.badge}</span>
-              </div>
-
               {/* Main Heading (Guaranteed 2 Clean Lines: Line 1 Black Serif, Line 2 Italic Sage Green) */}
               <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.85rem] lg:text-[3.25rem] xl:text-[3.6rem] font-normal text-[#1F2520] leading-[1.14] tracking-[-0.02em] mb-5 sm:mb-6 transition-all duration-300">
                 <span className="block">{currentHero.titlePart1}</span>
@@ -445,50 +439,24 @@ export default function HomePage() {
                 </button>
               </div>
 
-              {/* Slide Switcher Controls (Borderless, Organic Soft Shadows) */}
-              <div className="flex items-center gap-3 sm:gap-4 w-full pt-2">
-                {/* Slide Navigation Buttons */}
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-                    className="w-8 h-8 rounded-none bg-white text-[#1F2520] flex items-center justify-center shadow-[0_2px_10px_rgba(31,37,32,0.08)] hover:shadow-[0_4px_14px_rgba(31,37,32,0.14)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
-                    aria-label="Previous slide"
-                  >
-                    <ChevronLeft size={15} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveSlide((prev) => (prev + 1) % heroSlides.length)}
-                    className="w-8 h-8 rounded-none bg-white text-[#1F2520] flex items-center justify-center shadow-[0_2px_10px_rgba(31,37,32,0.08)] hover:shadow-[0_4px_14px_rgba(31,37,32,0.14)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
-                    aria-label="Next slide"
-                  >
-                    <ChevronRight size={15} />
-                  </button>
-                </div>
-
-                {/* Clean Minimal Slide Number Indicator Tabs */}
-                <div className="flex items-center gap-1.5">
-                  {heroSlides.map((slide, idx) => {
-                    const isActive = activeSlide === idx;
-                    return (
-                      <button
-                        key={slide.id}
-                        type="button"
-                        onClick={() => setActiveSlide(idx)}
-                        className={`h-8 px-3 text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
-                          isActive
-                            ? 'bg-[#1F2520] text-white shadow-xs'
-                            : 'bg-white text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5]'
-                        }`}
-                        aria-label={`Slide 0${idx + 1}`}
-                      >
-                        <span className={`w-1.5 h-1.5 ${isActive ? 'bg-[#34D399]' : 'bg-[#C5BFA9]'}`} />
-                        <span>0{idx + 1}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+              {/* Slide Switcher Controls (Clean Minimal Arrows) */}
+              <div className="flex items-center gap-1.5 w-full pt-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
+                  className="w-8 h-8 rounded-none bg-white text-[#1F2520] flex items-center justify-center shadow-[0_2px_10px_rgba(31,37,32,0.08)] hover:shadow-[0_4px_14px_rgba(31,37,32,0.14)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveSlide((prev) => (prev + 1) % heroSlides.length)}
+                  className="w-8 h-8 rounded-none bg-white text-[#1F2520] flex items-center justify-center shadow-[0_2px_10px_rgba(31,37,32,0.08)] hover:shadow-[0_4px_14px_rgba(31,37,32,0.14)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight size={15} />
+                </button>
               </div>
             </div>
 
@@ -853,9 +821,6 @@ export default function HomePage() {
         <div className="container">
           {/* Sub-Section 9A: 4-Step Regimen Flow */}
           <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-            <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
-              Dermatological Method
-            </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520]">
               The Daily 4-Step Clinical Regimen
             </h2>
@@ -958,9 +923,6 @@ export default function HomePage() {
           {/* Sub-Section 9B: Shop by Skin Concern */}
           <div className="pt-8 border-t border-[#ECE8DE]">
             <div className="text-center max-w-xl mx-auto mb-7">
-              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-1.5">
-                Dermatological Prescription
-              </span>
               <h2 className="font-serif text-2xl sm:text-3xl text-[#1F2520]">
                 Shop by Skin Concern
               </h2>
@@ -1114,85 +1076,67 @@ export default function HomePage() {
       </section>
 
       {/* ─── TESTIMONIALS & CLINICAL PROOF ─── */}
-      <section className="py-14 sm:py-18 md:py-20 border-b border-[#ECE8DE] bg-white">
+      <section className="py-12 sm:py-16 border-b border-[#ECE8DE] bg-white">
         <div className="container">
-          <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
-            <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
-              Dermatological Proof
-            </span>
+          <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520]">
               Clinical Results & Real Reviews
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Review 1 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-1 text-[#C29B38] mb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-0.5 text-[#C29B38]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={13} className="fill-current text-[#C29B38]" strokeWidth={0} />
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
-                  "Restored my skin barrier in two weeks. Chronic redness is gone, and my complexion feels balanced."
-                </p>
-              </div>
-              <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#1F2520]">Camille L.</h4>
                   <span className="text-[10px] text-[#71856B]">Sensitive Skin</span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
-                  Verified
-                </span>
               </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
+                Verified
+              </span>
             </div>
 
             {/* Review 2 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-1 text-[#C29B38] mb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-0.5 text-[#C29B38]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={13} className="fill-current text-[#C29B38]" strokeWidth={0} />
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
-                  "Pharmaceutical grade results. Deeply plumping and pure silk on the skin without stinging."
-                </p>
-              </div>
-              <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#1F2520]">Dr. Elena S.</h4>
                   <span className="text-[10px] text-[#71856B]">Dry Skin</span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
-                  Verified
-                </span>
               </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
+                Verified
+              </span>
             </div>
 
             {/* Review 3 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-1 text-[#C29B38] mb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-0.5 text-[#C29B38]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={13} className="fill-current text-[#C29B38]" strokeWidth={0} />
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
-                  "Authentic clinical skincare with fast cold-packed delivery and peace of mind."
-                </p>
-              </div>
-              <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#1F2520]">Sophea M.</h4>
                   <span className="text-[10px] text-[#71856B]">Combination Skin</span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
-                  Verified
-                </span>
               </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
+                Verified
+              </span>
             </div>
           </div>
         </div>
