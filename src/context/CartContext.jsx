@@ -190,22 +190,74 @@ export function CartProvider({ children }) {
     [showToast, isAuthenticated]
   );
 
-  const updateQty = useCallback((productId, qty) => {
+  const addBundleToCart = useCallback(
+    (bundle, qty = 1, options = {}) => {
+      if (!isAuthenticated) {
+        showToast('Please sign in or register an account to add sets to your cart.', 'warning');
+        return;
+      }
+
+      const quantityToAdd = Math.max(1, Number(qty) || 1);
+
+      setItems((prevItems) => {
+        const existingIndex = prevItems.findIndex((item) => item.bundle_id === bundle.id);
+
+        if (existingIndex > -1) {
+          const updated = [...prevItems];
+          const newQty = updated[existingIndex].qty + quantityToAdd;
+          updated[existingIndex] = {
+            ...updated[existingIndex],
+            qty: newQty,
+          };
+          return updated;
+        } else {
+          return [
+            ...prevItems,
+            {
+              bundle_id: bundle.id,
+              product_id: null,
+              is_bundle: true,
+              qty: quantityToAdd,
+              product: {
+                id: bundle.id,
+                name: bundle.name,
+                price: Number(bundle.price),
+                sale_price: Number(bundle.price),
+                final_price: Number(bundle.price),
+                image_url: bundle.image_url,
+                category_name: bundle.type === 'gift_set' ? 'Luxury Gift Set' : 'Routine Bundle',
+                stock: bundle.available_qty ?? 999,
+              },
+            },
+          ];
+        }
+      });
+
+      showToast(`Added "${bundle.name}" to your bag`, 'success');
+      if (options?.openDrawer) {
+        setIsCartOpen(true);
+      }
+    },
+    [showToast, isAuthenticated]
+  );
+
+  const updateQty = useCallback((id, qty, isBundle = false) => {
     const targetQty = Number(qty);
     if (targetQty <= 0) {
-      setItems((prev) => prev.filter((item) => item.product_id !== productId));
+      setItems((prev) => prev.filter((item) => (isBundle ? item.bundle_id !== id : item.product_id !== id)));
     } else {
       setItems((prev) =>
-        prev.map((item) =>
-          item.product_id === productId ? { ...item, qty: targetQty } : item
-        )
+        prev.map((item) => {
+          const match = isBundle ? item.bundle_id === id : item.product_id === id;
+          return match ? { ...item, qty: targetQty } : item;
+        })
       );
     }
   }, []);
 
   const removeFromCart = useCallback(
-    (productId) => {
-      setItems((prev) => prev.filter((item) => item.product_id !== productId));
+    (id, isBundle = false) => {
+      setItems((prev) => prev.filter((item) => (isBundle ? item.bundle_id !== id : item.product_id !== id)));
       showToast('Item removed from cart', 'info');
     },
     [showToast]
@@ -362,6 +414,7 @@ export function CartProvider({ children }) {
         closeCart,
         toggleCart,
         addToCart,
+        addBundleToCart,
         updateQty,
         removeFromCart,
         clearCart,

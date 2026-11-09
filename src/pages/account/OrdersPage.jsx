@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import orderService from '../../services/orderService';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useTranslation } from '../../i18n/LanguageContext';
-import { formatDate, formatOrderStatus } from '../../utils/formatters';
+import { formatDate, formatOrderStatus, formatOrderPrice } from '../../utils/formatters';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
 import AccountNav from '../../components/navigation/AccountNav';
 import EmptyState from '../../components/feedback/EmptyState';
@@ -13,7 +13,7 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const { format } = useCurrency();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   useEffect(() => {
     orderService
@@ -100,7 +100,7 @@ export default function OrdersPage() {
                     </div>
 
                     <div className="flex items-center gap-2 sm:gap-3 text-xs text-[#7A8578] flex-wrap">
-                      <span>{t('order_success.order_date') || 'Placed'}: <strong className="text-[#1F2520] font-medium">{formatDate(order.sale_date || order.created_at)}</strong></span>
+                      <span>{t('order_success.order_date') || 'Placed'}: <strong className="text-[#1F2520] font-medium">{formatDate(order.sale_date || order.created_at, false, language)}</strong></span>
                       <span>•</span>
                       <span>{itemCount} {itemCount === 1 ? 'Formulation' : 'Formulations'}</span>
                       {order.tracking_number && (
@@ -116,10 +116,10 @@ export default function OrdersPage() {
                   <div className="flex flex-row md:flex-row items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-[#ECE8DE]">
                     <div className="text-left md:text-right">
                       <span className="text-[10px] uppercase font-bold tracking-wider text-[#7A8578] block">
-                        Order Total
+                        Order Total ({order.currency || 'USD'})
                       </span>
                       <span className="text-base sm:text-lg font-bold text-[#1F2520]">
-                        {format(order.final_total ?? order.total)}
+                        {order.formatted_final_total || formatOrderPrice(order)}
                       </span>
                     </div>
 

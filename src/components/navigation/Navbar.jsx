@@ -129,6 +129,13 @@ export default function Navbar() {
       hasDropdown: true,
     },
     {
+      id: 'bundles',
+      name: 'Bundles & Sets',
+      path: '/bundles',
+      isActive: location.pathname === '/bundles',
+      badge: 'GIFT',
+    },
+    {
       id: 'offers',
       name: 'Offers',
       path: '/shop?promotion=1',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useLanguage } from '../../i18n/LanguageContext';
@@ -19,19 +19,59 @@ import {
   MapPin,
   ArrowRight,
   Globe,
+  X,
 } from 'lucide-react';
 
 export default function Header({ onOpenMobileMenu, onOpenSearch }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [navSearchQuery, setNavSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownTimeoutRef = useRef(null);
+  const searchContainerRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   const { customer, isAuthenticated, logout } = useAuth();
   const { totalItemCount, openCart } = useCart();
   const { language, t } = useLanguage();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+        setIsSearchExpanded(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsSearchExpanded(false);
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchExpanded(true);
+        setTimeout(() => searchInputRef.current?.focus(), 80);
+      }
+    };
+    if (isSearchExpanded) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isSearchExpanded]);
+
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (navSearchQuery.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(navSearchQuery.trim())}`);
+      setIsSearchExpanded(false);
+    }
+  };
 
   // Curated clinical categories
   const defaultCategories = [
@@ -150,7 +190,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
     {
       id: 'brands',
       name: t('nav.brands') || 'Brands',
-      path: '/shop?filter=brands',
+      path: '/brands',
       isActive: isBrandsActive,
       hasDropdown: true,
     },
@@ -213,25 +253,61 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               </div>
             </Link>
 
-            {/* Dribbble-Style Search Pill (Right next to Logo) */}
-            <button
-              type="button"
-              onClick={onOpenSearch}
-              id="desktop-search-trigger"
-              className="hidden md:flex items-center justify-between w-56 lg:w-64 xl:w-72 h-10 pl-3.5 pr-1.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#E0567A]/60 shadow-[0_1px_2px_rgba(31,37,32,0.02)] cursor-pointer text-xs text-[#8C9388] transition-all duration-200 hover:shadow-xs group shrink-0"
+            {/* Clean Expanding Search Button with Smooth Transition */}
+            <div
+              ref={searchContainerRef}
+              className="relative hidden md:flex items-center"
             >
-              <span className="truncate pr-1 text-[#8C9388] group-hover:text-[#1F2520] transition-colors">
-                {t('header.search_placeholder') || 'Search formulas, retinol...'}
-              </span>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[10px] font-medium tracking-wider bg-[#FAF9F5] border border-[#ECE8DE] px-1.5 py-0.5 rounded text-[#7A8578]">
-                  Ctrl+K
-                </span>
-                <div className="w-7 h-7 rounded-full bg-[#E0567A] text-white flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
-                  <Search size={13} />
-                </div>
-              </div>
-            </button>
+              <form
+                onSubmit={handleSearchSubmit}
+                className={`flex items-center rounded-full border bg-white transition-all duration-300 ease-in-out ${
+                  isSearchExpanded
+                    ? 'w-64 lg:w-72 xl:w-80 h-10 px-3.5 border-[#71856B] shadow-sm ring-2 ring-[#71856B]/15'
+                    : 'w-10 h-10 p-0 justify-center border-[#ECE8DE] hover:border-[#71856B] hover:shadow-xs cursor-pointer'
+                }`}
+                onClick={() => {
+                  if (!isSearchExpanded) {
+                    setIsSearchExpanded(true);
+                    setTimeout(() => searchInputRef.current?.focus(), 80);
+                  }
+                }}
+              >
+                <button
+                  type={isSearchExpanded ? 'submit' : 'button'}
+                  className={`flex items-center justify-center shrink-0 text-[#1F2520] hover:text-[#71856B] transition-colors cursor-pointer ${
+                    isSearchExpanded ? 'w-5 h-5 text-[#71856B]' : 'w-full h-full'
+                  }`}
+                  aria-label="Search"
+                >
+                  <Search size={16} />
+                </button>
+
+                {isSearchExpanded && (
+                  <>
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={navSearchQuery}
+                      onChange={(e) => setNavSearchQuery(e.target.value)}
+                      placeholder={t('header.search_placeholder') || 'Search formulas, ingredients...'}
+                      className="w-full bg-transparent border-none text-xs text-[#1F2520] placeholder-[#8C9388] outline-none pl-2 pr-1"
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsSearchExpanded(false);
+                        setNavSearchQuery('');
+                      }}
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-[#8C9388] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors shrink-0"
+                      aria-label="Close search"
+                    >
+                      <X size={13} />
+                    </button>
+                  </>
+                )}
+              </form>
+            </div>
           </div>
 
           {/* Right Cluster: Nav Links + Wishlist + Bag + User Account (Unified Single Right Group) */}

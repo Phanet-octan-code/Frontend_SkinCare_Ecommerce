@@ -27,16 +27,32 @@ textarea:focus-visible {
 }
 
 .container:not([class*="max-w-"]) {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: clamp(16px, 2.5vw, 40px) !important;
-  padding-right: clamp(16px, 2.5vw, 40px) !important;
+  width: 80% !important;
+  max-width: 80% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: clamp(16px, 2vw, 32px) !important;
+  padding-right: clamp(16px, 2vw, 32px) !important;
+}
+
+@media (max-width: 1280px) {
+  .container:not([class*="max-w-"]) {
+    width: 85% !important;
+    max-width: 85% !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container:not([class*="max-w-"]) {
+    width: 90% !important;
+    max-width: 90% !important;
+  }
 }
 
 @media (max-width: 768px) {
   .container:not([class*="max-w-"]) {
+    width: 92% !important;
+    max-width: 92% !important;
     padding-left: 16px !important;
     padding-right: 16px !important;
   }
@@ -44,6 +60,8 @@ textarea:focus-visible {
 
 @media (max-width: 480px) {
   .container:not([class*="max-w-"]) {
+    width: 95% !important;
+    max-width: 95% !important;
     padding-left: 12px !important;
     padding-right: 12px !important;
   }

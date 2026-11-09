@@ -23,7 +23,7 @@ export default function AboutPage() {
 
   return (
     <div className="bg-[#FAF9F5] min-h-screen py-8 sm:py-12 md:py-16">
-      <div className="container max-w-4xl mx-auto px-4">
+      <div className="container">
         {/* Breadcrumbs */}
         <Breadcrumbs items={[{ label: t('about.breadcrumb') || 'About Us' }]} />
 
@@ -37,27 +37,19 @@ export default function AboutPage() {
             {t('about.title_part1') || 'Rooted in Botany.'} <br className="hidden sm:inline" />
             <span className="italic font-serif text-[#71856B]">{t('about.title_part2') || 'Calibrated by Science.'}</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#5A6358] max-w-2xl mx-auto leading-relaxed font-normal">
-            {t('about.subtitle') || 'Élixir Botanique was founded on an unyielding principle: skincare should heal, fortify, and protect the dermal barrier without synthetic fillers, endocrine disruptors, or compromised molecular potency.'}
+          <p className="text-sm sm:text-base text-[#5A6358] max-w-xl mx-auto leading-relaxed font-normal">
+            {t('about.subtitle') || 'Skincare formulated to heal, fortify, and protect the dermal barrier with pure botanical potency and clinical precision.'}
           </p>
         </div>
 
-        {/* Highlight Image Banner */}
-        <div className="relative rounded-3xl overflow-hidden mb-12 sm:mb-16 shadow-xs border border-[#ECE8DE] aspect-[16/9] sm:aspect-[21/9]">
+        {/* Highlight Image Banner (Clean & Unobstructed) */}
+        <div className="rounded-3xl overflow-hidden mb-12 sm:mb-16 shadow-xs border border-[#ECE8DE] aspect-[16/9] sm:aspect-[21/9]">
           <img
             src={brandStoryImg}
             alt="Élixir Botanique Dispensary Laboratory"
             className="w-full h-full object-cover"
             onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1F2520]/80 via-[#1F2520]/20 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
-            <span className="text-xs uppercase tracking-[0.14em] text-[#D4DDD2] block mb-1">
-              {t('about.flagship_title') || 'Flagship Boutique & Compounding Counter'}
-            </span>
-            <h3 className="font-serif text-lg sm:text-2xl font-normal text-white">
-              {t('about.flagship_address') || '#42 Preah Norodom Blvd, Phnom Penh, Kingdom of Cambodia'}
-            </h3>
-          </div>
         </div>
 
         {/* 3 Value Pillars */}

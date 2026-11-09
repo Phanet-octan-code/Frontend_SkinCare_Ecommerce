@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import AnnouncementBar from './AnnouncementBar';
+import FlashSaleBanner from '../promotions/FlashSaleBanner';
 import Header from './Header';
 import PromotionBanner from './PromotionBanner';
 import MobileMenu from '../navigation/MobileMenu';
@@ -39,6 +40,7 @@ export default function AppLayout() {
 
       <ScrollToTop />
       <AnnouncementBar />
+      <FlashSaleBanner />
       <Header
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}

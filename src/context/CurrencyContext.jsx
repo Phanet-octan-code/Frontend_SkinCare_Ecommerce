@@ -11,9 +11,10 @@ export function CurrencyProvider({ children }) {
   const [exchangeRate, setExchangeRate] = useState(4100);
   const [deliveryThreshold, setDeliveryThreshold] = useState(50.0);
   const [standardShipping, setStandardShipping] = useState(2.5);
+  const [shippingZones, setShippingZones] = useState([]);
 
   useEffect(() => {
-    // Optionally fetch store settings to get configured exchange rate & delivery fee
+    // Fetch store settings to get configured exchange rate, delivery fee, and shipping zones
     storeService.getSettings()
       .then((res) => {
         const rate = res?.data?.exchange_rate_khr ?? res?.data?.currency_exchange_rate;
@@ -25,6 +26,9 @@ export function CurrencyProvider({ children }) {
         }
         if (res?.data?.standard_shipping_fee) {
           setStandardShipping(Number(res.data.standard_shipping_fee));
+        }
+        if (Array.isArray(res?.data?.shipping_zones)) {
+          setShippingZones(res.data.shipping_zones);
         }
       })
       .catch(() => {
@@ -50,6 +54,7 @@ export function CurrencyProvider({ children }) {
         exchangeRate,
         deliveryThreshold,
         standardShipping,
+        shippingZones,
         format,
       }}
     >

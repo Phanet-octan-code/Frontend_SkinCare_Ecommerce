@@ -470,6 +470,31 @@ export const catalogService = {
     storage.remove(`skincare_product_${productId}`);
     return res.data;
   },
+
+  /**
+   * Fetch promotional bundles & gift sets
+   */
+  async getBundles(type = null) {
+    const params = type ? { type } : {};
+    const res = await apiClient.get('/store/bundles', { params });
+    return res.data?.data || [];
+  },
+
+  /**
+   * Fetch single bundle details
+   */
+  async getBundle(id) {
+    const res = await apiClient.get(`/store/bundles/${id}`);
+    return res.data?.data || null;
+  },
+
+  /**
+   * Fetch active flash sales and limited-time offers
+   */
+  async getFlashSales() {
+    const res = await apiClient.get('/store/flash-sales');
+    return res.data?.data || [];
+  },
 };
 
 export default catalogService;

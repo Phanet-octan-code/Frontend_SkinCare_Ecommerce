@@ -17,6 +17,7 @@ import HomePage from './pages/HomePage';
 
 // Lazy-loaded routes for optimal bundle splitting and performance
 const ShopPage = lazy(() => import('./pages/ShopPage'));
+const BundlesPage = lazy(() => import('./pages/BundlesPage'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
@@ -27,6 +28,7 @@ const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 
 // Institutional & Content Pages
+const BrandsPage = lazy(() => import('./pages/BrandsPage'));
 const AboutPage = lazy(() => import('./pages/content/AboutPage'));
 const BlogPage = lazy(() => import('./pages/content/BlogPage'));
 const ContactPage = lazy(() => import('./pages/content/ContactPage'));
@@ -42,6 +44,8 @@ const OrdersPage = lazy(() => import('./pages/account/OrdersPage'));
 const OrderDetailPage = lazy(() => import('./pages/account/OrderDetailPage'));
 const AddressesPage = lazy(() => import('./pages/account/AddressesPage'));
 const WishlistPage = lazy(() => import('./pages/account/WishlistPage'));
+const LoyaltyPage = lazy(() => import('./pages/account/LoyaltyPage'));
+const SubscriptionsPage = lazy(() => import('./pages/account/SubscriptionsPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Clean luxury suspense fallback
@@ -75,6 +79,7 @@ export default function App() {
                       {/* Public Storefront Routes */}
                       <Route path="/" element={<HomePage />} />
                       <Route path="/shop" element={<ShopPage />} />
+                      <Route path="/bundles" element={<BundlesPage />} />
                       <Route path="/products/:slug" element={<ProductDetailPage />} />
                       <Route path="/product/:slug" element={<ProductDetailPage />} />
                       <Route path="/cart" element={<CartPage />} />
@@ -87,7 +92,7 @@ export default function App() {
                       <Route path="/blog" element={<BlogPage />} />
                       <Route path="/journal" element={<Navigate to="/blog" replace />} />
                       <Route path="/categories" element={<Navigate to="/shop" replace />} />
-                      <Route path="/brands" element={<Navigate to="/shop?filter=brands" replace />} />
+                      <Route path="/brands" element={<BrandsPage />} />
                       <Route path="/offers" element={<Navigate to="/shop?promotion=1" replace />} />
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/faq" element={<FaqPage />} />
@@ -149,6 +154,22 @@ export default function App() {
                     element={
                       <ProtectedRoute>
                         <AddressesPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/account/loyalty"
+                    element={
+                      <ProtectedRoute>
+                        <LoyaltyPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/account/subscriptions"
+                    element={
+                      <ProtectedRoute>
+                        <SubscriptionsPage />
                       </ProtectedRoute>
                     }
                   />

@@ -304,7 +304,7 @@ export default function HomePage() {
       badgeIcon: Droplets,
       titlePart1: t('hero.title_part1') || 'Triple Active Hydration',
       titlePart2: t('hero.title_part2') || 'Pure Botanicals & Dermal Renewal',
-      subtitle: t('hero.subtitle') || 'A clinical master ritual featuring gentle pH 5.5 Cleanser, concentrated Hydrating Serum dropper, and deep moisture barrier cream formulated for 24-hour cellular replenishment.',
+      subtitle: t('hero.subtitle') || 'Gentle pH 5.5 Cleanser, Hydrating Serum, and barrier cream for 24-hour hydration.',
       image: heroSlide1,
       ctaPrimary: t('hero.cta_primary') || 'Shop The Ritual',
       ctaSecondary: t('hero.cta_secondary') || 'Clinical Consultation',
@@ -329,7 +329,7 @@ export default function HomePage() {
       badgeIcon: Sparkles,
       titlePart1: t('hero.slide2_title1') || 'Science-Led Skincare for',
       titlePart2: t('hero.slide2_title2') || 'Luminous, Resilient Skin',
-      subtitle: t('hero.slide2_subtitle') || 'Curated pharmaceutical-grade formulations, active botanicals, and personalized dermatological regimens tested for clinical biocompatibility.',
+      subtitle: t('hero.slide2_subtitle') || 'Pure active botanicals and clinical actives engineered for luminous, resilient skin.',
       image: heroSlide2,
       ctaPrimary: t('hero.slide2_cta') || 'Explore Formulations',
       ctaSecondary: t('hero.cta_secondary') || 'Explore Collection',
@@ -354,7 +354,7 @@ export default function HomePage() {
       badgeIcon: Leaf,
       titlePart1: t('hero.slide3_title1') || 'Clinical Active Potency',
       titlePart2: t('hero.slide3_title2') || 'Hand-Dispensed Purity',
-      subtitle: t('hero.slide3_subtitle') || 'Cold-chain dispensed serums, restorative emulsions, and gentle botanical extracts engineered to illuminate the dermal mantle without irritation.',
+      subtitle: t('hero.slide3_subtitle') || 'Cold-chain serums and botanical extracts crafted to restore balance and radiance.',
       image: heroSlide3,
       ctaPrimary: t('hero.slide3_cta') || 'View Dispensary Catalog',
       ctaSecondary: t('hero.cta_secondary') || 'Our Philosophy',
@@ -531,55 +531,6 @@ export default function HomePage() {
                       </div>
                     );
                   })}
-
-                  {/* Floating Pill Top-Right: 100% Lab Verified (Luxury White Frosted Glass) */}
-                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 animate-hero-badge-1 pointer-events-none">
-                    <div className="px-3.5 sm:px-4 py-2 rounded-none bg-white/95 backdrop-blur-md text-[#1F2520] border border-[#ECE8DE] shadow-[0_10px_25px_rgba(31,37,32,0.08)] flex items-center gap-2.5">
-                      <span className="relative flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full bg-[#10B981] opacity-75" />
-                        <span className="relative inline-flex h-2.5 w-2.5 bg-[#059669]" />
-                      </span>
-                      <div className="flex flex-col text-left">
-                        <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#059669]">
-                          {currentHero.specimen.badge}
-                        </span>
-                        <span className="text-[11px] sm:text-xs font-medium text-[#1F2520]">
-                          {t('hero.dermatologist_tested') || 'Dermatologist Tested'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Floating Glass Specimen Card Bottom-Left (Luxury White Frosted Glass) */}
-                  <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-10 max-w-[290px] animate-hero-badge-2 pointer-events-none">
-                    <div className="p-3 sm:p-3.5 rounded-none bg-white/95 backdrop-blur-md text-[#1F2520] border border-[#ECE8DE] shadow-[0_16px_36px_rgba(31,37,32,0.1)] flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-none bg-[#EEF2EB] text-[#059669] flex items-center justify-center shrink-0 shadow-inner">
-                        <Droplets size={20} className="animate-bounce" style={{ animationDuration: '3s' }} />
-                      </div>
-                      <div className="min-w-0 pr-1 text-left">
-                        <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="text-[10.5px] uppercase tracking-[0.14em] font-bold text-[#059669] block truncate">
-                            {currentHero.specimen.title}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-[#5A6358] font-normal truncate mb-1">
-                          {currentHero.specimen.subtitle}
-                        </p>
-                        <div className="flex items-center gap-1 text-[10px] text-[#F59E0B]">
-                          <span>★★★★★</span>
-                          <span className="text-[#7A8578] font-medium ml-1">
-                            {currentHero.specimen.reviews}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Floating Tag Bottom-Right (Luxury White Frosted Glass) */}
-                  <div className="hidden sm:flex absolute bottom-6 right-6 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-none bg-white/92 backdrop-blur-md text-[#059669] border border-[#ECE8DE] text-[10px] font-semibold tracking-wider uppercase shadow-[0_6px_16px_rgba(31,37,32,0.06)] pointer-events-none">
-                    <ShieldCheck size={13} className="text-[#059669]" />
-                    <span className="text-[#1F2520] font-semibold">{t('hero.barrier_lock') || '24H Barrier Lock'}</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -924,124 +875,124 @@ export default function HomePage() {
             <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
               Dermatological Method
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] mb-3">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] mb-2">
               The Daily 4-Step Clinical Regimen
             </h2>
             <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
-              Achieve cellular balance and barrier resilience through our structured dispensary sequence.
+              A structured sequence to balance and fortify the skin barrier.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-14">
             {/* Step 1 */}
             <Link
               to="/shop?search=cleanse"
-              className="group p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold tracking-widest text-[#71856B] font-mono">
                     STEP 01
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Droplets size={17} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Droplets size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-base font-medium text-[#1F2520] mb-1.5 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                   Purify & pH Balance
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                  Gentle low-foam cleansing clears particulate pollutants without disrupting stratum corneum lipids.
+                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
+                  Gentle low-foam cleansing that preserves skin lipids.
                 </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
-                Explore Cleansers <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Explore Cleansers <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
 
             {/* Step 2 */}
             <Link
               to="/shop?search=toner"
-              className="group p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold tracking-widest text-[#71856B] font-mono">
                     STEP 02
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Sparkle size={17} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Sparkle size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-base font-medium text-[#1F2520] mb-1.5 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                   Infuse & Prime
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                  Botanical essences and micro-toners replenish bio-water to maximize downstream active bioavailability.
+                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
+                  Bio-water essences to prime and maximize absorption.
                 </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
-                Explore Toners <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Explore Toners <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
 
             {/* Step 3 */}
             <Link
               to="/shop?search=serum"
-              className="group p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold tracking-widest text-[#71856B] font-mono">
                     STEP 03
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Beaker size={17} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Beaker size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-base font-medium text-[#1F2520] mb-1.5 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                   Target & Correct
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                  High-potency clinical serums deliver calibrated actives (niacinamide, peptides, Vitamin C) straight to target cells.
+                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
+                  Targeted actives calibrated for high-potency results.
                 </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
-                Explore Serums <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Explore Serums <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
 
             {/* Step 4 */}
             <Link
               to="/shop?search=cream"
-              className="group p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold tracking-widest text-[#71856B] font-mono">
                     STEP 04
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <ShieldCheck size={17} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <ShieldCheck size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-base font-medium text-[#1F2520] mb-1.5 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                   Seal & Defend
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                  Rich lipid barrier crèmes lock in moisture, followed by broad-spectrum UVA/UVB mineral defense.
+                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
+                  Moisture seal crèmes paired with daily mineral defense.
                 </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
-                Explore Moisturizers <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Explore Moisturizers <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
           </div>
 
           {/* Sub-Section 9B: Shop by Skin Concern */}
           <div className="pt-8 border-t border-[#ECE8DE]">
-            <div className="text-center max-w-xl mx-auto mb-8">
-              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
+            <div className="text-center max-w-xl mx-auto mb-7">
+              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-1.5">
                 Dermatological Prescription
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl text-[#1F2520] mb-2">
@@ -1049,21 +1000,21 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 sm:gap-4">
               {/* Concern 1 */}
               <Link
                 to="/shop?search=hyaluronic"
-                className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
+                className="group p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <Droplets size={18} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                    <Droplets size={16} />
                   </div>
                   <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                     Hydration & Barrier
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                    Multi-weight hyaluronic acid, ceramides, and squalane for compromised skin.
+                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
+                    Ceramides & multi-depth hydration.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
@@ -1074,17 +1025,17 @@ export default function HomePage() {
               {/* Concern 2 */}
               <Link
                 to="/shop?search=peptides"
-                className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
+                className="group p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <Sparkles size={18} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                    <Sparkles size={16} />
                   </div>
                   <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                     Anti-Aging & Firming
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                    Matrixyl peptides, bio-retinol, and cold-pressed botanical lipids for collagen.
+                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
+                    Peptides & cellular firming.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
@@ -1095,17 +1046,17 @@ export default function HomePage() {
               {/* Concern 3 */}
               <Link
                 to="/shop?search=bha"
-                className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
+                className="group p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <ShieldCheck size={18} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                    <ShieldCheck size={16} />
                   </div>
                   <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                     Blemish & Clarifying
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                    Salicylic acid 2%, niacinamide 10%, and zinc to decongest pores.
+                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
+                    BHA & pore clarifying.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
@@ -1116,17 +1067,17 @@ export default function HomePage() {
               {/* Concern 4 */}
               <Link
                 to="/shop?search=vitamin%20c"
-                className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
+                className="group p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <Sun size={18} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                    <Sun size={16} />
                   </div>
                   <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                     Radiance & Dark Spots
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                    Stabilized L-ascorbic acid 15% and azelaic acid to unify dermal tone.
+                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
+                    Vitamin C & tone radiance.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
@@ -1137,17 +1088,17 @@ export default function HomePage() {
               {/* Concern 5 */}
               <Link
                 to="/shop?search=centella"
-                className="group p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
+                className="group p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] hover:bg-white hover:border-[#71856B]/60 hover:shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <Heart size={18} />
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                    <Heart size={16} />
                   </div>
                   <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
                     Calming & Redness
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                    Centella asiatica, panthenol B5, and bisabolol to soothe vascular reactivity.
+                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
+                    Centella & barrier calming.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
@@ -1163,7 +1114,7 @@ export default function HomePage() {
       <section className="py-14 sm:py-18 md:py-24 bg-[#FAF9F5] border-b border-[#ECE8DE]">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Story Imagery with Frosted Badge */}
+            {/* Story Imagery (Clean & Unobstructed) */}
             <div className="lg:col-span-6 relative">
               <div className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] border border-[#ECE8DE] shadow-sm">
                 <img
@@ -1174,32 +1125,18 @@ export default function HomePage() {
                   onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
                 />
               </div>
-
-              {/* Floating frosted glass badge */}
-              <div className="hidden sm:flex items-center gap-3 absolute bottom-6 right-6 p-4 rounded-2xl bg-white/90 backdrop-blur-md border border-[#ECE8DE] shadow-lg max-w-xs">
-                <div className="w-10 h-10 rounded-xl bg-[var(--color-primary-light)] text-[var(--color-primary)] flex items-center justify-center shrink-0">
-                  <Leaf size={18} />
-                </div>
-                <div className="text-left">
-                  <span className="block text-xs font-semibold text-[#1F2520]">100% Organic Extracts</span>
-                  <span className="block text-[11px] text-[var(--color-text-muted)]">Laboratory verified biocompatibility</span>
-                </div>
-              </div>
             </div>
 
-            {/* Story Narrative */}
+            {/* Story Narrative (Clean & Editorial) */}
             <div className="lg:col-span-6 flex flex-col items-start text-left">
               <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2.5">
                 Our Formulation Standard
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] leading-tight mb-4">
-                Formulated Without Compromise. Tested for Real Clinical Efficacy.
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] leading-tight mb-3">
+                Formulated Without Compromise. Verified by Science.
               </h2>
-              <p className="text-xs sm:text-sm md:text-base text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                At Élixir Botanique, we reject the notion that skincare must choose between physiological biocompatibility and high-potency clinical results. Our botanical extracts are harvested in their most bioavailable states, then precisely calibrated alongside verified clinical actives.
-              </p>
               <p className="text-xs sm:text-sm md:text-base text-[var(--color-text-secondary)] leading-relaxed mb-6">
-                Every formulation in our dispensary is 100% free from synthetic dyes, micro-plastics, parabens, and denatured drying alcohols.
+                We combine bioavailable botanical extracts with clinical actives to strengthen your skin barrier. Every formulation is 100% free from synthetic dyes, parabens, and drying alcohols.
               </p>
 
               {/* Trust Pillars Checklist */}
@@ -1248,21 +1185,21 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Review 1 */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1 text-[#C29B38] mb-3">
+                <div className="flex items-center gap-1 text-[#C29B38] mb-2.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-current text-[#C29B38]" strokeWidth={0} />
+                    <Star key={i} size={13} className="fill-current text-[#C29B38]" strokeWidth={0} />
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-5">
-                  "The Niacinamide 10% restored my skin barrier within two weeks. My chronic redness is completely calm, and my complexion has never felt this balanced."
+                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
+                  "Restored my skin barrier in two weeks. Chronic redness is gone, and my complexion feels balanced."
                 </p>
               </div>
               <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#1F2520]">Camille L.</h4>
-                  <span className="text-[10px] text-[#71856B]">Verified Buyer • Sensitive Skin</span>
+                  <span className="text-[10px] text-[#71856B]">Sensitive Skin</span>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
                   Verified
@@ -1271,21 +1208,21 @@ export default function HomePage() {
             </div>
 
             {/* Review 2 */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1 text-[#C29B38] mb-3">
+                <div className="flex items-center gap-1 text-[#C29B38] mb-2.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-current text-[#C29B38]" strokeWidth={0} />
+                    <Star key={i} size={13} className="fill-current text-[#C29B38]" strokeWidth={0} />
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-5">
-                  "Pharmaceutical grade results without any stinging. The Torriden hyaluronic serum is pure silk on the skin and deeply plumping under moisturizer."
+                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
+                  "Pharmaceutical grade results. Deeply plumping and pure silk on the skin without any stinging."
                 </p>
               </div>
               <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#1F2520]">Dr. Elena S.</h4>
-                  <span className="text-[10px] text-[#71856B]">Dermatology Consultant • Dry Skin</span>
+                  <span className="text-[10px] text-[#71856B]">Dry Skin</span>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
                   Verified
@@ -1294,21 +1231,21 @@ export default function HomePage() {
             </div>
 
             {/* Review 3 */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F5] border border-[#ECE8DE] shadow-2xs flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1 text-[#C29B38] mb-3">
+                <div className="flex items-center gap-1 text-[#C29B38] mb-2.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-current text-[#C29B38]" strokeWidth={0} />
+                    <Star key={i} size={13} className="fill-current text-[#C29B38]" strokeWidth={0} />
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-5">
-                  "Finally an ecommerce dispensary that delivers real authentic clinical skincare with same-day cold-packed delivery. The batch tracking gives complete peace of mind."
+                <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
+                  "Authentic clinical skincare with same-day cold-packed delivery and batch tracking peace of mind."
                 </p>
               </div>
               <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#1F2520]">Sophea M.</h4>
-                  <span className="text-[10px] text-[#71856B]">Dispensary Member • Combination</span>
+                  <span className="text-[10px] text-[#71856B]">Combination Skin</span>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)] font-medium">
                   Verified

@@ -40,10 +40,10 @@ export default function CheckoutPage() {
     hasOutOfStockItems,
   } = useCart();
 
-  const { format, exchangeRate } = useCurrency();
+  const { format, exchangeRate, currency, shippingZones } = useCurrency();
   const { isAuthenticated, customer } = useAuth();
   const { showToast } = useToast();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const navigate = useNavigate();
 
   // Saved addresses for authenticated customer
@@ -60,7 +60,7 @@ export default function CheckoutPage() {
     notes: '',
   });
 
-  const [shippingMethod, setShippingMethod] = useState('standard');
+  const [selectedZoneCode, setSelectedZoneCode] = useState('phnom_penh');
   const [paymentType, setPaymentType] = useState('qr'); // 'qr' | 'card' | 'cash'
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -68,6 +68,8 @@ export default function CheckoutPage() {
   // Coupon state on checkout
   const [couponInput, setCouponInput] = useState('');
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+  const [referralCodeInput, setReferralCodeInput] = useState('');
+  const [redeemPointsInput, setRedeemPointsInput] = useState('');
 
   // Card tokenized inputs (simulated client-side gateway)
   const [cardData, setCardData] = useState({
@@ -238,13 +240,18 @@ export default function CheckoutPage() {
       // Construct payload according to Laravel Backend Schema
       const payload = {
         items: items.map((item) => ({
-          product_id: item.product_id || item.id,
+          product_id: item.bundle_id ? null : (item.product_id || item.id),
+          bundle_id: item.bundle_id || null,
           qty: Math.max(1, Number(item.qty) || 1),
         })),
         shipping_address: fullAddressString,
+        shipping_zone_code: selectedZoneCode,
+        currency: currency,
         payment_type: paymentType, // 'qr', 'card', 'cash'
         order_notes: formData.notes ? formData.notes.trim() : null,
         coupon_code: appliedCoupon?.code || appliedCouponCode || null,
+        referral_code: referralCodeInput ? referralCodeInput.trim() : null,
+        redeem_points: Number(redeemPointsInput) || 0,
         idempotency_key: idempotencyKeyRef.current,
       };
 
@@ -597,41 +604,57 @@ export default function CheckoutPage() {
                   >
                     3
                   </span>
-                  <span>{t('checkout.shipping_method')}</span>
+                  <span>{language === 'km' ? 'តំបន់ និងជម្រើសដឹកជញ្ជូន' : t('checkout.shipping_method')}</span>
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <label
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '12px 14px',
-                      borderRadius: 'var(--radius-sm)',
-                      border: `1px solid ${shippingMethod === 'standard' ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                      backgroundColor: shippingMethod === 'standard' ? 'var(--color-primary-light)' : 'var(--color-surface)',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <input
-                        type="radio"
-                        name="shipping_method"
-                        checked={shippingMethod === 'standard'}
-                        onChange={() => setShippingMethod('standard')}
-                        style={{ accentColor: 'var(--color-primary)' }}
-                      />
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: '0.88rem' }}>{t('checkout.standard_shipping')}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-                          {t('checkout.standard_shipping_desc')}
+                  {(shippingZones.length > 0 ? shippingZones : [
+                    { code: 'phnom_penh', name: 'Phnom Penh Urban Express', name_km: 'រាជធានីភ្នំពេញ (ដឹកជញ្ជូនរហ័ស)', estimated_delivery: '1-2 Business Days', estimated_delivery_km: '១-២ ថ្ងៃធ្វើការ', standard_fee: 1.50, free_shipping_threshold: 40.00 },
+                    { code: 'provinces', name: 'Provincial Express Delivery', name_km: 'តាមបណ្ដាខេត្តទូទាំងប្រទេស', estimated_delivery: '2-4 Business Days', estimated_delivery_km: '២-៤ ថ្ងៃធ្វើការ', standard_fee: 3.00, free_shipping_threshold: 60.00 },
+                    { code: 'vip_express', name: 'VIP Same-Day Dispatch (Phnom Penh)', name_km: 'សេវាពិសេសក្នុងថ្ងៃតែមួយ (ភ្នំពេញ)', estimated_delivery: 'Within 3-4 Hours', estimated_delivery_km: 'ក្នុងរយៈពេល ៣-៤ ម៉ោង', standard_fee: 4.50, free_shipping_threshold: 999.00 },
+                  ]).map((zone) => {
+                    const isSelected = selectedZoneCode === zone.code;
+                    const zoneName = language === 'km' && zone.name_km ? zone.name_km : (zone.name || zone.name_en);
+                    const zoneDelivery = language === 'km' && zone.estimated_delivery_km ? zone.estimated_delivery_km : (zone.estimated_delivery || zone.estimated_delivery_en);
+                    const isFree = subtotal >= (Number(zone.free_shipping_threshold) || 9999);
+                    const feeDisplay = isFree ? (language === 'km' ? 'ឥតគិតថ្លៃ' : t('cart.complimentary')) : format(Number(zone.standard_fee) || 0);
+
+                    return (
+                      <label
+                        key={zone.code}
+                        onClick={() => setSelectedZoneCode(zone.code)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '12px 14px',
+                          borderRadius: 'var(--radius-sm)',
+                          border: `1px solid ${isSelected ? 'var(--color-primary)' : 'var(--color-border)'}`,
+                          backgroundColor: isSelected ? 'var(--color-primary-light)' : 'var(--color-surface)',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <input
+                            type="radio"
+                            name="shipping_zone"
+                            checked={isSelected}
+                            onChange={() => setSelectedZoneCode(zone.code)}
+                            style={{ accentColor: 'var(--color-primary)' }}
+                          />
+                          <div>
+                            <div style={{ fontWeight: 600, fontSize: '0.88rem' }}>{zoneName}</div>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
+                              {zoneDelivery} • {isFree ? (language === 'km' ? 'ទទួលបានការដឹកជញ្ជូនឥតគិតថ្លៃ' : 'Free delivery qualified') : (language === 'km' ? `ឥតគិតថ្លៃពេលទិញលើស ${format(zone.free_shipping_threshold)}` : `Free over ${format(zone.free_shipping_threshold)}`)}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <span style={{ fontWeight: 600, fontSize: '0.88rem' }}>
-                      {shippingFee === 0 ? t('cart.complimentary') : format(shippingFee)}
-                    </span>
-                  </label>
+                        <span style={{ fontWeight: 600, fontSize: '0.88rem', color: isFree ? 'var(--color-success)' : undefined }}>
+                          {feeDisplay}
+                        </span>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -848,7 +871,7 @@ export default function CheckoutPage() {
                     const unitPrice = product.final_price ?? product.sale_price ?? product.price ?? 0;
                     return (
                       <div
-                        key={item.product_id}
+                        key={item.bundle_id ? `b_${item.bundle_id}` : item.product_id}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -925,6 +948,34 @@ export default function CheckoutPage() {
                       >
                         {isApplyingCoupon ? '...' : 'Apply'}
                       </button>
+                    </div>
+                  )}
+
+                  {/* Referral Code input */}
+                  <div style={{ marginTop: '8px' }}>
+                    <input
+                      type="text"
+                      placeholder="Friend referral code (e.g. SKIN-XXXXX)"
+                      value={referralCodeInput}
+                      onChange={(e) => setReferralCodeInput(e.target.value.toUpperCase())}
+                      className="form-input"
+                      style={{ fontSize: '0.82rem', padding: '6px 10px', width: '100%', textTransform: 'uppercase' }}
+                    />
+                  </div>
+
+                  {/* Loyalty Points Redemption (if authenticated) */}
+                  {isAuthenticated && (
+                    <div style={{ marginTop: '8px' }}>
+                      <input
+                        type="number"
+                        placeholder="Redeem loyalty points (e.g. 100 pts = $5)"
+                        value={redeemPointsInput}
+                        onChange={(e) => setRedeemPointsInput(e.target.value)}
+                        className="form-input"
+                        style={{ fontSize: '0.82rem', padding: '6px 10px', width: '100%' }}
+                        min="0"
+                        step="100"
+                      />
                     </div>
                   )}
                 </div>

@@ -54,6 +54,8 @@ export default function ProductDetailPage() {
   const [qty, setQty] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [isSubscription, setIsSubscription] = useState(false);
+  const [subscriptionCadence, setSubscriptionCadence] = useState(30); // 30, 60, 90 days
 
   // Tabs for detailed specifications
   const [activeTab, setActiveTab] = useState('formulation'); // 'formulation' | 'usage' | 'shipping' | 'reviews'
@@ -457,6 +459,72 @@ export default function ProductDetailPage() {
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#71856B]/10 text-[#71856B] border border-[#71856B]/25">
                   <CheckCircle2 size={13} /> {t('product.in_stock_ready', { count: stockQty })}
                 </span>
+              )}
+            </div>
+
+            {/* Purchasing Cadence: One-Time vs. Subscribe & Save */}
+            <div className="mb-6 p-4 rounded-2xl bg-[#F8F6F0] border border-[#EBE6DF]">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <label
+                  onClick={() => setIsSubscription(false)}
+                  className={`flex-1 p-3 rounded-xl border text-left cursor-pointer transition-all ${
+                    !isSubscription
+                      ? 'bg-white border-[#7C8B72] shadow-xs'
+                      : 'bg-transparent border-[#E0DAD0] opacity-80 hover:opacity-100'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-semibold text-[#2C2A29]">One-Time Order</span>
+                    <input
+                      type="radio"
+                      name="purchase_type"
+                      checked={!isSubscription}
+                      onChange={() => setIsSubscription(false)}
+                      className="accent-[#7C8B72]"
+                    />
+                  </div>
+                  <div className="text-xs text-[#6B6561]">Standard single delivery</div>
+                </label>
+
+                <label
+                  onClick={() => setIsSubscription(true)}
+                  className={`flex-1 p-3 rounded-xl border text-left cursor-pointer transition-all relative ${
+                    isSubscription
+                      ? 'bg-white border-[#7C8B72] shadow-xs'
+                      : 'bg-transparent border-[#E0DAD0] opacity-80 hover:opacity-100'
+                  }`}
+                >
+                  <span className="absolute -top-2.5 right-3 bg-[#4F6C41] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    Save 10%
+                  </span>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-semibold text-[#2C2A29]">Subscribe & Save</span>
+                    <input
+                      type="radio"
+                      name="purchase_type"
+                      checked={isSubscription}
+                      onChange={() => setIsSubscription(true)}
+                      className="accent-[#7C8B72]"
+                    />
+                  </div>
+                  <div className="text-xs text-[#7C8B72] font-medium">Auto-replenish & save 10%</div>
+                </label>
+              </div>
+
+              {/* Delivery Frequency Picker */}
+              {isSubscription && (
+                <div className="mt-3 pt-3 border-t border-[#E8E2D8] flex items-center justify-between text-xs">
+                  <span className="text-[#6B6561] font-medium">Replenishment Cadence:</span>
+                  <select
+                    value={subscriptionCadence}
+                    onChange={(e) => setSubscriptionCadence(Number(e.target.value))}
+                    className="p-1.5 px-3 rounded-lg border border-[#D5CFC5] bg-white text-xs font-medium text-[#2C2A29] focus:outline-[#7C8B72]"
+                  >
+                    <option value={30}>Every 30 Days (Recommended)</option>
+                    <option value={60}>Every 60 Days</option>
+                    <option value={90}>Every 90 Days</option>
+                  </select>
+                </div>
               )}
             </div>
 

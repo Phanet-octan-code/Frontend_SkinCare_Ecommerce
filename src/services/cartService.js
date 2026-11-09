@@ -9,15 +9,29 @@ export const cartService = {
    * @param {Array<{ product_id: number, qty: number }>} items
    * @param {string|null} couponCode
    */
-  async getQuote(items, couponCode = null) {
+  async getQuote(
+    items,
+    couponCode = null,
+    redeemPoints = 0,
+    referralCode = null,
+    shippingZoneCode = null,
+    shippingAddress = null,
+    currency = null
+  ) {
     const formattedItems = (items || []).map((item) => ({
-      product_id: item.product_id || item.id,
+      product_id: item.bundle_id ? null : (item.product_id || item.id),
+      bundle_id: item.bundle_id || null,
       qty: Math.max(1, Number(item.qty) || 1),
     }));
 
     const res = await apiClient.post('/cart/quote', {
       items: formattedItems,
       coupon_code: couponCode ? String(couponCode).trim() : null,
+      redeem_points: Number(redeemPoints) || 0,
+      referral_code: referralCode ? String(referralCode).trim() : null,
+      shipping_zone_code: shippingZoneCode || null,
+      shipping_address: shippingAddress || null,
+      currency: currency || null,
     });
     return res.data;
   },

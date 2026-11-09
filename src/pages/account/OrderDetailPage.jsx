@@ -4,7 +4,7 @@ import orderService from '../../services/orderService';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
 import { useTranslation } from '../../i18n/LanguageContext';
-import { formatDate, formatOrderStatus } from '../../utils/formatters';
+import { formatDate, formatOrderStatus, formatPrice } from '../../utils/formatters';
 import { resolveImageUrl, handleImageError } from '../../utils/imageUrl';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs';
 import AccountNav from '../../components/navigation/AccountNav';
@@ -105,6 +105,10 @@ export default function OrderDetailPage() {
   const statusInfo = formatOrderStatus(order.status);
   const items = order.items || order.details || [];
 
+  const orderCurrency = order.currency || 'USD';
+  const orderRate = Number(order.exchange_rate) || 4100;
+  const formatOrder = (amount) => formatPrice(amount, orderCurrency, orderRate);
+
   // Fulfillment steps timeline calculation
   const statusLower = (order.status || '').toLowerCase();
   const isDelivered = statusLower === 'delivered' || statusLower === 'completed';
@@ -202,8 +206,13 @@ export default function OrderDetailPage() {
                 {statusInfo.label}
               </span>
               <div className="mt-2 text-xl sm:text-2xl font-bold text-[#1F2520]">
-                {format(order.final_total ?? order.total)}
+                {order.formatted_final_total || formatOrder(order.final_total ?? order.total)}
               </div>
+              {orderCurrency === 'KHR' && (
+                <div className="text-[11px] font-medium text-[#7A8578] mt-0.5">
+                  Locked rate: 1 USD = {orderRate.toLocaleString()} KHR
+                </div>
+              )}
             </div>
           </div>
 
@@ -314,14 +323,14 @@ export default function OrderDetailPage() {
                         {productName}
                       </Link>
                       <span className="text-xs text-[#7A8578]">
-                        Quantity: {quantity} × {format(unitPrice)}
+                        Quantity: {quantity} × {formatOrder(unitPrice)}
                       </span>
                     </div>
                   </div>
 
                   <div className="text-right">
                     <span className="text-sm sm:text-base font-bold text-[#1F2520]">
-                      {format(lineTotal)}
+                      {formatOrder(lineTotal)}
                     </span>
                   </div>
                 </div>
@@ -333,33 +342,33 @@ export default function OrderDetailPage() {
           <div className="mt-6 pt-4 border-t border-[#ECE8DE] flex flex-col gap-2 max-w-xs ml-auto text-xs sm:text-sm text-[#5A6358]">
             <div className="flex justify-between">
               <span>Subtotal:</span>
-              <span className="font-semibold text-[#1F2520]">{format(order.subtotal ?? (order.final_total ?? order.total))}</span>
+              <span className="font-semibold text-[#1F2520]">{formatOrder(order.subtotal ?? (order.final_total ?? order.total))}</span>
             </div>
 
             {Number(order.discount ?? order.discount_amount ?? 0) > 0 && (
               <div className="flex justify-between text-[#71856B] font-medium">
                 <span>Promotional Savings:</span>
-                <span>-{format(order.discount ?? order.discount_amount)}</span>
+                <span>-{formatOrder(order.discount ?? order.discount_amount)}</span>
               </div>
             )}
 
             {Number(order.tax ?? 0) > 0 && (
               <div className="flex justify-between">
                 <span>Tax (5%):</span>
-                <span className="font-semibold text-[#1F2520]">{format(order.tax)}</span>
+                <span className="font-semibold text-[#1F2520]">{formatOrder(order.tax)}</span>
               </div>
             )}
 
             <div className="flex justify-between">
-              <span>Courier Delivery:</span>
+              <span>Courier Delivery ({order.shipping_zone_name || 'Regional'}):</span>
               <span className="text-[#71856B] font-medium">
-                {Number(order.shipping_fee ?? 0) === 0 ? 'Complimentary' : format(order.shipping_fee)}
+                {Number(order.shipping_fee ?? 0) === 0 ? 'Complimentary' : formatOrder(order.shipping_fee)}
               </span>
             </div>
 
             <div className="flex justify-between pt-2 border-t border-[#ECE8DE] text-sm sm:text-base font-bold text-[#1F2520]">
-              <span>Total Paid:</span>
-              <span>{format(order.final_total ?? order.total)}</span>
+              <span>Total Paid ({orderCurrency}):</span>
+              <span>{order.formatted_final_total || formatOrder(order.final_total ?? order.total)}</span>
             </div>
           </div>
         </div>

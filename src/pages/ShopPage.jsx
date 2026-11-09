@@ -191,7 +191,7 @@ export default function ShopPage() {
 
   return (
     <div className="bg-[#FAF9F5] min-h-screen py-4 sm:py-6 md:py-8">
-      <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container">
         {/* Reusable Breadcrumbs */}
         <Breadcrumbs
           items={[

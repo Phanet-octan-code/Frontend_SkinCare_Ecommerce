@@ -269,10 +269,12 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               {product.name}
             </Link>
 
-            {/* Benefit Subtitle */}
-            <p className="text-[11px] sm:text-xs text-[#71776E] font-normal line-clamp-2 leading-relaxed mb-2 min-h-[30px]">
-              {subtitle}
-            </p>
+            {/* Optional concise subtitle */}
+            {product.subtitle && (
+              <p className="text-[11px] text-[#71776E] font-normal line-clamp-1 leading-snug mb-1.5">
+                {product.subtitle}
+              </p>
+            )}
 
             {/* Star Ratings */}
             <div className="flex items-center gap-1.5 mb-2.5 select-none">

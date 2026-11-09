@@ -24,13 +24,13 @@ const FALLBACK_IMAGE = DEFAULT_FALLBACK_IMAGE;
 const ARTICLES = [
   {
     id: 1,
-    title: 'The Dermal Barrier Architecture: Why Acid Mantle pH (4.7 – 5.5) Is Crucial',
+    title: 'The Dermal Barrier Architecture: Why Acid Mantle pH Matters',
     category: 'Dermatology',
     excerpt:
-      'Understanding the brick-and-mortar structure of the stratum corneum, intercellular lipids, and how alkaline soaps silently compromise physiological defense against pathogens.',
-    readTime: '6 min read',
+      'How the stratum corneum and intercellular lipids protect against pathogens and dehydration.',
+    readTime: '4 min read',
     date: 'Nov 3, 2026',
-    author: 'Dr. S. Vance, Formulation Chemist',
+    author: 'Dr. S. Vance',
     image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80',
     featured: true,
     content: `The human stratum corneum is frequently conceptualized as a biological brick wall: corneocyte protein envelopes represent the bricks, embedded within a continuous multi-lamellar lipid matrix comprised of ceramides, cholesterol, and free fatty acids.
@@ -50,10 +50,10 @@ The clinical result is transepidermal water loss (TEWL), heightened allergen pen
     title: 'Morning vs. Evening Active Scheduling: Avoiding Barrier Burnout',
     category: 'Routines',
     excerpt:
-      'A practical guide to cycling L-Ascorbic Acid, Copper Peptides, Retinoids, and Alpha Hydroxy Acids without causing competitive neutralization or micro-inflammation.',
-    readTime: '5 min read',
+      'A practical guide to cycling Vitamin C, retinoids, and hydroxy acids for optimal results without irritation.',
+    readTime: '3 min read',
     date: 'Oct 28, 2026',
-    author: 'Elena Rostova, Dermal Specialist',
+    author: 'Elena Rostova',
     image: 'https://images.unsplash.com/photo-1608248597359-5433246872a9?auto=format&fit=crop&w=800&q=80',
     featured: false,
     content: `Applying multiple low-pH actives in single sessions is one of the most common causes of induced barrier compromise. 
@@ -68,13 +68,13 @@ Recommended dispensary rotation:
   },
   {
     id: 3,
-    title: 'The Synergistic Trinity: Niacinamide, Azelaic Acid & Centella Asiatica',
+    title: 'The Synergistic Trinity: Niacinamide, Azelaic Acid & Centella',
     category: 'Ingredients',
     excerpt:
-      'How combining 2-5% Vitamin B3 with dicarboxylic acids calms post-inflammatory erythema (PIE) and balances sebum production without dermal peeling.',
-    readTime: '4 min read',
+      'How combining Vitamin B3 with botanical extracts calms redness and balances sebum.',
+    readTime: '3 min read',
     date: 'Oct 20, 2026',
-    author: 'Dispensary Lab Team',
+    author: 'Dispensary Lab',
     image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80',
     featured: false,
     content: `Niacinamide (Nicotinamide) is an essential precursor to NAD+ and NADP+ coenzymes involved in ATP synthesis and cellular DNA repair. When paired with 10% Azelaic Acid, the combination targets multiple pathways of cutaneous redness:
@@ -91,10 +91,10 @@ Recommended dispensary rotation:
     title: 'Multi-Depth Hyaluronic Acid: Why Molecular Weight Matters',
     category: 'Ingredients',
     excerpt:
-      'Not all hyaluronic acid behaves identically. High molecular weight forms an occlusive hydration veil, while low molecular weight penetrates deep to signal endogenous repair.',
-    readTime: '4 min read',
+      'How different molecular weights hydrate skin layers from surface shield to deep reservoir.',
+    readTime: '3 min read',
     date: 'Oct 15, 2026',
-    author: 'Dispensary Lab Team',
+    author: 'Dispensary Lab',
     image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
     featured: false,
     content: `Hyaluronic acid spans a broad spectrum of Daltons:
@@ -110,31 +110,29 @@ Recommended dispensary rotation:
     title: 'Mineral vs. Chemical UV Filters in Humid Environments',
     category: 'Formulations',
     excerpt:
-      'A technical review of Zinc Oxide and Titanium Dioxide versus modern organic filters (Tinosorb S, Uvinul A Plus) under high ambient humidity and perspiration.',
-    readTime: '6 min read',
+      'Comparing zinc shields with organic filters under warm humidity and perspiration.',
+    readTime: '3 min read',
     date: 'Oct 08, 2026',
-    author: 'Dr. S. Vance, Formulation Chemist',
+    author: 'Dr. S. Vance',
     image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
     featured: false,
-    content: `Sunscreen formulations in tropical and subtropical climates face unique physical stresses: perspiration, sebum breakdown, and thermal degradation.
-Physical mineral shields offer immediate, broad photostability with minimal irritation potential, while next-generation photostable organic filters offer weightless, invisible finishes on deeper skin tones.`,
+    content: `Sunscreen formulations in tropical and subtropical climates face unique stresses: perspiration, sebum, and heat. Mineral shields offer broad photostability with low irritation, while modern filters provide a weightless finish.`,
     relatedProducts: [
       { name: 'Beauty of Joseon Relief Sun: Rice + Probiotics', path: '/shop?search=joseon' },
     ],
   },
   {
     id: 6,
-    title: 'Cold-Process Micro-Extraction: Preserving Botanical Polyphenols',
+    title: 'Cold-Process Micro-Extraction: Preserving Polyphenols',
     category: 'Formulations',
     excerpt:
-      'How high-temperature decoctions denature volatile bioactive botanicals, and why supercritical CO2 and ultrasound micro-extraction yield higher potency.',
-    readTime: '5 min read',
+      'Why low-temperature supercritical extraction protects delicate bioactive nutrients.',
+    readTime: '3 min read',
     date: 'Sep 29, 2026',
-    author: 'Dispensary Lab Team',
+    author: 'Dispensary Lab',
     image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80',
     featured: false,
-    content: `Botanical bioactives—such as green tea epigallocatechin gallate (EGCG), Centella asiatica madecassoside, and licorice root glabridin—are inherently thermo-labile.
-Our dispensary extraction protocol relies on gentle supercritical cold processing to maintain 98.4% intact polyphenol structures.`,
+    content: `Botanical bioactives like green tea and madecassoside are delicate. Our dispensary cold processing ensures optimal potency and purity.`,
     relatedProducts: [
       { name: 'Beauty of Joseon Glow Serum : Propolis + Niacinamide', path: '/shop?search=glow' },
     ],
@@ -164,24 +162,24 @@ export default function BlogPage() {
 
   return (
     <div className="bg-[#FAF9F5] min-h-screen py-6 sm:py-10 md:py-14">
-      <div className="container max-w-6xl mx-auto px-4">
+      <div className="container">
         {/* Breadcrumbs */}
         <div className="mb-4">
           <Breadcrumbs items={[{ label: t('blog.breadcrumb') || 'Blog & Journal' }]} />
         </div>
 
         {/* Header Banner */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FDF2F4] text-[#E0567A] text-[11px] font-semibold tracking-wider uppercase mb-3 border border-[#E0567A]/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] font-semibold tracking-wider uppercase mb-3 border border-[#71856B]/20">
             <BookOpen size={13} />
-            <span>{t('blog.badge') || 'Clinical Monographs & Botanical Science'}</span>
+            <span>{t('blog.badge') || 'Clinical Journal & Science'}</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-3 sm:mb-4 tracking-tight">
             {t('blog.title_part1') || 'The Dermal'}{' '}
-            <span className="italic font-serif text-[#E0567A]">{t('blog.title_part2') || 'Compendium'}</span>
+            <span className="italic font-serif text-[#71856B]">{t('blog.title_part2') || 'Compendium'}</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#5A6358] leading-relaxed max-w-2xl mx-auto">
-            {t('blog.subtitle') || 'Authoritative dermatological monographs, cellular research digests, and evidence-backed botanical formulating standards from our dispensary chemists.'}
+          <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed max-w-xl mx-auto">
+            {t('blog.subtitle') || 'Dermatological monographs, ingredient research, and evidence-backed botanical skincare from our formulation lab.'}
           </p>
         </div>
 
@@ -290,7 +288,7 @@ export default function BlogPage() {
               className="bg-white rounded-2xl border border-[#ECE8DE] overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col group cursor-pointer"
               onClick={() => setActiveArticle(article)}
             >
-              {/* Thumbnail */}
+              {/* Thumbnail (Clean & Unobstructed) */}
               <div className="relative aspect-[16/10] overflow-hidden bg-[#F4F1EA]">
                 <img
                   src={resolveImageUrl(article.image)}
@@ -299,22 +297,24 @@ export default function BlogPage() {
                   loading="lazy"
                   onError={(e) => handleImageError(e, FALLBACK_IMAGE)}
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold tracking-wider uppercase text-[#1F2520] shadow-2xs border border-white/40">
-                  {article.category}
-                </span>
-                <span className="absolute bottom-3 right-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-xs text-white text-[10px] font-medium flex items-center gap-1">
-                  <Clock size={10} />
-                  {article.readTime}
-                </span>
               </div>
 
               {/* Body */}
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-[17px] sm:text-lg font-semibold text-[#1F2520] group-hover:text-[#E0567A] transition-colors mb-2 line-clamp-2 leading-snug">
+                  <div className="flex items-center justify-between text-xs mb-2">
+                    <span className="text-[10px] font-bold tracking-wider uppercase text-[#71856B]">
+                      {article.category}
+                    </span>
+                    <span className="text-[11px] text-[#8C9388] flex items-center gap-1">
+                      <Clock size={11} />
+                      {article.readTime}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-[17px] sm:text-lg font-semibold text-[#1F2520] group-hover:text-[#71856B] transition-colors mb-2 line-clamp-2 leading-snug">
                     {article.title}
                   </h3>
-                  <p className="text-xs sm:text-[13px] text-[#5A6358] line-clamp-3 leading-relaxed mb-4">
+                  <p className="text-xs sm:text-[13px] text-[#5A6358] line-clamp-2 leading-relaxed mb-4">
                     {article.excerpt}
                   </p>
                 </div>

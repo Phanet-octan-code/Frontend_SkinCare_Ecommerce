@@ -26,6 +26,8 @@ export default function AccountNav() {
 
   const navItems = [
     { label: t('account.profile_security') || 'Profile & Security', path: '/account/profile', icon: User },
+    { label: 'Loyalty Privilège & Referrals', path: '/account/loyalty', icon: Sparkles },
+    { label: 'Auto-Delivery Subscriptions', path: '/account/subscriptions', icon: Truck },
     { label: t('account.order_history') || 'Order History', path: '/account/orders', icon: Package },
     { label: t('account.delivery_addresses') || 'Saved Addresses', path: '/account/addresses', icon: MapPin },
     { label: t('account.saved_wishlist') || 'Wishlist', path: '/wishlist', icon: Heart },
