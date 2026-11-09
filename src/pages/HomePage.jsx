@@ -304,7 +304,7 @@ export default function HomePage() {
       badgeIcon: Droplets,
       titlePart1: t('hero.title_part1') || 'Triple Active Hydration',
       titlePart2: t('hero.title_part2') || 'Pure Botanicals & Dermal Renewal',
-      subtitle: t('hero.subtitle') || 'Gentle pH 5.5 Cleanser, Hydrating Serum, and barrier cream for 24-hour hydration.',
+      subtitle: t('hero.subtitle') || 'A clinical master ritual featuring gentle pH 5.5 Cleanser, concentrated Hydrating Serum dropper, and deep moisture barrier cream formulated for 24-hour cellular replenishment.',
       image: heroSlide1,
       ctaPrimary: t('hero.cta_primary') || 'Shop The Ritual',
       ctaSecondary: t('hero.cta_secondary') || 'Clinical Consultation',
@@ -329,7 +329,7 @@ export default function HomePage() {
       badgeIcon: Sparkles,
       titlePart1: t('hero.slide2_title1') || 'Science-Led Skincare for',
       titlePart2: t('hero.slide2_title2') || 'Luminous, Resilient Skin',
-      subtitle: t('hero.slide2_subtitle') || 'Pure active botanicals and clinical actives engineered for luminous, resilient skin.',
+      subtitle: t('hero.slide2_subtitle') || 'Curated pharmaceutical-grade formulations, active botanicals, and personalized dermatological regimens tested for clinical biocompatibility.',
       image: heroSlide2,
       ctaPrimary: t('hero.slide2_cta') || 'Explore Formulations',
       ctaSecondary: t('hero.cta_secondary') || 'Explore Collection',
@@ -354,7 +354,7 @@ export default function HomePage() {
       badgeIcon: Leaf,
       titlePart1: t('hero.slide3_title1') || 'Clinical Active Potency',
       titlePart2: t('hero.slide3_title2') || 'Hand-Dispensed Purity',
-      subtitle: t('hero.slide3_subtitle') || 'Cold-chain serums and botanical extracts crafted to restore balance and radiance.',
+      subtitle: t('hero.slide3_subtitle') || 'Cold-chain dispensed serums, restorative emulsions, and gentle botanical extracts engineered to illuminate the dermal mantle without irritation.',
       image: heroSlide3,
       ctaPrimary: t('hero.slide3_cta') || 'View Dispensary Catalog',
       ctaSecondary: t('hero.cta_secondary') || 'Our Philosophy',
@@ -404,17 +404,12 @@ export default function HomePage() {
               </div>
 
               {/* Main Heading (Guaranteed 2 Clean Lines: Line 1 Black Serif, Line 2 Italic Sage Green) */}
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.85rem] lg:text-[3.25rem] xl:text-[3.6rem] font-normal text-[#1F2520] leading-[1.14] tracking-[-0.02em] mb-4 sm:mb-5 transition-all duration-300">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.85rem] lg:text-[3.25rem] xl:text-[3.6rem] font-normal text-[#1F2520] leading-[1.14] tracking-[-0.02em] mb-5 sm:mb-6 transition-all duration-300">
                 <span className="block">{currentHero.titlePart1}</span>
                 <span className="block italic font-serif text-[#546A50] mt-1 sm:mt-1.5">
                   {currentHero.titlePart2}
                 </span>
               </h1>
-
-              {/* Subtitle Description */}
-              <p className="text-sm sm:text-base lg:text-[1.02rem] text-[#5A6358] leading-relaxed mb-5 sm:mb-6 max-w-lg font-normal transition-all duration-300">
-                {currentHero.subtitle}
-              </p>
 
               {/* Key Benefits Pill Row (Borderless, Clean Shadow) */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6 sm:mb-7">
@@ -472,8 +467,8 @@ export default function HomePage() {
                   </button>
                 </div>
 
-                {/* Slide Indicator Tabs */}
-                <div className="flex items-center gap-2 flex-wrap">
+                {/* Clean Minimal Slide Number Indicator Tabs */}
+                <div className="flex items-center gap-1.5">
                   {heroSlides.map((slide, idx) => {
                     const isActive = activeSlide === idx;
                     return (
@@ -481,14 +476,15 @@ export default function HomePage() {
                         key={slide.id}
                         type="button"
                         onClick={() => setActiveSlide(idx)}
-                        className={`px-3.5 py-1.5 rounded-none text-[11px] sm:text-xs font-semibold tracking-wider transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
+                        className={`h-8 px-3 text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
                           isActive
-                            ? 'bg-[#1F2520] text-white shadow-[0_4px_12px_rgba(31,37,32,0.2)] scale-100'
-                            : 'bg-white text-[#5A6358] shadow-[0_2px_8px_rgba(31,37,32,0.05)] hover:bg-white hover:text-[#1F2520] hover:shadow-[0_4px_12px_rgba(31,37,32,0.1)]'
+                            ? 'bg-[#1F2520] text-white shadow-xs'
+                            : 'bg-white text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5]'
                         }`}
+                        aria-label={`Slide 0${idx + 1}`}
                       >
-                        <span className={`w-1.5 h-1.5 ${isActive ? 'bg-[#34D399] animate-pulse' : 'bg-[#C5BFA9]'}`} />
-                        <span>{slide.pillTitle}</span>
+                        <span className={`w-1.5 h-1.5 ${isActive ? 'bg-[#34D399]' : 'bg-[#C5BFA9]'}`} />
+                        <span>0{idx + 1}</span>
                       </button>
                     );
                   })}
@@ -548,12 +544,9 @@ export default function HomePage() {
                 <Leaf size={18} strokeWidth={2} />
               </div>
               <div className="min-w-0">
-                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] mb-0.5 truncate">
+                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] truncate">
                   {t('pillars.genuine_title') || '100% Genuine Lab Verified'}
                 </h4>
-                <p className="text-[11px] sm:text-xs text-[#5A6358] truncate">
-                  {t('pillars.genuine_desc') || 'Pure & Natural Ingredients'}
-                </p>
               </div>
             </div>
 
@@ -563,12 +556,9 @@ export default function HomePage() {
                 <Beaker size={18} strokeWidth={2} />
               </div>
               <div className="min-w-0">
-                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] mb-0.5 truncate">
+                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] truncate">
                   No Harmful Additives
                 </h4>
-                <p className="text-[11px] sm:text-xs text-[#5A6358] truncate">
-                  Safe For You & Your Skin
-                </p>
               </div>
             </div>
 
@@ -578,12 +568,9 @@ export default function HomePage() {
                 <Award size={18} strokeWidth={2} />
               </div>
               <div className="min-w-0">
-                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] mb-0.5 truncate">
+                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] truncate">
                   Cold-Chain Handled
                 </h4>
-                <p className="text-[11px] sm:text-xs text-[#5A6358] truncate">
-                  Good For You, Good For Earth
-                </p>
               </div>
             </div>
 
@@ -593,12 +580,9 @@ export default function HomePage() {
                 <Truck size={18} strokeWidth={2} />
               </div>
               <div className="min-w-0">
-                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] mb-0.5 truncate">
+                <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#1F2520] truncate">
                   {t('pillars.shipping_title') || 'Complimentary Delivery'}
                 </h4>
-                <p className="text-[11px] sm:text-xs text-[#5A6358] truncate">
-                  {t('pillars.shipping_desc', { threshold: format(deliveryThreshold) }) || 'On all orders over $50'}
-                </p>
               </div>
             </div>
           </div>
@@ -610,12 +594,9 @@ export default function HomePage() {
         <div className="container relative">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-10 gap-4">
             <div className="text-left max-w-xl">
-              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold tracking-wider uppercase text-[#1F2520] mb-2">
+              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold tracking-wider uppercase text-[#1F2520]">
                 {t('home.shop_by_category') || 'SHOP BY CATEGORY'}
               </h2>
-              <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed m-0">
-                {t('home.shop_by_category_desc') || 'Explore specialized active solutions formulated to treat specific skin concerns.'}
-              </p>
             </div>
 
             {/* Forward / Backward Scroll Controls */}
@@ -868,19 +849,16 @@ export default function HomePage() {
       </section>
 
       {/* ─── SECTION 9: DAILY 4-STEP SKINCARE REGIMEN GUIDE & DERMAL TAXONOMY ─── */}
-      <section className="py-14 sm:py-18 md:py-22 bg-white border-b border-[#ECE8DE]">
+      <section className="py-12 sm:py-16 md:py-20 bg-white border-b border-[#ECE8DE]">
         <div className="container">
           {/* Sub-Section 9A: 4-Step Regimen Flow */}
-          <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
+          <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
             <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
               Dermatological Method
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] mb-2">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520]">
               The Daily 4-Step Clinical Regimen
             </h2>
-            <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
-              A structured sequence to balance and fortify the skin barrier.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-14">
@@ -898,12 +876,9 @@ export default function HomePage() {
                     <Droplets size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                   Purify & pH Balance
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                  Gentle low-foam cleansing that preserves skin lipids.
-                </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
                 Explore Cleansers <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -924,12 +899,9 @@ export default function HomePage() {
                     <Sparkle size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                   Infuse & Prime
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                  Bio-water essences to prime and maximize absorption.
-                </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
                 Explore Toners <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -950,12 +922,9 @@ export default function HomePage() {
                     <Beaker size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                   Target & Correct
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                  Targeted actives calibrated for high-potency results.
-                </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
                 Explore Serums <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -976,12 +945,9 @@ export default function HomePage() {
                     <ShieldCheck size={16} />
                   </div>
                 </div>
-                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                <h3 className="font-serif text-sm sm:text-base font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                   Seal & Defend
                 </h3>
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
-                  Moisture seal crèmes paired with daily mineral defense.
-                </p>
               </div>
               <span className="text-[11px] font-semibold text-[#71856B] inline-flex items-center gap-1">
                 Explore Moisturizers <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -995,7 +961,7 @@ export default function HomePage() {
               <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-1.5">
                 Dermatological Prescription
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl text-[#1F2520] mb-2">
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1F2520]">
                 Shop by Skin Concern
               </h2>
             </div>
@@ -1010,12 +976,9 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
                     <Droplets size={16} />
                   </div>
-                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                     Hydration & Barrier
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
-                    Ceramides & multi-depth hydration.
-                  </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
                   Explore Regimen <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -1031,12 +994,9 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
                     <Sparkles size={16} />
                   </div>
-                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                     Anti-Aging & Firming
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
-                    Peptides & cellular firming.
-                  </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
                   Explore Regimen <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -1052,12 +1012,9 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
                     <ShieldCheck size={16} />
                   </div>
-                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                     Blemish & Clarifying
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
-                    BHA & pore clarifying.
-                  </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
                   Explore Regimen <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -1073,12 +1030,9 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
                     <Sun size={16} />
                   </div>
-                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                     Radiance & Dark Spots
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
-                    Vitamin C & tone radiance.
-                  </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
                   Explore Regimen <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -1094,12 +1048,9 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-xl bg-white border border-[#ECE8DE] text-[#71856B] flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
                     <Heart size={16} />
                   </div>
-                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-1 group-hover:text-[#71856B] transition-colors">
+                  <h3 className="font-serif text-sm font-medium text-[#1F2520] mb-3 group-hover:text-[#71856B] transition-colors">
                     Calming & Redness
                   </h3>
-                  <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mb-2.5">
-                    Centella & barrier calming.
-                  </p>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#71856B]">
                   Explore Regimen <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -1127,31 +1078,25 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Story Narrative (Clean & Editorial) */}
+            {/* Story Narrative (Clean & Minimalist) */}
             <div className="lg:col-span-6 flex flex-col items-start text-left">
               <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2.5">
                 Our Formulation Standard
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] leading-tight mb-3">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] leading-tight mb-6">
                 Formulated Without Compromise. Verified by Science.
               </h2>
-              <p className="text-xs sm:text-sm md:text-base text-[var(--color-text-secondary)] leading-relaxed mb-6">
-                We combine bioavailable botanical extracts with clinical actives to strengthen your skin barrier. Every formulation is 100% free from synthetic dyes, parabens, and drying alcohols.
-              </p>
 
-              {/* Trust Pillars Checklist */}
+              {/* Trust Pillars Checklist (Clean & Minimalist) */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full mb-7">
-                <div className="p-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
-                  <span className="block text-xs font-semibold text-[#1F2520] mb-0.5">🌿 100% Organic</span>
-                  <span className="text-[10px] text-[var(--color-text-muted)]">Clean Botanicals</span>
+                <div className="py-2.5 px-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
+                  <span className="text-xs font-semibold text-[#1F2520]">🌿 100% Organic</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
-                  <span className="block text-xs font-semibold text-[#1F2520] mb-0.5">🔬 Dermatologist</span>
-                  <span className="text-[10px] text-[var(--color-text-muted)]">Approved & Tested</span>
+                <div className="py-2.5 px-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
+                  <span className="text-xs font-semibold text-[#1F2520]">🔬 Dermatologist Tested</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
-                  <span className="block text-xs font-semibold text-[#1F2520] mb-0.5">🐰 Cruelty-Free</span>
-                  <span className="text-[10px] text-[var(--color-text-muted)]">Sustainably Crafted</span>
+                <div className="py-2.5 px-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
+                  <span className="text-xs font-semibold text-[#1F2520]">🐰 Cruelty-Free</span>
                 </div>
               </div>
 
@@ -1175,12 +1120,9 @@ export default function HomePage() {
             <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2">
               Dermatological Proof
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] mb-3">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520]">
               Clinical Results & Real Reviews
             </h2>
-            <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
-              Verified experiences from our dispensary patrons and skincare clinic members.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -1216,7 +1158,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
-                  "Pharmaceutical grade results. Deeply plumping and pure silk on the skin without any stinging."
+                  "Pharmaceutical grade results. Deeply plumping and pure silk on the skin without stinging."
                 </p>
               </div>
               <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">
@@ -1239,7 +1181,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-xs sm:text-sm text-[#1F2520] leading-relaxed italic mb-4">
-                  "Authentic clinical skincare with same-day cold-packed delivery and batch tracking peace of mind."
+                  "Authentic clinical skincare with fast cold-packed delivery and peace of mind."
                 </p>
               </div>
               <div className="pt-3 border-t border-[#ECE8DE] flex items-center justify-between">

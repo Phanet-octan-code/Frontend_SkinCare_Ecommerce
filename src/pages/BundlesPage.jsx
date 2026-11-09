@@ -45,19 +45,16 @@ export default function BundlesPage() {
   });
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="bg-[#FAF8F5] min-h-screen py-10">
+      <div className="container">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="text-xs uppercase tracking-widest text-[#7C8B72] font-semibold">
             Curated Collections & Rituals
           </span>
-          <h1 className="text-3xl sm:text-4xl font-serif text-[#2C2A29] mt-2 mb-4">
+          <h1 className="text-3xl sm:text-4xl font-serif text-[#2C2A29] mt-2 mb-3">
             Product Bundles & Luxury Gift Sets
           </h1>
-          <p className="text-sm sm:text-base text-[#6B6561] leading-relaxed">
-            Experience complete skincare regimens designed by dermatological experts. Each curated bundle pairs synergistically active formulas with special set savings and complimentary treats.
-          </p>
 
           {/* Filter Navigation */}
           <div className="inline-flex rounded-full bg-white p-1.5 shadow-sm border border-[#EBE6DF] mt-6">
@@ -138,30 +135,13 @@ export default function BundlesPage() {
                   className="bg-white rounded-2xl border border-[#EBE6DF] overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
                   <div>
-                    {/* Image & Badges */}
+                    {/* Pure Clean Bundle Image (Zero Overlaid Badges) */}
                     <div className="relative aspect-square bg-[#F5F2EC] overflow-hidden group">
                       <img
                         src={bundle.image_url}
                         alt={bundle.name}
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                        {isGiftSet ? (
-                          <span className="bg-[#D9A74A] text-white text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                            Gift Set
-                          </span>
-                        ) : (
-                          <span className="bg-[#7C8B72] text-white text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                            Routine Bundle
-                          </span>
-                        )}
-                        {bundle.savings_amount > 0 && (
-                          <span className="bg-[#2C2A29] text-white text-[11px] font-medium px-2.5 py-0.5 rounded-full shadow-sm">
-                            Save {formatPrice(bundle.savings_amount)} ({bundle.savings_percentage}%)
-                          </span>
-                        )}
-                      </div>
-
                       {!inStock && (
                         <div className="absolute inset-0 bg-white/70 backdrop-blur-xs flex items-center justify-center">
                           <span className="bg-[#6B6561] text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest">
@@ -173,14 +153,27 @@ export default function BundlesPage() {
 
                     {/* Content Details */}
                     <div className="p-6">
-                      <h3 className="font-serif text-lg text-[#2C2A29] font-medium leading-snug mb-2">
+                      {/* Bundle Category & Savings Tags */}
+                      <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
+                        {isGiftSet ? (
+                          <span className="bg-[#D9A74A] text-white text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            Gift Set
+                          </span>
+                        ) : (
+                          <span className="bg-[#7C8B72] text-white text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            Routine Bundle
+                          </span>
+                        )}
+                        {bundle.savings_amount > 0 && (
+                          <span className="bg-[#2C2A29] text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
+                            Save {formatPrice(bundle.savings_amount)} ({bundle.savings_percentage}%)
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="font-serif text-lg text-[#2C2A29] font-medium leading-snug mb-3">
                         {bundle.name}
                       </h3>
-                      {bundle.description && (
-                        <p className="text-xs text-[#6B6561] line-clamp-2 leading-relaxed mb-4">
-                          {bundle.description}
-                        </p>
-                      )}
 
                       {/* Packaging info */}
                       {bundle.packaging_details && (

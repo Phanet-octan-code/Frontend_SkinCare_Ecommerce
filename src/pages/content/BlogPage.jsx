@@ -169,18 +169,15 @@ export default function BlogPage() {
         </div>
 
         {/* Header Banner */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] font-semibold tracking-wider uppercase mb-3 border border-[#71856B]/20">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] font-semibold tracking-wider uppercase mb-2.5 border border-[#71856B]/20">
             <BookOpen size={13} />
             <span>{t('blog.badge') || 'Clinical Journal & Science'}</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-3 sm:mb-4 tracking-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] tracking-tight">
             {t('blog.title_part1') || 'The Dermal'}{' '}
             <span className="italic font-serif text-[#71856B]">{t('blog.title_part2') || 'Compendium'}</span>
           </h1>
-          <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed max-w-xl mx-auto">
-            {t('blog.subtitle') || 'Dermatological monographs, ingredient research, and evidence-backed botanical skincare from our formulation lab.'}
-          </p>
         </div>
 
         {/* Search & Category Filter Bar */}
@@ -243,12 +240,9 @@ export default function BlogPage() {
                       {featuredArticle.readTime}
                     </span>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl md:text-3xl font-normal text-[#1F2520] mb-3 leading-snug">
+                  <h2 className="font-serif text-2xl sm:text-3xl md:text-3xl font-normal text-[#1F2520] mb-6 leading-snug">
                     {featuredArticle.title}
                   </h2>
-                  <p className="text-sm text-[#5A6358] leading-relaxed mb-6 font-normal">
-                    {featuredArticle.excerpt}
-                  </p>
                 </div>
 
                 <div>
@@ -311,12 +305,9 @@ export default function BlogPage() {
                       {article.readTime}
                     </span>
                   </div>
-                  <h3 className="font-serif text-[17px] sm:text-lg font-semibold text-[#1F2520] group-hover:text-[#71856B] transition-colors mb-2 line-clamp-2 leading-snug">
+                  <h3 className="font-serif text-[17px] sm:text-lg font-semibold text-[#1F2520] group-hover:text-[#71856B] transition-colors mb-4 line-clamp-2 leading-snug">
                     {article.title}
                   </h3>
-                  <p className="text-xs sm:text-[13px] text-[#5A6358] line-clamp-2 leading-relaxed mb-4">
-                    {article.excerpt}
-                  </p>
                 </div>
 
                 <div className="pt-3.5 border-t border-[#F0ECE3] flex items-center justify-between text-xs text-[#8C9388]">

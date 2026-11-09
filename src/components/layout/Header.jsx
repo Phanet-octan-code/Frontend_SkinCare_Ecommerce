@@ -299,7 +299,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                         setIsSearchExpanded(false);
                         setNavSearchQuery('');
                       }}
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-[#8C9388] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors shrink-0"
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-[#8C9388] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors shrink-0 cursor-pointer"
                       aria-label="Close search"
                     >
                       <X size={13} />

@@ -27,43 +27,36 @@ textarea:focus-visible {
 }
 
 .container:not([class*="max-w-"]) {
-  width: 80% !important;
-  max-width: 80% !important;
+  width: 95% !important;
+  max-width: 95% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-left: clamp(16px, 2vw, 32px) !important;
-  padding-right: clamp(16px, 2vw, 32px) !important;
-}
-
-@media (max-width: 1280px) {
-  .container:not([class*="max-w-"]) {
-    width: 85% !important;
-    max-width: 85% !important;
-  }
+  padding-left: clamp(12px, 1.5vw, 24px) !important;
+  padding-right: clamp(12px, 1.5vw, 24px) !important;
 }
 
 @media (max-width: 1024px) {
   .container:not([class*="max-w-"]) {
-    width: 90% !important;
-    max-width: 90% !important;
+    width: 95% !important;
+    max-width: 95% !important;
   }
 }
 
 @media (max-width: 768px) {
   .container:not([class*="max-w-"]) {
-    width: 92% !important;
-    max-width: 92% !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    width: 96% !important;
+    max-width: 96% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
 
 @media (max-width: 480px) {
   .container:not([class*="max-w-"]) {
-    width: 95% !important;
-    max-width: 95% !important;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    width: 98% !important;
+    max-width: 98% !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 }
 

@@ -190,37 +190,8 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
   return (
     <>
       <div className="product-card group relative flex flex-col h-full bg-transparent transition-all duration-300">
-        {/* Product Image Canvas (Warm Studio Background, Clean Borderless) */}
-        <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-[#F4F1EA] group-hover:bg-[#ECE8DF] transition-colors duration-300 flex items-center justify-center p-4 sm:p-5 mb-3">
-          {/* Subtle Discount / Status Badge */}
-          {hasDiscount && (
-            <span className="absolute top-2.5 left-2.5 z-10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider bg-[#1F2520] text-white shadow-2xs">
-              -{discountPercent}%
-            </span>
-          )}
-          {isOutOfStock && (
-            <span className="absolute top-2.5 left-2.5 z-10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider bg-[#71776E] text-white shadow-2xs">
-              {t('common.out_of_stock') || 'Sold Out'}
-            </span>
-          )}
-
-          {/* Minimal Wishlist Heart Button */}
-          <button
-            type="button"
-            onClick={handleWishlistToggle}
-            disabled={isWishlistLoading}
-            aria-label={isWishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
-            className="absolute top-2.5 right-2.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/75 hover:bg-white backdrop-blur-xs flex items-center justify-center text-[#1F2520]/70 hover:text-[#C55A48] shadow-2xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
-          >
-            <Heart
-              size={13}
-              fill={isWishlisted ? '#C55A48' : 'none'}
-              stroke={isWishlisted ? '#C55A48' : 'currentColor'}
-              strokeWidth={1.8}
-              className={`transition-colors ${isWishlisted ? 'text-[#C55A48]' : ''}`}
-            />
-          </button>
-
+        {/* Pure Clean Product Image Canvas (Zero Overlaid Content) */}
+        <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-[#F4F1EA] group-hover:bg-[#ECE8DF] transition-colors duration-300 flex items-center justify-center p-3 sm:p-4 mb-2.5">
           {/* Product Image Link */}
           <Link
             to={`/products/${product.slug || product.id}`}
@@ -240,44 +211,58 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
               </div>
             )}
           </Link>
-
-          {/* Quick View Button on Hover */}
-          <button
-            type="button"
-            onClick={() => setIsQuickViewOpen(true)}
-            className="hidden sm:inline-flex items-center gap-1.5 absolute bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase z-10 shadow-2xs cursor-pointer whitespace-nowrap bg-white/90 hover:bg-white text-[#1F2520] opacity-0 group-hover:opacity-100 transition-all duration-200"
-          >
-            <Eye size={11} className="text-[#526B54]" />
-            <span>Quick View</span>
-          </button>
         </div>
 
         {/* Product Details (Preserves Classic Serif Font) */}
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
-            {/* Brand / Formulation Category Tag */}
-            <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#71856B] block truncate mb-1">
-              {brand}
-            </span>
+            {/* Brand + Discount Badge + Heart in Clean Header Row */}
+            <div className="flex items-center justify-between gap-1.5 mb-1">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#71856B] truncate">
+                  {brand}
+                </span>
+                {hasDiscount && (
+                  <span className="px-1.5 py-0.2 text-[8.5px] font-semibold uppercase tracking-wider bg-[#1F2520] text-white shrink-0">
+                    -{discountPercent}%
+                  </span>
+                )}
+                {isOutOfStock && (
+                  <span className="px-1.5 py-0.2 text-[8.5px] font-semibold uppercase tracking-wider bg-[#71776E] text-white shrink-0">
+                    Sold Out
+                  </span>
+                )}
+              </div>
+
+              {/* Minimal Wishlist Heart Button */}
+              <button
+                type="button"
+                onClick={handleWishlistToggle}
+                disabled={isWishlistLoading}
+                aria-label={isWishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
+                className="w-6 h-6 rounded-full flex items-center justify-center text-[#1F2520]/70 hover:text-[#C55A48] hover:bg-[#EEF2EB] transition-colors cursor-pointer shrink-0"
+              >
+                <Heart
+                  size={12.5}
+                  fill={isWishlisted ? '#C55A48' : 'none'}
+                  stroke={isWishlisted ? '#C55A48' : 'currentColor'}
+                  strokeWidth={1.8}
+                  className={isWishlisted ? 'text-[#C55A48]' : ''}
+                />
+              </button>
+            </div>
 
             {/* Product Title (Classic Old Font: font-serif) */}
             <Link
               to={`/products/${product.slug || product.id}`}
-              className="font-serif text-[13.5px] sm:text-[15px] font-medium text-[#1F2520] hover:text-[#526B54] line-clamp-1 mb-1 leading-snug transition-colors block"
+              className="font-serif text-[13.5px] sm:text-[15px] font-medium text-[#1F2520] hover:text-[#526B54] line-clamp-1 mb-1.5 leading-snug transition-colors block"
               title={product.name}
             >
               {product.name}
             </Link>
 
-            {/* Optional concise subtitle */}
-            {product.subtitle && (
-              <p className="text-[11px] text-[#71776E] font-normal line-clamp-1 leading-snug mb-1.5">
-                {product.subtitle}
-              </p>
-            )}
-
             {/* Star Ratings */}
-            <div className="flex items-center gap-1.5 mb-2.5 select-none">
+            <div className="flex items-center gap-1.5 mb-2 select-none">
               <div className="flex items-center gap-0.5 text-[#C29B38]">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star

@@ -70,17 +70,14 @@ export default function BrandsPage() {
         </div>
 
         {/* Minimal Editorial Header */}
-        <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] font-semibold tracking-wider uppercase mb-3 border border-[#71856B]/20">
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] font-semibold tracking-wider uppercase mb-2.5 border border-[#71856B]/20">
             <Sparkles size={13} />
             <span>Curated Dispensary Labs</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] mb-3">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520]">
             Partner Brands
           </h1>
-          <p className="text-xs sm:text-sm text-[#5A6358] leading-relaxed">
-            Clinically tested formulations from world-renowned botanical and dermatology laboratories.
-          </p>
         </div>
 
         {/* Filter Bar */}
@@ -128,12 +125,9 @@ export default function BrandsPage() {
                 <span className="text-[10px] font-semibold tracking-wider uppercase text-[#71856B] block mb-1">
                   {brand.origin}
                 </span>
-                <h3 className="font-serif text-lg font-medium text-[#1F2520] group-hover:text-[#71856B] transition-colors mb-1.5">
+                <h3 className="font-serif text-lg font-medium text-[#1F2520] group-hover:text-[#71856B] transition-colors mb-3">
                   {brand.name}
                 </h3>
-                <p className="text-xs text-[#5A6358] leading-relaxed mb-4">
-                  {brand.focus}
-                </p>
               </div>
 
               <div className="pt-3 border-t border-[#FAF9F5] flex items-center justify-between text-xs font-semibold text-[#71856B]">
@@ -147,3 +141,4 @@ export default function BrandsPage() {
     </div>
   );
 }
+
