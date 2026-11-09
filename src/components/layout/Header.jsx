@@ -190,7 +190,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
     {
       id: 'brands',
       name: t('nav.brands') || 'Brands',
-      path: '/brands',
+      path: '/shop?filter=brands',
       isActive: isBrandsActive,
       hasDropdown: true,
     },
