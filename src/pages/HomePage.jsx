@@ -15,7 +15,6 @@ import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
 import heroSlide1 from '../assets/hero/hero.png';
 import heroSlide2 from '../assets/hero/hero-campaign-old.jpg';
 import heroSlide3 from '../assets/hero/hero-products-showcase.jpg';
-import brandStoryImg from '../assets/brand-story.jpg';
 import {
   ArrowRight,
   ChevronLeft,
@@ -77,9 +76,6 @@ export default function HomePage() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState(null); // 'success' | 'error' | null
   const [newsletterMessage, setNewsletterMessage] = useState('');
-
-  // Brand Philosophy Modal
-  const [isPhilosophyOpen, setIsPhilosophyOpen] = useState(false);
 
   // Load all homepage data from live Laravel APIs
   const loadData = useCallback(async () => {
@@ -1025,58 +1021,6 @@ export default function HomePage() {
 
 
 
-      {/* ─── SECTION 10: BRAND STORY & FORMULATION STANDARD (EDITORIAL HARMONY) ─── */}
-      <section className="py-14 sm:py-18 md:py-24 bg-[#FAF9F5] border-b border-[#ECE8DE]">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Story Imagery (Clean & Unobstructed) */}
-            <div className="lg:col-span-6 relative">
-              <div className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] border border-[#ECE8DE] shadow-sm">
-                <img
-                  src={brandStoryImg}
-                  alt="Élixir Botanique Formulation Laboratory"
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                  onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80')}
-                />
-              </div>
-            </div>
-
-            {/* Story Narrative (Clean & Minimalist) */}
-            <div className="lg:col-span-6 flex flex-col items-start text-left">
-              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#71856B] block mb-2.5">
-                Our Formulation Standard
-              </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1F2520] leading-tight mb-6">
-                Formulated Without Compromise. Verified by Science.
-              </h2>
-
-              {/* Trust Pillars Checklist (Clean & Minimalist) */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full mb-7">
-                <div className="py-2.5 px-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
-                  <span className="text-xs font-semibold text-[#1F2520]">🌿 100% Organic</span>
-                </div>
-                <div className="py-2.5 px-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
-                  <span className="text-xs font-semibold text-[#1F2520]">🔬 Dermatologist Tested</span>
-                </div>
-                <div className="py-2.5 px-3 rounded-xl bg-white border border-[#ECE8DE] text-center shadow-2xs">
-                  <span className="text-xs font-semibold text-[#1F2520]">🐰 Cruelty-Free</span>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setIsPhilosophyOpen(true)}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-medium text-[#1F2520] bg-white hover:bg-[#FAF9F5] border border-[#ECE8DE] hover:border-[#71856B]/60 shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer"
-              >
-                <span>Read Our Formulation Pledge</span>
-                <ArrowRight size={14} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
 
 
       {/* ─── SECTION 11: VALIDATED NEWSLETTER SUBSCRIPTION (LUXURY DISPENSARY JOURNAL) ─── */}
@@ -1148,66 +1092,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── PHILOSOPHY MODAL ─── */}
-      {isPhilosophyOpen && (
-        <div className="overlay" onClick={() => setIsPhilosophyOpen(false)}>
-          <div
-            className="modal-dialog"
-            onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: '580px' }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '18px',
-                paddingBottom: '12px',
-                borderBottom: '1px solid var(--color-border)',
-              }}
-            >
-              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', margin: 0 }}>
-                Our 5 Formulation Pillars
-              </h3>
-              <button
-                type="button"
-                onClick={() => setIsPhilosophyOpen(false)}
-                style={{ color: 'var(--color-text-muted)' }}
-              >
-                <X size={18} />
-              </button>
-            </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '0.88rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-              <div>
-                <strong style={{ color: 'var(--color-text-main)' }}>1. Physiologically Matched Actives:</strong> Formulations are calibrated to match the natural acidic mantle pH (4.8 - 5.5) of healthy dermal tissue.
-              </div>
-              <div>
-                <strong style={{ color: 'var(--color-text-main)' }}>2. Barrier Repair Focus:</strong> Every active serum or exfoliator incorporates soothing lipid replenishers (ceramides, squalane, or panthenol) to prevent trans-epidermal water loss.
-              </div>
-              <div>
-                <strong style={{ color: 'var(--color-text-main)' }}>3. Zero Synthetic Fragrances:</strong> 100% free from masking fragrances, drying phthalates, and synthetic aromatic compounds.
-              </div>
-              <div>
-                <strong style={{ color: 'var(--color-text-main)' }}>4. Ethical & Cruelty-Free:</strong> Formulated ethically with certified cruelty-free testing and sustainably cultivated botanicals.
-              </div>
-              <div>
-                <strong style={{ color: 'var(--color-text-main)' }}>5. Verified POS Batch Tracking:</strong> Every bottle sold is recorded into our integrated laboratory POS database with direct batch authentication.
-              </div>
-            </div>
-
-            <div style={{ marginTop: '24px', textAlign: 'right' }}>
-              <button
-                type="button"
-                onClick={() => setIsPhilosophyOpen(false)}
-                className="btn btn-primary btn-sm"
-              >
-                Close Formulation Pledge
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
