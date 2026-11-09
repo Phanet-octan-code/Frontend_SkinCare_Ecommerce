@@ -6,7 +6,6 @@ import { useLanguage } from '../../i18n/LanguageContext';
 import { getLocalizedCategoryName } from '../../utils/categoryLocalization';
 import { getCustomerAvatar } from '../../utils/customerAvatar';
 import catalogService from '../../services/catalogService';
-import leafLogo from '../../assets/logo/leaf.png';
 import {
   Search,
   ShoppingBag,
@@ -18,7 +17,6 @@ import {
   Package,
   MapPin,
   ArrowRight,
-  Globe,
   X,
 } from 'lucide-react';
 
@@ -184,8 +182,8 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
     <header className="sticky top-0 z-[1020] bg-[#FAF9F5]/98 backdrop-blur-md border-b border-[#ECE8DE] shadow-[0_1px_3px_rgba(31,37,32,0.02)] select-none">
       <div className="container">
         <div className="flex items-center justify-between h-16 sm:h-17 md:h-[72px] gap-3 sm:gap-4 lg:gap-6 w-full">
-          {/* Left Cluster: Mobile Menu Button + Brand Logo + Dribbble Search Pill */}
-          <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-5 xl:gap-6 min-w-0 shrink-0">
+          {/* Left Cluster: Mobile Menu Button (< lg) + Page Navigation Links */}
+          <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 xl:gap-8 min-w-0">
             {/* Mobile Menu Toggle Button (< lg) */}
             <button
               type="button"
@@ -197,89 +195,9 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
               <Menu size={20} />
             </button>
 
-            {/* Brand Logo & Dispensary Tagline */}
-            <Link
-              to="/"
-              className="flex items-center gap-2 sm:gap-2.5 no-underline select-none shrink-0 group"
-              aria-label="Élixir Botanique - Clinical Skincare & Dispensary"
-            >
-              <img
-                src={leafLogo}
-                alt="Élixir Botanique Leaf Logo"
-                className="w-7 h-7 sm:w-8 sm:h-8 object-contain shrink-0 group-hover:scale-105 transition-transform duration-200"
-              />
-              <div className="flex flex-col items-start leading-none">
-                <span className="brand-logo-title font-serif text-base sm:text-lg lg:text-xl font-normal tracking-[0.02em] text-[#1F2520] leading-none whitespace-nowrap">
-                  ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
-                </span>
-                <span className="brand-logo-tagline text-[7.5px] sm:text-[8.5px] lg:text-[9px] font-medium tracking-[0.16em] uppercase text-[#8C9388] mt-1 whitespace-nowrap block">
-                  CLINICAL SKINCARE &amp; DISPENSARY
-                </span>
-              </div>
-            </Link>
-
-            {/* Clean Expanding Search Button with Smooth Transition */}
-            <div
-              ref={searchContainerRef}
-              className="relative hidden md:flex items-center"
-            >
-              <form
-                onSubmit={handleSearchSubmit}
-                className={`flex items-center rounded-full border bg-white transition-all duration-300 ease-in-out ${
-                  isSearchExpanded
-                    ? 'w-64 lg:w-72 xl:w-80 h-10 px-3.5 border-[#71856B] shadow-sm ring-2 ring-[#71856B]/15'
-                    : 'w-10 h-10 p-0 justify-center border-[#ECE8DE] hover:border-[#71856B] hover:shadow-xs cursor-pointer'
-                }`}
-                onClick={() => {
-                  if (!isSearchExpanded) {
-                    setIsSearchExpanded(true);
-                    setTimeout(() => searchInputRef.current?.focus(), 80);
-                  }
-                }}
-              >
-                <button
-                  type={isSearchExpanded ? 'submit' : 'button'}
-                  className={`flex items-center justify-center shrink-0 text-[#1F2520] hover:text-[#71856B] transition-colors cursor-pointer ${
-                    isSearchExpanded ? 'w-5 h-5 text-[#71856B]' : 'w-full h-full'
-                  }`}
-                  aria-label="Search"
-                >
-                  <Search size={16} />
-                </button>
-
-                {isSearchExpanded && (
-                  <>
-                    <input
-                      ref={searchInputRef}
-                      type="text"
-                      value={navSearchQuery}
-                      onChange={(e) => setNavSearchQuery(e.target.value)}
-                      placeholder={t('header.search_placeholder') || 'Search formulas, ingredients...'}
-                      className="w-full bg-transparent border-none text-xs text-[#1F2520] placeholder-[#8C9388] outline-none pl-2 pr-1"
-                    />
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsSearchExpanded(false);
-                        setNavSearchQuery('');
-                      }}
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-[#8C9388] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors shrink-0 cursor-pointer"
-                      aria-label="Close search"
-                    >
-                      <X size={13} />
-                    </button>
-                  </>
-                )}
-              </form>
-            </div>
-          </div>
-
-          {/* Right Cluster: Nav Links + Wishlist + Bag + User Account (Unified Single Right Group) */}
-          <div className="flex items-center gap-3.5 sm:gap-4 lg:gap-5 xl:gap-7 shrink-0">
-            {/* Integrated Navigation Links */}
+            {/* Navigation Links Aligned Left */}
             <nav
-              className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7"
+              className="hidden lg:flex items-center gap-5 xl:gap-7 2xl:gap-8"
               aria-label="Main navigation"
             >
               {navLinks.map((item) => {
@@ -333,7 +251,7 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                     {/* Dropdown Menu for Categories */}
                     {item.id === 'categories' && isOpen && (
                       <div
-                        className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-72 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-3.5 z-[1050] animate-[fadeIn_0.15s_ease-out]"
+                        className="absolute top-[calc(100%+8px)] left-0 w-72 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-3.5 z-[1050] animate-[fadeIn_0.15s_ease-out]"
                         onMouseEnter={() => handleMouseEnter('categories')}
                         onMouseLeave={handleMouseLeave}
                       >
@@ -378,165 +296,221 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                 );
               })}
             </nav>
+          </div>
 
-            {/* Action Icons Block */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 pl-1 sm:pl-2 border-l border-[#ECE8DE]/80">
-              {/* Search Icon for Mobile & Tablet (< md) */}
-              <button
-                type="button"
-                onClick={onOpenSearch}
-                id="mobile-search-btn"
-                className="md:hidden inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-colors cursor-pointer"
-                aria-label="Open search"
+          {/* Right Cluster: Search (near favorite) + Favorite + Bag + User Account */}
+          <div className="flex items-center gap-2 sm:gap-2.5 lg:gap-3 shrink-0">
+            {/* Clean Expanding Search Button right next to favorite */}
+            <div
+              ref={searchContainerRef}
+              className="relative hidden md:flex items-center"
+            >
+              <form
+                onSubmit={handleSearchSubmit}
+                className={`flex items-center rounded-full border bg-white transition-all duration-300 ease-in-out ${
+                  isSearchExpanded
+                    ? 'w-56 sm:w-64 md:w-72 lg:w-72 h-9 lg:h-10 px-3.5 border-[#71856B] shadow-sm ring-2 ring-[#71856B]/15'
+                    : 'w-9 h-9 lg:w-10 lg:h-10 p-0 justify-center border-[#ECE8DE] hover:border-[#71856B] hover:bg-white cursor-pointer'
+                }`}
+                onClick={() => {
+                  if (!isSearchExpanded) {
+                    setIsSearchExpanded(true);
+                    setTimeout(() => searchInputRef.current?.focus(), 80);
+                  }
+                }}
               >
-                <Search size={18} />
-              </button>
-
-              {/* Wishlist Link */}
-              <Link
-                to="/wishlist"
-                className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full text-[#1F2520] hover:bg-white hover:text-[#E0567A] border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95"
-                title="My Saved Wishlist"
-                aria-label="Wishlist"
-              >
-                <Heart size={18} />
-              </Link>
-
-              {/* Shopping Bag Trigger */}
-              <button
-                type="button"
-                onClick={openCart}
-                className="relative inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95 cursor-pointer"
-                title="Shopping Bag"
-                aria-label={`Shopping Bag with ${totalItemCount} items`}
-              >
-                <ShoppingBag size={18} />
-                {totalItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#1F2520] text-white rounded-full text-[9px] sm:text-[10px] font-bold min-w-[16px] sm:min-w-[18px] h-[16px] sm:h-[18px] flex items-center justify-center px-1 shadow-2xs ring-2 ring-[#FAF9F5]">
-                    {totalItemCount}
-                  </span>
-                )}
-              </button>
-
-              {/* User Account Menu / Sign In */}
-              {isAuthenticated ? (
-                <div className="relative">
-                  {(() => {
-                    const avatarSrc = getCustomerAvatar(customer);
-                    return (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                          className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-8 sm:h-9 lg:h-10 w-8 sm:w-auto p-0 sm:pl-1.5 sm:pr-3.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#71856B]/60 text-xs font-medium text-[#1F2520] cursor-pointer shadow-2xs hover:shadow-xs transition-colors"
-                          aria-label="User Account"
-                        >
-                          <div className="w-7 h-7 sm:w-7 sm:h-7 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] flex items-center justify-center font-bold text-[11px] shrink-0 border border-[#71856B]/20">
-                            {avatarSrc ? (
-                              <img
-                                src={avatarSrc}
-                                alt={customer?.name || 'User'}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
-                            )}
-                          </div>
-                          <span className="hidden sm:inline max-w-[85px] truncate font-medium">
-                            {customer?.name?.split(' ')[0] || 'Account'}
-                          </span>
-                          <ChevronDown size={12} className="hidden sm:inline text-[#8C9388]" />
-                        </button>
-
-                        {isUserMenuOpen && (
-                          <>
-                            <div
-                              onClick={() => setIsUserMenuOpen(false)}
-                              className="fixed inset-0 z-[1030]"
-                            />
-                            <div className="absolute right-0 top-[120%] w-60 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-2 z-[1040] flex flex-col animate-[fadeIn_0.15s_ease-out]">
-                              {/* Member Identity Header with Avatar */}
-                              <div className="flex items-center gap-2.5 px-3 py-2.5 border-b border-[#ECE8DE] mb-1.5 bg-[#FAF9F5]/70 rounded-xl">
-                                <div className="w-9 h-9 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] border border-[#71856B]/25 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
-                                  {avatarSrc ? (
-                                    <img
-                                      src={avatarSrc}
-                                      alt={customer?.name || 'User'}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  ) : (
-                                    customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
-                                  )}
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <p className="text-xs font-semibold text-[#1F2520] truncate">
-                                    {customer?.name}
-                                  </p>
-                                  <p className="text-[11px] text-[#8C9388] truncate">
-                                    {customer?.email}
-                                  </p>
-                                </div>
-                              </div>
-
-                              <Link
-                                to="/account/profile"
-                                onClick={() => setIsUserMenuOpen(false)}
-                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
-                              >
-                                <User size={14} className="text-[#71856B]" />
-                                <span>{t('account.profile_security') || 'Profile & Photo'}</span>
-                              </Link>
-
-                              <Link
-                                to="/account/orders"
-                                onClick={() => setIsUserMenuOpen(false)}
-                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
-                              >
-                                <Package size={14} />
-                                <span>{t('nav.orders')}</span>
-                              </Link>
-
-                              <Link
-                                to="/account/addresses"
-                                onClick={() => setIsUserMenuOpen(false)}
-                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
-                              >
-                                <MapPin size={14} />
-                                <span>{t('nav.addresses')}</span>
-                              </Link>
-
-                              <div className="h-px bg-[#ECE8DE] my-1" />
-
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setIsUserMenuOpen(false);
-                                  logout();
-                                }}
-                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#A64444] hover:bg-[#F9EFEF] transition-colors w-full text-left cursor-pointer"
-                              >
-                                <LogOut size={14} />
-                                <span>{t('nav.sign_out')}</span>
-                              </button>
-                            </div>
-                          </>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-              ) : (
-                <Link
-                  to="/login"
-                  className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 lg:h-10 px-3.5 sm:px-4 rounded-full bg-[#1F2520] hover:bg-[#2F3A31] text-white text-xs font-semibold tracking-wide transition-all duration-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap cursor-pointer no-underline"
-                  style={{ backgroundColor: '#1F2520', color: '#FFFFFF' }}
-                  aria-label="Sign In"
+                <button
+                  type={isSearchExpanded ? 'submit' : 'button'}
+                  className={`flex items-center justify-center shrink-0 text-[#1F2520] hover:text-[#71856B] transition-colors cursor-pointer ${
+                    isSearchExpanded ? 'w-5 h-5 text-[#71856B]' : 'w-full h-full'
+                  }`}
+                  aria-label="Search"
                 >
-                  <User size={14} className="text-[#DCE2DA] shrink-0" />
-                  <span className="text-white font-medium">{t('nav.sign_in') || 'Sign In'}</span>
-                </Link>
-              )}
+                  <Search size={16} />
+                </button>
+
+                {isSearchExpanded && (
+                  <>
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={navSearchQuery}
+                      onChange={(e) => setNavSearchQuery(e.target.value)}
+                      placeholder={t('header.search_placeholder') || 'Search formulas, ingredients...'}
+                      className="w-full bg-transparent border-none text-xs text-[#1F2520] placeholder-[#8C9388] outline-none pl-2 pr-1"
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsSearchExpanded(false);
+                        setNavSearchQuery('');
+                      }}
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-[#8C9388] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors shrink-0 cursor-pointer"
+                      aria-label="Close search"
+                    >
+                      <X size={13} />
+                    </button>
+                  </>
+                )}
+              </form>
             </div>
+
+            {/* Mobile Search Button (< md) */}
+            <button
+              type="button"
+              onClick={onOpenSearch}
+              id="mobile-search-btn"
+              className="md:hidden inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-colors cursor-pointer"
+              aria-label="Open search"
+            >
+              <Search size={18} />
+            </button>
+
+            {/* Wishlist Link (Favorite) */}
+            <Link
+              to="/wishlist"
+              className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full text-[#1F2520] hover:bg-white hover:text-[#E0567A] border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95"
+              title="My Saved Wishlist"
+              aria-label="Wishlist"
+            >
+              <Heart size={18} />
+            </Link>
+
+            {/* Shopping Bag Trigger */}
+            <button
+              type="button"
+              onClick={openCart}
+              className="relative inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full text-[#1F2520] hover:bg-white border border-transparent hover:border-[#ECE8DE] transition-all duration-150 active:scale-95 cursor-pointer"
+              title="Shopping Bag"
+              aria-label={`Shopping Bag with ${totalItemCount} items`}
+            >
+              <ShoppingBag size={18} />
+              {totalItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#1F2520] text-white rounded-full text-[9px] sm:text-[10px] font-bold min-w-[16px] sm:min-w-[18px] h-[16px] sm:h-[18px] flex items-center justify-center px-1 shadow-2xs ring-2 ring-[#FAF9F5]">
+                  {totalItemCount}
+                </span>
+              )}
+            </button>
+
+            {/* User Account Menu / Sign In */}
+            {isAuthenticated ? (
+              <div className="relative">
+                {(() => {
+                  const avatarSrc = getCustomerAvatar(customer);
+                  return (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                        className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-8 sm:h-9 lg:h-10 w-8 sm:w-auto p-0 sm:pl-1.5 sm:pr-3.5 rounded-full bg-white border border-[#ECE8DE] hover:border-[#71856B]/60 text-xs font-medium text-[#1F2520] cursor-pointer shadow-2xs hover:shadow-xs transition-colors"
+                        aria-label="User Account"
+                      >
+                        <div className="w-7 h-7 sm:w-7 sm:h-7 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] flex items-center justify-center font-bold text-[11px] shrink-0 border border-[#71856B]/20">
+                          {avatarSrc ? (
+                            <img
+                              src={avatarSrc}
+                              alt={customer?.name || 'User'}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
+                          )}
+                        </div>
+                        <span className="hidden sm:inline max-w-[85px] truncate font-medium">
+                          {customer?.name?.split(' ')[0] || 'Account'}
+                        </span>
+                        <ChevronDown size={12} className="hidden sm:inline text-[#8C9388]" />
+                      </button>
+
+                      {isUserMenuOpen && (
+                        <>
+                          <div
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="fixed inset-0 z-[1030]"
+                          />
+                          <div className="absolute right-0 top-[120%] w-60 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-2 z-[1040] flex flex-col animate-[fadeIn_0.15s_ease-out]">
+                            {/* Member Identity Header with Avatar */}
+                            <div className="flex items-center gap-2.5 px-3 py-2.5 border-b border-[#ECE8DE] mb-1.5 bg-[#FAF9F5]/70 rounded-xl">
+                              <div className="w-9 h-9 rounded-full overflow-hidden bg-[#EEF2EB] text-[#4A5D45] border border-[#71856B]/25 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                                {avatarSrc ? (
+                                  <img
+                                    src={avatarSrc}
+                                    alt={customer?.name || 'User'}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  customer?.name ? customer.name.charAt(0).toUpperCase() : 'U'
+                                )}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-xs font-semibold text-[#1F2520] truncate">
+                                  {customer?.name}
+                                </p>
+                                <p className="text-[11px] text-[#8C9388] truncate">
+                                  {customer?.email}
+                                </p>
+                              </div>
+                            </div>
+
+                            <Link
+                              to="/account/profile"
+                              onClick={() => setIsUserMenuOpen(false)}
+                              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
+                            >
+                              <User size={14} className="text-[#71856B]" />
+                              <span>{t('account.profile_security') || 'Profile & Photo'}</span>
+                            </Link>
+
+                            <Link
+                              to="/account/orders"
+                              onClick={() => setIsUserMenuOpen(false)}
+                              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
+                            >
+                              <Package size={14} />
+                              <span>{t('nav.orders')}</span>
+                            </Link>
+
+                            <Link
+                              to="/account/addresses"
+                              onClick={() => setIsUserMenuOpen(false)}
+                              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors"
+                            >
+                              <MapPin size={14} />
+                              <span>{t('nav.addresses')}</span>
+                            </Link>
+
+                            <div className="h-px bg-[#ECE8DE] my-1" />
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setIsUserMenuOpen(false);
+                                logout();
+                              }}
+                              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-[#A64444] hover:bg-[#F9EFEF] transition-colors w-full text-left cursor-pointer"
+                            >
+                              <LogOut size={14} />
+                              <span>{t('nav.sign_out')}</span>
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 lg:h-10 px-3.5 sm:px-4 rounded-full bg-[#1F2520] hover:bg-[#2F3A31] text-white text-xs font-semibold tracking-wide transition-all duration-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap cursor-pointer no-underline"
+                style={{ backgroundColor: '#1F2520', color: '#FFFFFF' }}
+                aria-label="Sign In"
+              >
+                <User size={14} className="text-[#DCE2DA] shrink-0" />
+                <span className="text-white font-medium">{t('nav.sign_in') || 'Sign In'}</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
