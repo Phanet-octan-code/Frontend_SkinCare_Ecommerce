@@ -12,6 +12,7 @@ import ProductCard from '../components/product/ProductCard';
 import { ProductGridSkeleton } from '../components/feedback/LoadingSkeleton';
 import ErrorState from '../components/feedback/ErrorState';
 import { resolveImageUrl, handleImageError } from '../utils/imageUrl';
+import heroCampaignImg from '../assets/hero/hero-campaign.jpg';
 import heroSlide3 from '../assets/hero/hero-products-showcase.jpg';
 import {
   ArrowRight,
@@ -369,15 +370,15 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Hero Product Visual (Clean Transparent Image from public/hero-campaign.jpg - No Background, No Border, No Shadow) */}
+            {/* Right Column: Hero Product Visual (Clean Transparent Image from hero-campaign.jpg - No Background, No Border, No Shadow) */}
             <div className="lg:col-span-5 xl:col-span-6 w-full flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
               <div className="relative w-full max-w-[540px] lg:max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] flex items-center justify-center bg-transparent">
                 <img
-                  src="/hero-campaign.jpg"
+                  src={heroCampaignImg}
                   alt="Élixir Botanique Skincare Ritual"
                   loading="eager"
                   className="w-full h-auto object-contain max-h-[480px] sm:max-h-[540px] lg:max-h-[600px] transition-transform duration-500 ease-out hover:scale-[1.02]"
-                  onError={(e) => handleImageError(e, '/hero.png')}
+                  onError={(e) => handleImageError(e, `${import.meta.env.BASE_URL}hero-campaign.jpg`)}
                 />
               </div>
             </div>
