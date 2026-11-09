@@ -29,7 +29,6 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [navSearchQuery, setNavSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownTimeoutRef = useRef(null);
   const searchContainerRef = useRef(null);
@@ -83,18 +82,6 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
     { id: 2, name: 'Toners & Essences', path: '/shop?category_id=2' },
   ];
 
-  // Curated dispensary brands
-  const defaultBrands = [
-    'Beauty of Joseon',
-    'Torriden',
-    'CeraVe',
-    "Paula's Choice",
-    'La Roche-Posay',
-    'SkinCeuticals',
-    'Dermalogica',
-    'The Ordinary',
-  ];
-
   useEffect(() => {
     catalogService
       .getCategories()
@@ -113,32 +100,18 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
         }
       })
       .catch(() => {});
-
-    catalogService
-      .getBrands()
-      .then((res) => {
-        if (Array.isArray(res?.data) && res.data.length > 0) {
-          setBrands(res.data.slice(0, 8));
-        }
-      })
-      .catch(() => {});
   }, []);
 
   const displayedCategories =
     categories.length > 0 ? categories : defaultCategories;
-  const displayedBrands = brands.length > 0 ? brands : defaultBrands;
 
   // Active route matching
   const searchParams = new URLSearchParams(location.search);
   const path = location.pathname;
-  const brandParam = searchParams.get('brand');
   const filterParam = searchParams.get('filter');
   const promotionParam = searchParams.get('promotion');
 
   const isHomeActive = path === '/';
-  const isBrandsActive =
-    path === '/brands' ||
-    (path === '/shop' && (Boolean(brandParam) || filterParam === 'brands'));
   const isOffersActive =
     path === '/offers' ||
     (path === '/shop' && (promotionParam === '1' || filterParam === 'promotion'));
@@ -147,7 +120,6 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
       path === '/categories' ||
       path.startsWith('/product/') ||
       path.startsWith('/products/')) &&
-    !isBrandsActive &&
     !isOffersActive;
   const isAboutActive = path === '/about';
   const isBlogActive = path.startsWith('/blog') || path.startsWith('/journal');
@@ -185,13 +157,6 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
       name: t('nav.categories') || 'Categories',
       path: '/shop',
       isActive: isCategoriesActive,
-      hasDropdown: true,
-    },
-    {
-      id: 'brands',
-      name: t('nav.brands') || 'Brands',
-      path: '/shop?filter=brands',
-      isActive: isBrandsActive,
       hasDropdown: true,
     },
     {
@@ -402,47 +367,6 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
                                 </span>
                                 <span className="text-[#8C9388] text-[10px] group-hover/item:translate-x-0.5 transition-transform">
                                   →
-                                </span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Dropdown Menu for Brands */}
-                    {item.id === 'brands' && isOpen && (
-                      <div
-                        className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-76 bg-white rounded-2xl shadow-xl border border-[#ECE8DE] p-3.5 z-[1050] animate-[fadeIn_0.15s_ease-out]"
-                        onMouseEnter={() => handleMouseEnter('brands')}
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <div className="px-3 py-1.5 border-b border-[#ECE8DE] mb-2 flex items-center justify-between">
-                          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8C9388]">
-                            {t('nav.brands')}
-                          </span>
-                          <Link
-                            to="/shop?filter=brands"
-                            onClick={handleCloseDropdown}
-                            className="text-[11px] text-[#E0567A] hover:underline font-medium flex items-center gap-1"
-                          >
-                            <span>{t('nav.all_brands')}</span>
-                            <ArrowRight size={11} />
-                          </Link>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-1 max-h-64 overflow-y-auto no-scrollbar">
-                          {displayedBrands.map((b) => {
-                            const brandName = typeof b === 'string' ? b : b.name || b;
-                            return (
-                              <Link
-                                key={brandName}
-                                to={`/shop?brand=${encodeURIComponent(brandName)}`}
-                                onClick={handleCloseDropdown}
-                                className="flex items-center justify-between px-2.5 py-2 rounded-xl text-xs text-[#2D3748] hover:text-[#1F2520] hover:bg-[#FAF9F5] transition-colors group/item"
-                              >
-                                <span className="truncate font-medium group-hover/item:text-[#E0567A] transition-colors">
-                                  {brandName}
                                 </span>
                               </Link>
                             );

@@ -25,15 +25,11 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
   const location = useLocation();
   const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
-  const brandParam = searchParams.get('brand');
   const filterParam = searchParams.get('filter');
   const promotionParam = searchParams.get('promotion');
   const categoryParam = searchParams.get('category_id');
 
   const isHomeActive = path === '/';
-  const isBrandsActive =
-    path === '/brands' ||
-    (path === '/shop' && (Boolean(brandParam) || filterParam === 'brands'));
   const isOffersActive =
     path === '/offers' ||
     (path === '/shop' && (promotionParam === '1' || filterParam === 'promotion'));
@@ -42,7 +38,6 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
       path === '/categories' ||
       path.startsWith('/product/') ||
       path.startsWith('/products/')) &&
-    !isBrandsActive &&
     !isOffersActive;
   const isAboutActive = path === '/about';
   const isBlogActive = path.startsWith('/blog') || path.startsWith('/journal');
@@ -51,38 +46,19 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
   const isFaqActive = path === '/faq';
 
   const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isBrandsOpen, setIsBrandsOpen] = useState(false);
 
   const { customer, isAuthenticated, logout } = useAuth();
   const { currency, setCurrency } = useCurrency();
   const { language, setLanguage, availableLanguages, t } = useLanguage();
 
-  const defaultBrands = [
-    'Beauty of Joseon',
-    'Torriden',
-    'CeraVe',
-    "Paula's Choice",
-    'La Roche-Posay',
-    'SkinCeuticals',
-    'Dermalogica',
-    'The Ordinary',
-  ];
-
   useEffect(() => {
     if (isOpen) {
-      // Auto-expand active accordion if browsing category or brand
+      // Auto-expand active accordion if browsing category
       if (isCategoriesActive && categoryParam) {
         setIsCategoriesOpen(true);
       } else {
         setIsCategoriesOpen(false);
-      }
-
-      if (isBrandsActive && brandParam) {
-        setIsBrandsOpen(true);
-      } else {
-        setIsBrandsOpen(false);
       }
 
       catalogService
@@ -103,15 +79,6 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
         })
         .catch(() => {});
 
-      catalogService
-        .getBrands()
-        .then((res) => {
-          if (Array.isArray(res?.data) && res.data.length > 0) {
-            setBrands(res.data.slice(0, 8));
-          }
-        })
-        .catch(() => {});
-
       const handleKeyDown = (e) => {
         if (e.key === 'Escape') onClose();
       };
@@ -125,8 +92,6 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
   const handleLinkClick = () => {
     onClose();
   };
-
-  const displayedBrands = brands.length > 0 ? brands : defaultBrands;
 
   return (
     <div
@@ -276,77 +241,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
               )}
             </div>
 
-            {/* 3. Brands Accordion Toggle */}
-            <div className="flex flex-col">
-              <button
-                type="button"
-                onClick={() => setIsBrandsOpen((prev) => !prev)}
-                className={`w-full px-3.5 py-2.5 rounded-xl text-sm transition-all duration-150 flex items-center justify-between cursor-pointer text-left ${
-                  isBrandsActive
-                    ? 'bg-[#FDF2F4] text-[#E0567A] font-semibold border border-[#E0567A]/25 shadow-2xs'
-                    : isBrandsOpen
-                    ? 'bg-[#FAF9F5] text-[#1F2520] font-medium border border-[#ECE8DE]'
-                    : 'text-[#1F2520] hover:bg-[#FAF9F5] font-medium border border-transparent'
-                }`}
-                aria-expanded={isBrandsOpen}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">{t('nav.brands') || 'Brands'}</span>
-                  {isBrandsActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E0567A] shadow-xs" />
-                  )}
-                </div>
-                <ChevronDown
-                  size={16}
-                  className={`text-[#8C9388] transition-transform duration-200 ${
-                    isBrandsOpen ? 'rotate-180 text-[#E0567A]' : ''
-                  }`}
-                />
-              </button>
-
-              {/* Collapsible Brands List */}
-              {isBrandsOpen && (
-                <div className="pl-3 pr-1 py-1.5 flex flex-col gap-0.5 border-l-2 border-[#E0567A]/30 my-1 ml-4 animate-[fadeIn_0.15s_ease-out]">
-                  <Link
-                    to="/shop?filter=brands"
-                    onClick={handleLinkClick}
-                    className={`px-2.5 py-2 rounded-lg text-xs transition-colors flex items-center justify-between ${
-                      path === '/shop' && filterParam === 'brands' && !brandParam
-                        ? 'bg-[#FDF2F4] text-[#E0567A] font-bold border border-[#E0567A]/25'
-                        : 'font-semibold text-[#E0567A] hover:bg-[#FDF2F4]'
-                    }`}
-                  >
-                    <span>{t('nav.all_brands') || 'All Brands'}</span>
-                    <ArrowRight size={12} />
-                  </Link>
-
-                  {displayedBrands.map((b) => {
-                    const brandName = typeof b === 'string' ? b : b.name || b;
-                    const isThisBrandActive =
-                      isBrandsActive &&
-                      brandParam &&
-                      brandParam.toLowerCase() === brandName.toLowerCase();
-                    return (
-                      <Link
-                        key={brandName}
-                        to={`/shop?brand=${encodeURIComponent(brandName)}`}
-                        onClick={handleLinkClick}
-                        className={`px-2.5 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between ${
-                          isThisBrandActive
-                            ? 'bg-[#FDF2F4] text-[#E0567A] font-bold border border-[#E0567A]/25'
-                            : 'text-[#5A6358] hover:text-[#1F2520] hover:bg-[#FAF9F5]'
-                        }`}
-                      >
-                        <span>{brandName}</span>
-                        <span className="text-[10px] text-[#8C9388] opacity-50">→</span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* 4. Offers */}
+            {/* 3. Offers */}
             <Link
               to="/shop?promotion=1"
               onClick={handleLinkClick}
