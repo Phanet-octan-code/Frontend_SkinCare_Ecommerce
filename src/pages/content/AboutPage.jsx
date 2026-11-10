@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from '../../i18n/LanguageContext';
 import brandStoryImg from '../../assets/brand-story.jpg';
 import {
-  Sparkles,
   ShieldCheck,
   Award,
   Leaf,
@@ -112,11 +111,6 @@ export default function AboutPage() {
       <div className="container">
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] sm:text-xs font-semibold tracking-widest uppercase mb-4 border border-[#71856B]/25 shadow-2xs hover:shadow-xs transition-shadow">
-            <Sparkles size={13} className="text-[#71856B] animate-pulse" />
-            <span>{t('about.philosophy_badge') || 'The Dispensary Philosophy'}</span>
-          </div>
-
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal text-[#1F2520] mb-5 leading-[1.18] tracking-tight">
             {t('about.title_part1') || 'Rooted in Botany.'}{' '}
             <span className="italic font-serif text-[#71856B]">

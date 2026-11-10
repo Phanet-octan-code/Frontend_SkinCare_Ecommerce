@@ -195,10 +195,6 @@ export default function BlogPage() {
       <div className="container">
         {/* Header Section */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EEF2EB] text-[#71856B] text-[11px] sm:text-xs font-semibold tracking-widest uppercase mb-4 border border-[#71856B]/25 shadow-2xs hover:shadow-xs transition-shadow">
-            <BookOpen size={13} className="text-[#71856B]" />
-            <span>{t('blog.badge') || 'Clinical Journal & Science'}</span>
-          </div>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1F2520] tracking-tight leading-tight mb-4">
             {t('blog.title_part1') || 'The Dermal'}{' '}
             <span className="italic font-serif text-[#71856B]">{t('blog.title_part2') || 'Compendium'}</span>
