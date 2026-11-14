@@ -79,7 +79,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 sm:pb-14">
           {/* Brand Identity & Location (5 columns on desktop) */}
           <div className="lg:col-span-5 pr-0 lg:pr-6">
-            <Link to="/" className="inline-flex items-center gap-3 mb-3.5 group select-none" aria-label="Élixir Botanique - Clinical Skincare & Dispensary">
+            <Link to="/" className="inline-flex items-center gap-3 mb-3.5 group select-none" aria-label="Élixir Botanique - Clinical Skincare">
               <img
                 src={leafLogo}
                 alt="Élixir Botanique Leaf Logo"
@@ -90,7 +90,7 @@ export default function Footer() {
                   ÉLIXIR <span className="brand-italic font-serif italic text-[var(--color-primary-light)] font-normal">BOTANIQUE</span>
                 </span>
                 <span className="brand-logo-tagline text-[10px] tracking-[0.2em] uppercase text-[#8E9C8D] block mt-1 font-medium">
-                  CLINICAL SKINCARE &amp; DISPENSARY
+                  CLINICAL SKINCARE
                 </span>
               </div>
             </Link>
@@ -207,7 +207,7 @@ export default function Footer() {
         {/* ─── 3. BOTTOM COPYRIGHT & TRUST CLEARANCE BAR ─── */}
         <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#818E7F] text-center md:text-left">
           <p>
-            © {CURRENT_YEAR} Élixir Botanique Clinical Dispensary Co. Integrated with SkinCare POS System.
+            © {CURRENT_YEAR} Élixir Botanique Skincare Co. Integrated with SkinCare POS System.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-[#97A395]">

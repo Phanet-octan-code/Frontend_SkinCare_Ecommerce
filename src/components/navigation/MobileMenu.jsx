@@ -119,7 +119,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }) {
                   ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
                 </span>
                 <span className="brand-logo-tagline text-[8.5px] tracking-[0.16em] uppercase text-[#8C9388] block mt-1 font-medium">
-                  CLINICAL SKINCARE &amp; DISPENSARY
+                  CLINICAL SKINCARE
                 </span>
               </div>
             </Link>

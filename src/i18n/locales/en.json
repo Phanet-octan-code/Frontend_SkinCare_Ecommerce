@@ -86,7 +86,7 @@
   },
   "header": {
     "search_placeholder": "Search active formulas, retinol, cleansers...",
-    "brand_tagline": "Clinical Skincare & Dispensary"
+    "brand_tagline": "Clinical Skincare"
   },
   "hero": {
     "badge": "100% PURE ACTIVES • CLINICAL DISPENSARY",
@@ -200,7 +200,7 @@
     "min_price": "Min Price ($)",
     "max_price": "Max Price ($)",
     "catalogue_error": "Catalogue Error",
-    "dispensary": "Dispensary",
+    "dispensary": "Shop",
     "promotional_sets": "Promotional Treatments & Sets"
   },
   "product": {

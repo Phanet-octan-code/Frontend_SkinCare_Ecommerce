@@ -81,20 +81,40 @@ export default function HomePage() {
 
     try {
       const [
+        bootstrapResult,
         bestsellerResult,
         newArrivalResult,
-        categoryResult,
-        promotionResult,
         catalogResult,
-        settingsResult,
       ] = await Promise.allSettled([
+        storeService.getBootstrap(),
         catalogService.getBestsellers(10),
         catalogService.getNewArrivals(10),
-        catalogService.getCategories(),
-        catalogService.getPromotions(),
         catalogService.getProducts({ per_page: 12 }),
-        storeService.getSettings(),
       ]);
+
+      // 1. Process Bootstrap (Settings, Categories, Promotions in 1 fast round-trip)
+      if (bootstrapResult.status === 'fulfilled' && bootstrapResult.value?.data) {
+        const bData = bootstrapResult.value.data;
+        if (Array.isArray(bData.categories)) {
+          setCategories(bData.categories);
+        }
+        if (Array.isArray(bData.promotions)) {
+          const now = new Date();
+          const activePromos = bData.promotions.filter((p) => {
+            if (!p.end_date) return true;
+            return new Date(p.end_date) >= now;
+          });
+          setPromotions(activePromos);
+        }
+        if (bData.settings) {
+          setStoreSettings(bData.settings);
+        }
+      } else {
+        // Resilient fallback if bootstrap endpoint is unreachable
+        catalogService.getCategories().then((res) => res?.data && setCategories(res.data)).catch(() => {});
+        catalogService.getPromotions().then((res) => res?.data && setPromotions(res.data)).catch(() => {});
+        storeService.getSettings().then((res) => res?.data && setStoreSettings(res.data)).catch(() => {});
+      }
 
       if (bestsellerResult.status === 'fulfilled' && Array.isArray(bestsellerResult.value?.data)) {
         setBestsellers(bestsellerResult.value.data);
@@ -104,25 +124,8 @@ export default function HomePage() {
         setNewArrivals(newArrivalResult.value.data);
       }
 
-      if (categoryResult.status === 'fulfilled' && Array.isArray(categoryResult.value?.data)) {
-        setCategories(categoryResult.value.data);
-      }
-
-      if (promotionResult.status === 'fulfilled' && Array.isArray(promotionResult.value?.data)) {
-        const now = new Date();
-        const activePromos = promotionResult.value.data.filter((p) => {
-          if (!p.end_date) return true;
-          return new Date(p.end_date) >= now;
-        });
-        setPromotions(activePromos);
-      }
-
       if (catalogResult.status === 'fulfilled' && Array.isArray(catalogResult.value?.data)) {
         setCatalogProducts(catalogResult.value.data);
-      }
-
-      if (settingsResult.status === 'fulfilled' && settingsResult.value?.data) {
-        setStoreSettings(settingsResult.value.data);
       }
 
       const availableCatalog = (catalogResult.status === 'fulfilled' && Array.isArray(catalogResult.value?.data))
@@ -378,6 +381,10 @@ export default function HomePage() {
                     src={heroCampaignImg}
                     alt="Élixir Botanique Skincare Ritual"
                     loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    width={680}
+                    height={540}
                     className="w-full h-auto object-contain max-h-[480px] sm:max-h-[540px] lg:max-h-[600px] transition-transform duration-700 ease-out group-hover/hero:scale-[1.03] select-none filter drop-shadow-[0_22px_32px_rgba(31,37,32,0.13)]"
                     onError={(e) => handleImageError(e, `${import.meta.env.BASE_URL}hero-campaign.jpg`)}
                   />

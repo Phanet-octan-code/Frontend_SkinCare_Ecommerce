@@ -86,7 +86,7 @@
   },
   "header": {
     "search_placeholder": "搜索高活性配方、视黄醇、氨基酸洁面...",
-    "brand_tagline": "Clinical Skincare & Dispensary"
+    "brand_tagline": "Clinical Skincare"
   },
   "hero": {
     "badge": "100% 纯正活性 · 专研药妆药房",
@@ -200,7 +200,7 @@
     "min_price": "最低价格 ($)",
     "max_price": "最高价格 ($)",
     "catalogue_error": "配方目录加载失败",
-    "dispensary": "专研药房",
+    "dispensary": "商城",
     "promotional_sets": "特惠护理与套装"
   },
   "product": {

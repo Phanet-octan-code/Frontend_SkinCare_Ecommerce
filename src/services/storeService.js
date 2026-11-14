@@ -3,6 +3,7 @@ import apiClient from './api';
 let settingsCache = null;
 let settingsCacheTime = 0;
 let settingsPromise = null;
+let bootstrapPromise = null;
 const SETTINGS_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
 export const storeService = {
@@ -27,6 +28,67 @@ export const storeService = {
       // Ignore
     }
     return null;
+  },
+
+  /**
+   * Consolidated bootstrap endpoint to load settings, categories, promotions, flash sales, and shipping zones in 1 fast call.
+   */
+  async getBootstrap(forceRefresh = false) {
+    if (!forceRefresh && bootstrapPromise) {
+      return bootstrapPromise;
+    }
+
+    bootstrapPromise = apiClient
+      .get('/store/bootstrap')
+      .then((res) => {
+        const bootstrapData = res.data?.data;
+        if (bootstrapData) {
+          if (bootstrapData.settings) {
+            settingsCache = { success: true, data: bootstrapData.settings };
+            settingsCacheTime = Date.now();
+            try {
+              sessionStorage.setItem(
+                'skincare_settings',
+                JSON.stringify({ time: settingsCacheTime, data: settingsCache })
+              );
+            } catch {}
+          }
+          if (bootstrapData.categories) {
+            try {
+              sessionStorage.setItem(
+                'skincare_categories',
+                JSON.stringify({ time: Date.now(), data: { success: true, data: bootstrapData.categories } })
+              );
+            } catch {}
+          }
+          if (bootstrapData.promotions) {
+            try {
+              sessionStorage.setItem(
+                'skincare_promotions',
+                JSON.stringify({ time: Date.now(), data: { success: true, data: bootstrapData.promotions } })
+              );
+            } catch {}
+          }
+          if (bootstrapData.flash_sales) {
+            try {
+              sessionStorage.setItem(
+                'skincare_flash_sales',
+                JSON.stringify({ time: Date.now(), data: { success: true, data: bootstrapData.flash_sales } })
+              );
+            } catch {}
+          }
+        }
+        return res.data;
+      })
+      .catch((err) => {
+        // Fallback to individual getSettings if bootstrap route is unavailable
+        return this.getSettings(forceRefresh);
+      })
+      .finally(() => {
+        bootstrapPromise = null;
+      });
+
+    return bootstrapPromise;
   },
 
   /**

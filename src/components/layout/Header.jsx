@@ -199,13 +199,13 @@ export default function Header({ onOpenMobileMenu, onOpenSearch }) {
             <Link
               to="/"
               className="flex flex-col items-start leading-none no-underline select-none shrink-0 group py-0.5"
-              aria-label="Élixir Botanique - Clinical Skincare & Dispensary"
+              aria-label="Élixir Botanique - Clinical Skincare"
             >
               <span className="brand-logo-title font-serif text-[17px] sm:text-lg lg:text-[19px] xl:text-xl font-normal tracking-[0.02em] text-[#1F2520] leading-none whitespace-nowrap group-hover:text-[#71856B] transition-colors">
                 ÉLIXIR <span className="brand-italic font-serif italic text-[#71856B] font-normal">BOTANIQUE</span>
               </span>
               <span className="brand-logo-tagline text-[7px] sm:text-[7.5px] lg:text-[8px] font-medium tracking-[0.16em] uppercase text-[#8C9388] mt-1 whitespace-nowrap block">
-                CLINICAL SKINCARE &amp; DISPENSARY
+                CLINICAL SKINCARE
               </span>
             </Link>
 

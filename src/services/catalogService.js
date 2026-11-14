@@ -474,10 +474,35 @@ export const catalogService = {
   /**
    * Fetch promotional bundles & gift sets
    */
-  async getBundles(type = null) {
+  async getBundles(type = null, forceRefresh = false) {
+    const key = `skincare_bundles_${type || 'all'}`;
+    if (!forceRefresh) {
+      const cached = storage.get(key, METADATA_TTL_MS);
+      if (cached) return cached.data || cached;
+    }
+
+    if (inFlightRequests.has(key)) {
+      return inFlightRequests.get(key);
+    }
+
     const params = type ? { type } : {};
-    const res = await apiClient.get('/store/bundles', { params });
-    return res.data?.data || [];
+    const promise = apiClient
+      .get('/store/bundles', { params })
+      .then((res) => {
+        storage.set(key, res.data);
+        return res.data?.data || [];
+      })
+      .catch((err) => {
+        const stale = storage.get(key, 0, true);
+        if (stale) return stale.data || stale;
+        return [];
+      })
+      .finally(() => {
+        inFlightRequests.delete(key);
+      });
+
+    inFlightRequests.set(key, promise);
+    return promise;
   },
 
   /**
@@ -491,9 +516,34 @@ export const catalogService = {
   /**
    * Fetch active flash sales and limited-time offers
    */
-  async getFlashSales() {
-    const res = await apiClient.get('/store/flash-sales');
-    return res.data?.data || [];
+  async getFlashSales(forceRefresh = false) {
+    const key = 'skincare_flash_sales';
+    if (!forceRefresh) {
+      const cached = storage.get(key, METADATA_TTL_MS);
+      if (cached) return cached.data || cached;
+    }
+
+    if (inFlightRequests.has(key)) {
+      return inFlightRequests.get(key);
+    }
+
+    const promise = apiClient
+      .get('/store/flash-sales')
+      .then((res) => {
+        storage.set(key, res.data);
+        return res.data?.data || [];
+      })
+      .catch((err) => {
+        const stale = storage.get(key, 0, true);
+        if (stale) return stale.data || stale;
+        return [];
+      })
+      .finally(() => {
+        inFlightRequests.delete(key);
+      });
+
+    inFlightRequests.set(key, promise);
+    return promise;
   },
 };
 

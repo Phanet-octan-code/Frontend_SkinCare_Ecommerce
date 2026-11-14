@@ -86,7 +86,7 @@
   },
   "header": {
     "search_placeholder": "ស្វែងរករូបមន្តសកម្ម រេទីណុល ហ្វូមលាងមុខ...",
-    "brand_tagline": "Clinical Skincare & Dispensary"
+    "brand_tagline": "Clinical Skincare"
   },
   "hero": {
     "badge": "សារធាតុសកម្មសុទ្ធ ១០០% • ឱសថស្ថានកែសម្ផស្សគ្លីនិក",
@@ -200,7 +200,7 @@
     "min_price": "តម្លៃទាបបំផុត ($)",
     "max_price": "តម្លៃខ្ពស់បំផុត ($)",
     "catalogue_error": "កំហុសក្នុងការទាញយកកាតាឡុក",
-    "dispensary": "ឱសថស្ថានគ្លីនិក",
+    "dispensary": "ហាងទំនិញ",
     "promotional_sets": "ឈុតព្យាបាល & ប្រូម៉ូសិនពិសេស"
   },
   "product": {

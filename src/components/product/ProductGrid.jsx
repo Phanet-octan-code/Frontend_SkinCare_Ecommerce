@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 
-export default function ProductGrid({
+function ProductGrid({
   products = [],
   wishlistedIds = new Set(),
   onWishlistChange,
@@ -33,3 +33,5 @@ export default function ProductGrid({
     </div>
   );
 }
+
+export default React.memo(ProductGrid);

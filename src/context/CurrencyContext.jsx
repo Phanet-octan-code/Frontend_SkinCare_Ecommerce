@@ -14,21 +14,23 @@ export function CurrencyProvider({ children }) {
   const [shippingZones, setShippingZones] = useState([]);
 
   useEffect(() => {
-    // Fetch store settings to get configured exchange rate, delivery fee, and shipping zones
-    storeService.getSettings()
+    // Bootstrap store settings, currencies, and active zones in 1 round-trip
+    storeService.getBootstrap()
       .then((res) => {
-        const rate = res?.data?.exchange_rate_khr ?? res?.data?.currency_exchange_rate;
+        const rawSettings = res?.data?.settings || res?.data;
+        const rate = rawSettings?.exchange_rate_khr ?? rawSettings?.currency_exchange_rate;
         if (rate) {
           setExchangeRate(Number(rate));
         }
-        if (res?.data?.free_shipping_threshold) {
-          setDeliveryThreshold(Number(res.data.free_shipping_threshold));
+        if (rawSettings?.free_shipping_threshold) {
+          setDeliveryThreshold(Number(rawSettings.free_shipping_threshold));
         }
-        if (res?.data?.standard_shipping_fee) {
-          setStandardShipping(Number(res.data.standard_shipping_fee));
+        if (rawSettings?.standard_shipping_fee) {
+          setStandardShipping(Number(rawSettings.standard_shipping_fee));
         }
-        if (Array.isArray(res?.data?.shipping_zones)) {
-          setShippingZones(res.data.shipping_zones);
+        const zones = res?.data?.shipping_zones || rawSettings?.shipping_zones;
+        if (Array.isArray(zones)) {
+          setShippingZones(zones);
         }
       })
       .catch(() => {

@@ -22,7 +22,7 @@ const decodeHtml = (str) => {
     .replace(/&#39;/g, "'");
 };
 
-export default function ProductCard({ product, initialWishlisted = false, onWishlistChange }) {
+function ProductCard({ product, initialWishlisted = false, onWishlistChange }) {
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
@@ -214,6 +214,9 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
                 src={resolveImageUrl(product.image_url)}
                 alt={decodeHtml(product.name)}
                 loading="lazy"
+                decoding="async"
+                width={300}
+                height={300}
                 className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 onError={(e) => handleImageError(e, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80')}
               />
@@ -309,3 +312,13 @@ export default function ProductCard({ product, initialWishlisted = false, onWish
     </>
   );
 }
+
+export default React.memo(ProductCard, (prevProps, nextProps) => {
+  return (
+    prevProps.product?.id === nextProps.product?.id &&
+    prevProps.product?.sale_price === nextProps.product?.sale_price &&
+    prevProps.product?.final_price === nextProps.product?.final_price &&
+    prevProps.product?.qty === nextProps.product?.qty &&
+    prevProps.initialWishlisted === nextProps.initialWishlisted
+  );
+});
