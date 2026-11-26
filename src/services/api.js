@@ -2,22 +2,8 @@ import axios from 'axios';
 
 /**
  * Centralized Axios instance for SkinCare E-Commerce
- * In local environment (localhost or 127.0.0.1), connects directly to fast local Laravel API.
  */
-const resolveBaseUrl = () => {
-  if (import.meta.env.VITE_API_BASE_URL) {
-    return import.meta.env.VITE_API_BASE_URL;
-  }
-  if (
-    typeof window !== 'undefined' &&
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ) {
-    return 'http://127.0.0.1:8000/api/v1';
-  }
-  return 'https://backend-skincare-ng5o.onrender.com/api/v1';
-};
-
-const API_BASE_URL = resolveBaseUrl();
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://backend-skincare-ng5o.onrender.com/api/v1';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
