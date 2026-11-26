@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { X, ArrowRight, Tag } from 'lucide-react';
 import catalogService from '../../services/catalogService';
 import { useCurrency } from '../../context/CurrencyContext';
@@ -8,6 +8,8 @@ import { useTranslation } from '../../i18n/LanguageContext';
 const DISMISS_KEY = 'elixir_dismissed_promo_banner_v1';
 
 export default function PromotionBanner() {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
   const { format } = useCurrency();
   const { t } = useTranslation();
 
@@ -80,8 +82,8 @@ export default function PromotionBanner() {
     }
   };
 
-  // Do not render if explicitly dismissed by user
-  if (isDismissed) return null;
+  // Do not render if not on home page or explicitly dismissed by user
+  if (!isHomePage || isDismissed) return null;
 
   // Curated fallback promotion if database has no active promotions
   const activePromo =

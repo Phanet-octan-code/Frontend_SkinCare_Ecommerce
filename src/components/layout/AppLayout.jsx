@@ -15,6 +15,7 @@ export default function AppLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
 
   // Global Ctrl+K / Cmd+K search shortcut
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function AppLayout() {
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
       />
-      <PromotionBanner />
+      {isHomePage && <PromotionBanner />}
 
       <main
         id="main-content"
