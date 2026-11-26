@@ -13,9 +13,9 @@ const storage = {
       return mem.data;
     }
 
-    // 2. Try sessionStorage
+    // 2. Try localStorage then sessionStorage
     try {
-      const raw = sessionStorage.getItem(key);
+      const raw = localStorage.getItem(key) || sessionStorage.getItem(key);
       if (raw) {
         const item = JSON.parse(raw);
         if (ttlMs === 0 || now - item.time < ttlMs || allowStale) {
@@ -23,11 +23,12 @@ const storage = {
           return item.data;
         }
         if (!allowStale) {
+          localStorage.removeItem(key);
           sessionStorage.removeItem(key);
         }
       }
     } catch {
-      // Ignore sessionStorage errors (e.g. private mode quota)
+      // Ignore storage errors (e.g. private mode quota)
     }
 
     return null;
@@ -37,15 +38,20 @@ const storage = {
     const entry = { time: Date.now(), data };
     memoryStore.set(key, entry);
     try {
-      sessionStorage.setItem(key, JSON.stringify(entry));
+      localStorage.setItem(key, JSON.stringify(entry));
     } catch {
-      // Storage quota exceeded or disabled
+      try {
+        sessionStorage.setItem(key, JSON.stringify(entry));
+      } catch {
+        // Storage quota exceeded or disabled
+      }
     }
   },
 
   remove(key) {
     memoryStore.delete(key);
     try {
+      localStorage.removeItem(key);
       sessionStorage.removeItem(key);
     } catch {
       // Ignore

@@ -7,7 +7,8 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [customer, setCustomer] = useState(() => authService.getCurrentUser());
   const [token, setToken] = useState(() => localStorage.getItem('skincare_customer_token'));
-  const [isLoading, setIsLoading] = useState(true);
+  // Instant non-blocking mount if customer is already cached in localStorage
+  const [isLoading, setIsLoading] = useState(() => !authService.getCurrentUser() && Boolean(localStorage.getItem('skincare_customer_token')));
   const { showToast } = useToast();
 
   const refreshProfile = useCallback(async () => {
@@ -19,11 +20,18 @@ export function AuthProvider({ children }) {
     try {
       const res = await authService.getProfile();
       const cust = res.customer || res.data?.customer || res.data;
-      setCustomer(cust);
+      if (cust) {
+        setCustomer(cust);
+      }
       return cust;
-    } catch {
-      setCustomer(null);
-      setToken(null);
+    } catch (err) {
+      // Only clear user on explicit 401 Unauthorized, never on transient network delays
+      if (err?.response?.status === 401) {
+        setCustomer(null);
+        setToken(null);
+        localStorage.removeItem('skincare_customer_token');
+        localStorage.removeItem('skincare_customer_user');
+      }
       return null;
     } finally {
       setIsLoading(false);
